@@ -6,7 +6,7 @@
 ![Frontend](https://img.shields.io/badge/Frontend-HTML%2F%20CSS%2F%20JS-orange?style=for-the-badge&logo=htmx&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=for-the-badge)
 
-## Nome do Projeto
+## TaskOps
 Sistema de gerenciamento de projetos e demandas, permitindo cadastrar, consultar e atualizar tarefas, correções de defeitos, melhorias e atividades de documentação de forma organizada. A aplicação integra frontend em HTML, CSS e JavaScript, backend em Node.js, TypeScript e Express, e banco de dados Oracle, possibilitando o acompanhamento de demandas com classificação por tipo, prioridade e status, garantindo uma solução completa para controle e evolução dos projetos sem exclusão física dos registros.
 
 ## Integrantes
