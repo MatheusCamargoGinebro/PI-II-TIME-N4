@@ -1,18 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
 
 * {
-	font-family: "Space Grotesk", sans-serif;
-	display: block;
-	padding: 0;
 	margin: 0;
-	scroll-behavior: smooth;
+	padding: 0;
+	box-sizing: border-box;
 }
 
+html,
 body {
 	background-color: var(--color-neutral-100);
 	color: var(--color-neutral-900);
 	font-size: 16px;
 	line-height: 1.5;
+	font-family: "Space Grotesk", sans-serif;
+	scroll-behavior: smooth;
 }
 
 a {
@@ -31,15 +32,15 @@ input {
 
 :root {
 	/* Brand */
-	--color-brand-primary-900: #000b0b;
-	--color-brand-primary-800: #002020;
-	--color-brand-primary-700: #004040;
-	--color-brand-primary-600: #005656;
-	--color-brand-primary-500: #006b6b;
-	--color-brand-primary-400: #338989;
-	--color-brand-primary-300: #66a6a6;
-	--color-brand-primary-200: #99c4c4;
-	--color-brand-primary-100: #cce1e1;
+	--color-primary-900: #000b0b;
+	--color-primary-800: #002020;
+	--color-primary-700: #004040;
+	--color-primary-600: #005656;
+	--color-primary-500: #006b6b;
+	--color-primary-400: #338989;
+	--color-primary-300: #66a6a6;
+	--color-primary-200: #99c4c4;
+	--color-primary-100: #cce1e1;
 
 	/* Accent */
 	--color-accent-100: #ccfbfb;
@@ -84,4 +85,33 @@ input {
 
 	/* Global Page Padding */
 	--padding-global: 64px;
+
+	/* Escala de fonte */
+	--font-xs: 12px;
+	--font-sm: 16px;
+	--font-md: 24px;
+	--font-lg: 32px;
+	--font-xl: 40px;
+	--font-xxl: 48px;
+	--font-display: 64px;
+
+	/* Espaçamentos */
+	--space-xxs: 4px;
+	--space-xs: 8px;
+	--space-sm: 16px;
+	--space-md: 24px;
+	--space-lg: 32px;
+	--space-xl: 40px;
+	--space-xxl: 48px;
+	--space-xxxl: 64px;
+
+	/* Bordas arredondadas */
+	--radius-xs: 2px;
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+	--radius-xl: 10px;
+	--radius-xxl: 12px;
+	--radius-xxxl: 16px;
+	--radius-full: 9999px;
 }
