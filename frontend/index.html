@@ -11,9 +11,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sistema de Projetos</title>
 
-		<!-- Importa estilos globais e do botão -->
+		<!-- Estilos globais -->
 		<link rel="stylesheet" href="./assets/styles/global.css" />
 		<link rel="stylesheet" href="./components/buttons/p_button/p_button.css" />
 	</head>
 	<body id="app"></body>
+
+	<script src="./components/buttons/p_button/p_button.js"></script>
+	<script>
+		document.getElementById("app").innerHTML += p_button({
+			label: "Clique nimim",
+			disabled: false,
+			icon: "./assets/icons/save.png",
+			disabled: true,
+		});
+	</script>
 </html>

@@ -31,7 +31,6 @@ input {
 }
 
 :root {
-	/* Brand */
 	--color-primary-900: #000b0b;
 	--color-primary-800: #002020;
 	--color-primary-700: #004040;
@@ -42,7 +41,6 @@ input {
 	--color-primary-200: #99c4c4;
 	--color-primary-100: #cce1e1;
 
-	/* Accent */
 	--color-accent-100: #ccfbfb;
 	--color-accent-200: #99f7f7;
 	--color-accent-300: #66f3f4;
@@ -53,7 +51,6 @@ input {
 	--color-accent-800: #005e5e;
 	--color-accent-900: #002f2f;
 
-	/* Neutral */
 	--color-neutral-900: #19191a;
 	--color-neutral-800: #323233;
 	--color-neutral-700: #646466;
@@ -64,12 +61,10 @@ input {
 	--color-neutral-200: #e2e2e6;
 	--color-neutral-100: #fbfbff;
 
-	/* Containers */
 	--container-small: 768px;
 	--container-medium: 1024px;
 	--container-large: 1280px;
 
-	/* Max Widths */
 	--max-width-xxsmall: 320px;
 	--max-width-xsmall: 400px;
 	--max-width-small: 480px;
@@ -78,40 +73,26 @@ input {
 	--max-width-xlarge: 1024px;
 	--max-width-xxlarge: 1280px;
 
-	/* Section Padding */
 	--padding-section-small: 48px;
 	--padding-section-medium: 80px;
 	--padding-section-large: 112px;
 
-	/* Global Page Padding */
 	--padding-global: 64px;
 
-	/* Escala de fonte */
-	--font-xs: 12px;
-	--font-sm: 16px;
-	--font-md: 24px;
-	--font-lg: 32px;
-	--font-xl: 40px;
-	--font-xxl: 48px;
-	--font-display: 64px;
+	--size-xxs: 2px;
+	--size-xs: 4px;
+	--size-sm: 8px;
+	--size-md: 16px;
+	--size-lg: 24px;
+	--size-xl: 32px;
+	--size-xxl: 48px;
+	--size-xxxl: 64px;
+	--size-xxxxl: 128px;
 
-	/* Espaçamentos */
-	--space-xxs: 4px;
-	--space-xs: 8px;
-	--space-sm: 16px;
-	--space-md: 24px;
-	--space-lg: 32px;
-	--space-xl: 40px;
-	--space-xxl: 48px;
-	--space-xxxl: 64px;
-
-	/* Bordas arredondadas */
 	--radius-xs: 2px;
 	--radius-sm: 4px;
 	--radius-md: 6px;
 	--radius-lg: 8px;
-	--radius-xl: 10px;
-	--radius-xxl: 12px;
-	--radius-xxxl: 16px;
-	--radius-full: 9999px;
+	--radius-xl: 12px;
+	--radius-full: 100%;
 }
