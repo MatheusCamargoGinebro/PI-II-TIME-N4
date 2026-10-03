@@ -10,8 +10,6 @@
 	padding: var(--size-md) var(--size-lg);
 	border-radius: var(--radius-sm);
 
-	margin: 2rem;
-
 	transition: 0.2s;
 }
 
@@ -27,19 +25,18 @@
 	display: inline-block;
 	width: var(--size-lg);
 	height: var(--size-lg);
-	background-color: var(--color-accent-100); /* cor normal */
+	background-color: var(--color-accent-100);
 	-webkit-mask: var(--p-button-icon) center / contain no-repeat;
 	mask: var(--p-button-icon) center / contain no-repeat;
 }
 
 .p-button:disabled {
 	background-color: var(--color-neutral-200);
-	color: var(--color-neutral-300);
+	color: var(--color-neutral-400);
 
 	cursor: not-allowed;
 }
 
-/* Ícone dentro do botão desabilitado */
 .p-button:disabled .p-button-icon {
-	background-color: var(--color-neutral-300); /* nova cor do ícone */
+	background-color: var(--color-neutral-400);
 }

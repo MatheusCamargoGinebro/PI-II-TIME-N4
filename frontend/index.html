@@ -20,9 +20,21 @@
 	<script src="./components/buttons/p_button/p_button.js"></script>
 	<script>
 		document.getElementById("app").innerHTML += p_button({
-			label: "Clique nimim",
+			label: "Icone e habilitado",
 			disabled: false,
 			icon: "./assets/icons/save.png",
+		});
+		document.getElementById("app").innerHTML += p_button({
+			label: "Icone e desabilitado",
+			disabled: true,
+			icon: "./assets/icons/save.png",
+		});
+		document.getElementById("app").innerHTML += p_button({
+			label: "Sem icone e habilitado",
+			disabled: false,
+		});
+		document.getElementById("app").innerHTML += p_button({
+			label: "Sem icone e desabilitado",
 			disabled: true,
 		});
 	</script>
