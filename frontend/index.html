@@ -11,31 +11,62 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sistema de Projetos</title>
 
-		<!-- Estilos globais -->
 		<link rel="stylesheet" href="./assets/styles/global.css" />
-		<link rel="stylesheet" href="./components/buttons/p_button/p_button.css" />
 	</head>
-	<body id="app"></body>
+	<body id="app">
+		<nav>
+			<ul>
+				<li><a href="./pages/dashboard/dashboard.html">Dashboard</a></li>
+				<ul>
+					<li>
+						<a href="./pages/demand/demand_details/demand_details.html"
+							>Demand details</a
+						>
+					</li>
+					<li>
+						<a href="./pages/demand/demands_list/demands_list.html"
+							>Demand list</a
+						>
+					</li>
+					<li>
+						<a href="./pages/demand/register_demand/register_demand.html"
+							>Register demand</a
+						>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="./pages/project/project_details/project_details.html"
+							>Project details</a
+						>
+					</li>
+					<li>
+						<a
+							href="./pages/project/project_member_details/project_member_details.html"
+							>Project member details</a
+						>
+					</li>
+					<li>
+						<a href="./pages/project/project_members/project_members.html"
+							>project members</a
+						>
+					</li>
+					<li>
+						<a href="./pages/project/projects_list/projects_list.html"
+							>Projects list</a
+						>
+					</li>
+				</ul>
 
-	<script src="./components/buttons/p_button/p_button.js"></script>
-	<script>
-		document.getElementById("app").innerHTML += p_button({
-			label: "Icone e habilitado",
-			disabled: false,
-			icon: "./assets/icons/save.png",
-		});
-		document.getElementById("app").innerHTML += p_button({
-			label: "Icone e desabilitado",
-			disabled: true,
-			icon: "./assets/icons/save.png",
-		});
-		document.getElementById("app").innerHTML += p_button({
-			label: "Sem icone e habilitado",
-			disabled: false,
-		});
-		document.getElementById("app").innerHTML += p_button({
-			label: "Sem icone e desabilitado",
-			disabled: true,
-		});
-	</script>
+				<ul>
+					<li>
+						<a href="./pages/user/login/login.html">Login</a>
+					</li>
+					<li>
+						<a href="./pages/user/register/register.html">Register</a>
+					</li>
+				</ul>
+			</ul>
+		</nav>
+	</body>
 </html>
