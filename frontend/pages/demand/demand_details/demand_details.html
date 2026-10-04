@@ -12,8 +12,8 @@
 		<link rel="stylesheet" href="./demand_details.css" />
 	</head>
 	<body>
-		<header class="header-container">
-			<nav class="navigation-container">
+		<div class="demand-details-header">
+			<div class="demand-details-navigation">
 				<a href="../../dashboard/dashboard.html">
 					<img src="../../../assets/images/logo.png" alt="TaskOps"
 				/></a>
@@ -21,35 +21,45 @@
 					<a href="../../dashboard/dashboard.html">Dashboard</a>
 					<a href="../../project/projects_list/projects_list.html">Projetos</a>
 				</div>
-			</nav>
+			</div>
 
-			<div class="user-profile-container" id="profile-container">
+			<div class="demand-details-user-profile" id="demand-details-profile">
 				<img src="../../../assets/images/user.png" alt="Foto de perfil" />
-				<div class="user-info">
-					<p class="user-profile-name">Fulano da Silva</p>
-					<p class="user-profile-email">fulano@email.com</p>
+				<div class="demand-details-user-info">
+					<p class="demand-details-user-name">Fulano da Silva</p>
+					<p class="demand-details-user-email">fulano@email.com</p>
 				</div>
 				<button>
 					<img src="../../../assets//icons/chevron.png" alt="Opções" />
 				</button>
 			</div>
-		</header>
+		</div>
 
-		<div class="sub-header-container">
-			<div class="path-div">
+		<div class="demand-details-subheader">
+			<div class="demand-details-breadcrumb">
 				<ul>
-					<li><a href="" class="path-component">Projetos</a></li>
-					<li><a href="" class="path-component">Projeto Inovador</a></li>
-					<li><a href="" class="path-component">Demandas</a></li>
 					<li>
-						<a href="" class="path-component"><span>TAR00001</span></a>
+						<a href="" class="demand-details-breadcrumb-link">Projetos</a>
+					</li>
+					<li>
+						<a href="" class="demand-details-breadcrumb-link"
+							>Projeto Inovador</a
+						>
+					</li>
+					<li>
+						<a href="" class="demand-details-breadcrumb-link">Demandas</a>
+					</li>
+					<li>
+						<a href="" class="demand-details-breadcrumb-link"
+							><span>TAR00001</span></a
+						>
 					</li>
 				</ul>
 			</div>
-			<div class="content-sub-header">
+			<div class="demand-details-heading">
 				<h1>TAR00001</h1>
-				<div class="sub-header-options">
-					<button id="revert-btn">
+				<div class="demand-details-actions">
+					<button id="demand-details-revert-button">
 						<img
 							src="../../../assets/icons/delete.png"
 							alt="reverter alterações"
@@ -64,14 +74,14 @@
 			</div>
 		</div>
 
-		<nav class="sub-navigation-bar">
-			<button id="demand-info">Informações gerais</button>
-			<button id="demand-history">Histórico e anotações</button>
-		</nav>
+		<div class="demand-details-tabs">
+			<button id="demand-details-info-tab">Informações gerais</button>
+			<button id="demand-details-history-tab">Histórico e anotações</button>
+		</div>
 
 		<form action="">
-			<div class="demand-text-infos-container">
-				<div class="demand-tittle">
+			<div class="demand-details-information">
+				<div class="demand-details-section-heading">
 					<img
 						src="../../../assets/icons/list_info.png"
 						alt="Informações da demanda"
@@ -80,58 +90,72 @@
 				</div>
 
 				<div>
-					<div class="forms-section-1">
-						<div class="input-div">
-							<label for="demand-tittle">Titulo da demanda</label>
-							<input type="text" name="demand-tittle" id="demand-tittle" />
-							<p id="demand-tittle-error"></p>
+					<div
+						class="demand-details-form-section demand-details-form-section-title"
+					>
+						<div class="demand-details-field">
+							<label for="demand-details-title">Titulo da demanda</label>
+							<input
+								type="text"
+								name="demand-title"
+								id="demand-details-title"
+							/>
+							<p id="demand-details-title-error"></p>
 						</div>
 					</div>
-					<div class="forms-section-2">
-						<div class="input-div">
-							<label for="demand-type">Tipo de demanda</label>
-							<select name="demand-type" id="demand-type">
+					<div
+						class="demand-details-form-section demand-details-form-section-metadata"
+					>
+						<div class="demand-details-field">
+							<label for="demand-details-type">Tipo de demanda</label>
+							<select name="demand-type" id="demand-details-type">
 								<option value="TAREFA">TAREFA</option>
 							</select>
 						</div>
-						<div class="input-div">
-							<label for="associated-project">Projeto associado</label>
+						<div class="demand-details-field">
+							<label for="demand-details-associated-project"
+								>Projeto associado</label
+							>
 							<input
 								type="text"
 								name="associated-project"
-								id="associated-project"
+								id="demand-details-associated-project"
 							/>
-							<p id="demand-tittle-error"></p>
+							<p id="demand-details-associated-project-error"></p>
 						</div>
 					</div>
-					<div class="forms-section-3">
-						<div class="input-div">
-							<label for="demand-priority">Prioridade</label>
-							<select name="demand-priority" id="demand-priority">
+					<div
+						class="demand-details-form-section demand-details-form-section-classification"
+					>
+						<div class="demand-details-field">
+							<label for="demand-details-priority">Prioridade</label>
+							<select name="demand-priority" id="demand-details-priority">
 								<option value="ALTA">ALTA</option>
 							</select>
 						</div>
-						<div class="input-div">
-							<label for="demand-status">Prioridade</label>
-							<select name="demand-status" id="demand-status">
+						<div class="demand-details-field">
+							<label for="demand-details-status">Prioridade</label>
+							<select name="demand-status" id="demand-details-status">
 								<option value="ALTA">ALTA</option>
 							</select>
 						</div>
 					</div>
-					<div class="forms-section-4">
-						<div class="input-div">
-							<label for="demand-description">Descrição</label>
+					<div
+						class="demand-details-form-section demand-details-form-section-description"
+					>
+						<div class="demand-details-field">
+							<label for="demand-details-description">Descrição</label>
 							<textarea
 								name="demand-description"
-								id="demand-description"
+								id="demand-details-description"
 							></textarea>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="aside-container">
-				<div class="demand-date-infos-container">
-					<div class="demand-tittle">
+			<div class="demand-details-sidebar">
+				<div class="demand-details-dates">
+					<div class="demand-details-section-heading">
 						<img src="../../../assets/icons/calendar_1.png" alt="Datas" />
 						Datas
 					</div>
@@ -154,44 +178,109 @@
 							/>18/09/2026 08:46</span
 						>
 					</p>
-					<p class="date-alert">
+					<p class="demand-details-sla-alert">
 						Faltal <span>23 horas</span> para a violação de SLA
 					</p>
 				</div>
-				<div class="demand-users-infos-container">
-					<div class="demand-tittle">
+				<div class="demand-details-users">
+					<div class="demand-details-section-heading">
 						<img src="../../../assets/icons/users.png" alt="Usuário" />
 						Usuários
 					</div>
 
-					<div class="soliciting-user-container">
+					<div class="demand-details-requester-section">
 						<p>Usuário solicitante</p>
-						<div class="soliciting-user">
+						<div class="demand-details-requester">
 							<img
 								src="../../../assets/images/user.png"
 								alt="Usuário solicitante"
 							/>
 							<div>
-								<p id="soliciting-user-name">Fulano da Silva</p>
-								<p id="soliciting-user-role">Líder de projeto</p>
+								<p id="demand-details-requester-name">Fulano da Silva</p>
+								<p id="demand-details-requester-role">Líder de projeto</p>
 							</div>
 						</div>
 					</div>
 
-					<div class="designed-user-container">
+					<div class="demand-details-assignee-section">
 						<p>Usuário designado</p>
-						<div class="designed-user">
-							<div class="designed-user-infos">
+						<div class="demand-details-assignee">
+							<div class="demand-details-assignee-info">
 								<img
 									src="../../../assets/images/user.png"
 									alt="Usuário designado"
 								/>
 								<div>
-									<p id="designed-user-name">Ciclano de souza</p>
-									<p id="designed-user-role">Membro de projeto</p>
+									<p id="demand-details-assignee-name">Ciclano de souza</p>
+									<p id="demand-details-assignee-role">Membro de projeto</p>
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<form action="">
+			<div class="demand-details-section-heading">
+				<img src="../../../assets/icons/history.png" alt="Usuário" />
+				Histórico e anotações
+			</div>
+
+			<div class="demand-details-comment-form">
+				<div class="demand-details-field">
+					<label for="demand-details-comment">Adicionar um comentário</label>
+					<textarea
+						name="demand-comment"
+						id="demand-details-comment"
+					></textarea>
+				</div>
+				<div class="demand-details-field demand-details-comment-submit">
+					<button id="demand-details-comment-button">Comentar</button>
+				</div>
+			</div>
+
+			<div class="demand-details-history">
+				<div
+					class="demand-details-history-entry demand-details-history-entry-system"
+				>
+					<div class="demand-details-section-heading">
+						<div class="demand-details-history-title">
+							<img src="../../../assets/icons/history.png" alt="Usuário" />
+							Histórico e anotações
+						</div>
+						<div class="demand-details-history-date">
+							<p><span>Alteração de status</span><span>16/09/2026</span></p>
+						</div>
+					</div>
+
+					<div>
+						<p>
+							<span>Ciclano de Souza</span> alterou <span>status</span> da
+							demanda de <span>ABERTA</span> para <span>EM ANDAMENTO</span>.
+						</p>
+						<p>Alteração: Status = Aberta → Em andamento</p>
+					</div>
+				</div>
+				<div
+					class="demand-details-history-entry demand-details-history-entry-comment"
+				>
+					<div class="demand-details-section-heading">
+						<div class="demand-details-history-title">
+							<img src="../../../assets/icons/history.png" alt="Usuário" />
+							Histórico e anotações
+						</div>
+						<div class="demand-details-history-date">
+							<p><span>Alteração de status</span><span>16/09/2026</span></p>
+						</div>
+					</div>
+
+					<div>
+						<p>Ciclano de Souza:</p>
+						<p>
+							Favor verificar a demanda. Não esquecer do prazo (SLA). Tratar com
+							o cliente. Qualquer dúvida, estou à disposição.
+						</p>
 					</div>
 				</div>
 			</div>
