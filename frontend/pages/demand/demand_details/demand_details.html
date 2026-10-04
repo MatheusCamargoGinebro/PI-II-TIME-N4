@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+	<!-- v Parte reutilizável abaixo v -->
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,80 +13,116 @@
 		<link rel="stylesheet" href="./demand_details.css" />
 	</head>
 	<body>
-		<div class="demand-details-header">
-			<div class="demand-details-navigation">
+		<div class="details-header">
+			<div class="details-navigation">
 				<a href="../../dashboard/dashboard.html">
 					<img src="../../../assets/images/logo.png" alt="TaskOps"
 				/></a>
 				<div>
-					<a href="../../dashboard/dashboard.html">Dashboard</a>
-					<a href="../../project/projects_list/projects_list.html">Projetos</a>
+					<a href="../../dashboard/dashboard.html" class="normal">Dashboard</a>
+					<a
+						href="../../project/projects_list/projects_list.html"
+						class="highlighted"
+						>Projetos</a
+					>
 				</div>
 			</div>
 
-			<div class="demand-details-user-profile" id="demand-details-profile">
+			<div class="details-user-profile" id="details-profile">
 				<img src="../../../assets/images/user.png" alt="Foto de perfil" />
-				<div class="demand-details-user-info">
-					<p class="demand-details-user-name">Fulano da Silva</p>
-					<p class="demand-details-user-email">fulano@email.com</p>
+				<div class="details-user-info">
+					<p class="details-user-name">Fulano da Silva</p>
+					<p class="details-user-email">fulano@email.com</p>
 				</div>
-				<button>
-					<img src="../../../assets//icons/chevron.png" alt="Opções" />
+				<button type="button" aria-label="Opções">
+					<span
+						class="details-user-profile-menu-icon"
+						aria-hidden="true"
+					></span>
 				</button>
 			</div>
 		</div>
 
-		<div class="demand-details-subheader">
-			<div class="demand-details-breadcrumb">
+		<div class="details-subheader">
+			<div class="details-breadcrumb">
 				<ul>
 					<li>
-						<a href="" class="demand-details-breadcrumb-link">Projetos</a>
+						<a
+							href="../../project/projects_list/projects_list.html"
+							class="details-breadcrumb-link"
+							>Projetos</a
+						>
 					</li>
 					<li>
-						<a href="" class="demand-details-breadcrumb-link"
+						<span class="details-breadcrumb-chevron" aria-hidden="true"></span>
+					</li>
+					<li>
+						<a
+							href="../../project/project_details/project_details.html"
+							class="details-breadcrumb-link"
 							>Projeto Inovador</a
 						>
 					</li>
 					<li>
-						<a href="" class="demand-details-breadcrumb-link">Demandas</a>
+						<span class="details-breadcrumb-chevron" aria-hidden="true"></span>
 					</li>
 					<li>
-						<a href="" class="demand-details-breadcrumb-link"
+						<a
+							href="../demands_list/demands_list.html"
+							class="details-breadcrumb-link"
+							>Demandas</a
+						>
+					</li>
+					<li>
+						<span class="details-breadcrumb-chevron" aria-hidden="true"></span>
+					</li>
+					<li>
+						<a href="#" class="details-breadcrumb-link"
 							><span>TAR00001</span></a
 						>
 					</li>
 				</ul>
 			</div>
-			<div class="demand-details-heading">
-				<h1>TAR00001</h1>
-				<div class="demand-details-actions">
-					<button id="demand-details-revert-button">
-						<img
-							src="../../../assets/icons/delete.png"
-							alt="reverter alterações"
-						/>
-						Reverter alterações
-					</button>
-					<button>
-						<img src="../../../assets/icons/save.png" alt="Salvar alterações" />
-						Salvar alterações
-					</button>
-				</div>
+			<div class="demand-details-actions">
+				<button
+					id="demand-details-revert-button"
+					class="demand-sleeping-action"
+				>
+					<span class="demand-details-revert" aria-hidden="true"></span>
+					Reverter alterações
+				</button>
+				<button id="demand-details-save" class="demand-acivate-action">
+					<span class="demand-details-save" aria-hidden="true"></span>
+					Salvar alterações
+				</button>
 			</div>
+			<!-- ^ Parte reutilizável acima ^ -->
 		</div>
 
+		<div class="details-heading">
+			<h1>TAR00001</h1>
+		</div>
 		<div class="demand-details-tabs">
-			<button id="demand-details-info-tab">Informações gerais</button>
-			<button id="demand-details-history-tab">Histórico e anotações</button>
+			<button
+				id="demand-details-info-tab"
+				class="demand-details-tab-button demand-details-selected-tab"
+			>
+				Informações gerais
+			</button>
+			<button id="demand-details-history-tab" class="demand-details-tab-button">
+				Histórico e anotações
+			</button>
 		</div>
 
-		<form action="">
+		<form action="" id="demand-details-forms">
 			<div class="demand-details-information">
 				<div class="demand-details-section-heading">
-					<img
-						src="../../../assets/icons/list_info.png"
-						alt="Informações da demanda"
-					/>
+					<div class="icon-case">
+						<span
+							class="details-list-icon demand-details-section-heading-icon"
+							aria-hidden="true"
+						></span>
+					</div>
 					<p>Informações da demanda <a href="#">TAR00001</a></p>
 				</div>
 
@@ -156,7 +193,12 @@
 			<div class="demand-details-sidebar">
 				<div class="demand-details-dates">
 					<div class="demand-details-section-heading">
-						<img src="../../../assets/icons/calendar_1.png" alt="Datas" />
+						<div class="icon-case">
+							<span
+								class="date-icon demand-details-section-heading-icon"
+								aria-hidden="true"
+							></span>
+						</div>
 						Datas
 					</div>
 
@@ -184,7 +226,12 @@
 				</div>
 				<div class="demand-details-users">
 					<div class="demand-details-section-heading">
-						<img src="../../../assets/icons/users.png" alt="Usuário" />
+						<div class="icon-case">
+							<span
+								class="users-icon demand-details-section-heading-icon"
+								aria-hidden="true"
+							></span>
+						</div>
 						Usuários
 					</div>
 
@@ -221,7 +268,7 @@
 			</div>
 		</form>
 
-		<form action="">
+		<form action="" id="demand-logs-forms">
 			<div class="demand-details-section-heading">
 				<img src="../../../assets/icons/history.png" alt="Usuário" />
 				Histórico e anotações
@@ -231,6 +278,7 @@
 				<div class="demand-details-field">
 					<label for="demand-details-comment">Adicionar um comentário</label>
 					<textarea
+						
 						name="demand-comment"
 						id="demand-details-comment"
 					></textarea>

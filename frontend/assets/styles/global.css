@@ -14,7 +14,7 @@
 
 html,
 body {
-	background-color: var(--color-neutral-100);
+	background-color: var(--color-neutral-200);
 	color: var(--color-neutral-900);
 	font-size: 16px;
 	line-height: 1.5;
@@ -28,12 +28,14 @@ a {
 }
 
 button,
-input {
+input,
+textarea {
 	background: none;
 	outline: none;
 	border: none;
 	cursor: pointer;
 	font: inherit;
+	scrollbar-width: none;
 }
 
 :root {
@@ -85,6 +87,7 @@ input {
 
 	--padding-global: 64px;
 
+	--size-xxxs: 1px;
 	--size-xxs: 2px;
 	--size-xs: 4px;
 	--size-sm: 8px;

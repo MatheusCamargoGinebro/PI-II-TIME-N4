@@ -1,1 +1,178 @@
+.demand-details-actions {
+	display: flex;
+	align-items: center;
+	gap: var(--size-xxl);
+}
 
+#demand-details-revert-button,
+#demand-details-save {
+	display: flex;
+	gap: var(--size-md);
+	font-weight: 700;
+}
+
+.demand-sleeping-action {
+	color: var(--color-neutral-500);
+}
+
+.demand-details-revert {
+	display: block;
+	width: var(--size-lg);
+	height: var(--size-lg);
+	background-color: var(--color-neutral-500);
+	-webkit-mask: url("../../../assets/icons/delete.png") center / contain
+		no-repeat;
+	mask: url("../../../assets/icons/delete.png") center / contain no-repeat;
+}
+
+.demand-details-save {
+	display: block;
+	width: var(--size-lg);
+	height: var(--size-lg);
+	background-color: var(--color-neutral-500);
+	-webkit-mask: url("../../../assets/icons/save.png") center / contain no-repeat;
+	mask: url("../../../assets/icons/save.png") center / contain no-repeat;
+
+	transition: 0.2s;
+}
+
+.demand-acivate-action {
+	background-color: var(--color-primary-500);
+	border-radius: var(--radius-md);
+	padding: var(--size-md) var(--size-lg);
+	color: var(--color-accent-100);
+
+	transition: 0.2s;
+}
+
+.demand-acivate-action:hover {
+	background-color: var(--color-primary-600);
+}
+
+.demand-acivate-action .demand-details-revert,
+.demand-acivate-action .demand-details-save {
+	background-color: var(--color-accent-100);
+}
+
+.demand-details-tabs {
+	display: flex;
+	gap: var(--size-lg);
+	padding: var(--size-lg) var(--size-xxl);
+}
+
+.demand-details-tab-button {
+	color: var(--color-neutral-700);
+
+	transition: 0.2s;
+}
+
+.demand-details-tab-button:hover {
+	color: var(--color-neutral-900);
+}
+
+.demand-details-selected-tab {
+	background-color: var(--color-neutral-100);
+	padding: var(--size-sm) var(--size-lg);
+	border-radius: var(--radius-lg);
+	color: var(--color-neutral-800);
+	font-weight: 700;
+}
+
+/* ------------------------ Forms 1 ------------------------ */
+
+#demand-details-forms {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-lg);
+	padding-inline: var(--size-xxl);
+}
+
+.demand-details-information {
+	padding: var(--size-lg);
+	background-color: var(--color-neutral-100);
+	border-radius: var(--radius-lg);
+	height: fit-content;
+}
+
+.demand-details-section-heading {
+	display: flex;
+	align-items: center;
+	gap: var(--size-md);
+	margin-bottom: var(--size-xxl);
+}
+
+.demand-details-section-heading p {
+	color: var(--color-neutral-800);
+}
+
+.demand-details-section-heading p > a {
+	color: var(--color-primary-500);
+	font-weight: 700;
+	text-decoration: underline;
+	text-decoration-color: var(--color-primary-500);
+}
+
+.demand-details-section-heading p > a:hover {
+	color: var(--color-primary-600);
+	text-decoration-color: var(--color-primary-600);
+}
+
+.icon-case {
+	background-color: var(--color-neutral-200);
+	padding: var(--size-sm);
+	border-radius: var(--radius-md);
+}
+
+.demand-details-section-heading-icon {
+	display: block;
+	width: var(--size-lg);
+	height: var(--size-lg);
+	background-color: var(--color-neutral-700);
+}
+
+.details-list-icon {
+	-webkit-mask: url("../../../assets/icons/list_info.png") center / contain
+		no-repeat;
+	mask: url("../../../assets/icons/list_info.png") center / contain no-repeat;
+}
+
+.date-icon {
+	-webkit-mask: url("../../../assets/icons/calendar_1.png") center / contain
+		no-repeat;
+	mask: url("../../../assets/icons/calendar_1.png") center / contain no-repeat;
+}
+
+.users-icon {
+	-webkit-mask: url("../../../assets/icons/users.png") center / contain
+		no-repeat;
+	mask: url("../../../assets/icons/users.png") center / contain no-repeat;
+}
+
+.demand-details-form-section {
+	margin: 20px;
+	display: flex;
+	gap: var(--size-lg);
+}
+
+.demand-details-field {
+	display: flex;
+	align-items: center;
+	gap: var(--size-md);
+}
+
+.demand-details-field label {
+	color: var(--color-neutral-700);
+}
+
+.demand-details-field input,
+.demand-details-field select,
+textarea {
+	background-color: var(--color-neutral-100);
+	border: solid var(--size-xxxs) var(--color-neutral-300);
+	border-radius: var(--radius-sm);
+	padding: var(--size-xs);
+}
+
+.demand-details-field textarea {
+	
+}
