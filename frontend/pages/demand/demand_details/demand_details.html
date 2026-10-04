@@ -24,7 +24,7 @@
 			</nav>
 
 			<div class="user-profile-container" id="profile-container">
-				<img src="" alt="Foto de perfil" />
+				<img src="../../../assets/images/user.png" alt="Foto de perfil" />
 				<div class="user-info">
 					<p class="user-profile-name">Fulano da Silva</p>
 					<p class="user-profile-email">fulano@email.com</p>
@@ -77,6 +77,122 @@
 						alt="Informações da demanda"
 					/>
 					<p>Informações da demanda <a href="#">TAR00001</a></p>
+				</div>
+
+				<div>
+					<div class="forms-section-1">
+						<div class="input-div">
+							<label for="demand-tittle">Titulo da demanda</label>
+							<input type="text" name="demand-tittle" id="demand-tittle" />
+							<p id="demand-tittle-error"></p>
+						</div>
+					</div>
+					<div class="forms-section-2">
+						<div class="input-div">
+							<label for="demand-type">Tipo de demanda</label>
+							<select name="demand-type" id="demand-type">
+								<option value="TAREFA">TAREFA</option>
+							</select>
+						</div>
+						<div class="input-div">
+							<label for="associated-project">Projeto associado</label>
+							<input
+								type="text"
+								name="associated-project"
+								id="associated-project"
+							/>
+							<p id="demand-tittle-error"></p>
+						</div>
+					</div>
+					<div class="forms-section-3">
+						<div class="input-div">
+							<label for="demand-priority">Prioridade</label>
+							<select name="demand-priority" id="demand-priority">
+								<option value="ALTA">ALTA</option>
+							</select>
+						</div>
+						<div class="input-div">
+							<label for="demand-status">Prioridade</label>
+							<select name="demand-status" id="demand-status">
+								<option value="ALTA">ALTA</option>
+							</select>
+						</div>
+					</div>
+					<div class="forms-section-4">
+						<div class="input-div">
+							<label for="demand-description">Descrição</label>
+							<textarea
+								name="demand-description"
+								id="demand-description"
+							></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="aside-container">
+				<div class="demand-date-infos-container">
+					<div class="demand-tittle">
+						<img src="../../../assets/icons/calendar_1.png" alt="Datas" />
+						Datas
+					</div>
+
+					<p>
+						Criado em:
+						<span
+							><img
+								src="../../../assets/icons/starting.png"
+								alt="Data de criação"
+							/>16/09/2026 08:46</span
+						>
+					</p>
+					<p>
+						Prazo:
+						<span
+							><img
+								src="../../../assets/icons/flag.png"
+								alt="Prazo"
+							/>18/09/2026 08:46</span
+						>
+					</p>
+					<p class="date-alert">
+						Faltal <span>23 horas</span> para a violação de SLA
+					</p>
+				</div>
+				<div class="demand-users-infos-container">
+					<div class="demand-tittle">
+						<img src="../../../assets/icons/users.png" alt="Usuário" />
+						Usuários
+					</div>
+
+					<div class="soliciting-user-container">
+						<p>Usuário solicitante</p>
+						<div class="soliciting-user">
+							<img
+								src="../../../assets/images/user.png"
+								alt="Usuário solicitante"
+							/>
+							<div>
+								<p id="soliciting-user-name">Fulano da Silva</p>
+								<p id="soliciting-user-role">Líder de projeto</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="designed-user-container">
+						<p>Usuário designado</p>
+						<div class="designed-user">
+							<div class="designed-user-infos">
+								<img
+									src="../../../assets/images/user.png"
+									alt="Usuário designado"
+								/>
+								<div>
+									<p id="designed-user-name">Ciclano de souza</p>
+									<p id="designed-user-role">Membro de projeto</p>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</form>
