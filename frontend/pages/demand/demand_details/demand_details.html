@@ -126,7 +126,7 @@
 					<p>Informações da demanda <a href="#">TAR00001</a></p>
 				</div>
 
-				<div>
+				<div class="demand-details-form-fields">
 					<div
 						class="demand-details-form-section demand-details-form-section-title"
 					>
@@ -150,6 +150,16 @@
 							</select>
 						</div>
 						<div class="demand-details-field">
+							<label for="demand-details-priority">Prioridade</label>
+							<select name="demand-priority" id="demand-details-priority">
+								<option value="ALTA">ALTA</option>
+							</select>
+						</div>
+					</div>
+					<div
+						class="demand-details-form-section demand-details-form-section-classification"
+					>
+						<div class="demand-details-field demand-details-field-project">
 							<label for="demand-details-associated-project"
 								>Projeto associado</label
 							>
@@ -160,20 +170,10 @@
 							/>
 							<p id="demand-details-associated-project-error"></p>
 						</div>
-					</div>
-					<div
-						class="demand-details-form-section demand-details-form-section-classification"
-					>
 						<div class="demand-details-field">
-							<label for="demand-details-priority">Prioridade</label>
-							<select name="demand-priority" id="demand-details-priority">
-								<option value="ALTA">ALTA</option>
-							</select>
-						</div>
-						<div class="demand-details-field">
-							<label for="demand-details-status">Prioridade</label>
+							<label for="demand-details-status">Status</label>
 							<select name="demand-status" id="demand-details-status">
-								<option value="ALTA">ALTA</option>
+								<option value="ABERTA">ABERTA</option>
 							</select>
 						</div>
 					</div>
@@ -199,29 +199,31 @@
 								aria-hidden="true"
 							></span>
 						</div>
-						Datas
+						<p>Datas</p>
 					</div>
 
 					<p>
 						Criado em:
-						<span
-							><img
-								src="../../../assets/icons/starting.png"
-								alt="Data de criação"
-							/>16/09/2026 08:46</span
+						<span>
+							<span
+								class="starting-icon demand-details-section-heading-icon"
+								aria-hidden="true"
+							></span>
+							16/09/2026 08:46</span
 						>
 					</p>
 					<p>
 						Prazo:
-						<span
-							><img
-								src="../../../assets/icons/flag.png"
-								alt="Prazo"
-							/>18/09/2026 08:46</span
+						<span>
+							<span
+								class="flag-icon demand-details-section-heading-icon"
+								aria-hidden="true"
+							></span
+							>18/09/2026 08:46</span
 						>
 					</p>
 					<p class="demand-details-sla-alert">
-						Faltal <span>23 horas</span> para a violação de SLA
+						Faltal <b>23 horas</b>para a violação de SLA
 					</p>
 				</div>
 				<div class="demand-details-users">
@@ -232,7 +234,7 @@
 								aria-hidden="true"
 							></span>
 						</div>
-						Usuários
+						<p>Usuários</p>
 					</div>
 
 					<div class="demand-details-requester-section">
@@ -262,6 +264,10 @@
 									<p id="demand-details-assignee-role">Membro de projeto</p>
 								</div>
 							</div>
+							<span
+								class="demand-details-assignee-chevron"
+								aria-hidden="true"
+							></span>
 						</div>
 					</div>
 				</div>
@@ -270,23 +276,29 @@
 
 		<form action="" id="demand-logs-forms">
 			<div class="demand-details-section-heading">
-				<img src="../../../assets/icons/history.png" alt="Usuário" />
-				Histórico e anotações
+				<div class="icon-case">
+					<span
+						class="demand-details-history-icon demand-details-history-main-icon"
+						aria-hidden="true"
+					></span>
+				</div>
+				<p>Histórico e anotações de demandas</p>
 			</div>
 
 			<div class="demand-details-comment-form">
-				<div class="demand-details-field">
-					<label for="demand-details-comment">Adicionar um comentário</label>
+				<div class="demand-details-comment-field">
+					<label for="demand-details-comment">Adicionar comentário</label>
 					<textarea
-						
 						name="demand-comment"
 						id="demand-details-comment"
 					></textarea>
 				</div>
-				<div class="demand-details-field demand-details-comment-submit">
+				<div class="demand-details-comment-submit">
 					<button id="demand-details-comment-button">Comentar</button>
 				</div>
 			</div>
+
+			<div class="demand-details-history-divider" aria-hidden="true"></div>
 
 			<div class="demand-details-history">
 				<div
@@ -294,20 +306,26 @@
 				>
 					<div class="demand-details-section-heading">
 						<div class="demand-details-history-title">
-							<img src="../../../assets/icons/history.png" alt="Usuário" />
-							Histórico e anotações
+							<span
+								class="demand-details-history-icon demand-details-system-icon"
+								aria-hidden="true"
+							></span>
+							<p>Sistema</p>
 						</div>
 						<div class="demand-details-history-date">
-							<p><span>Alteração de status</span><span>16/09/2026</span></p>
+							<p>Alteração de status - 16/09/2026 16:09:11</p>
 						</div>
 					</div>
 
-					<div>
+					<div class="demand-details-history-content">
 						<p>
-							<span>Ciclano de Souza</span> alterou <span>status</span> da
-							demanda de <span>ABERTA</span> para <span>EM ANDAMENTO</span>.
+							<strong>Ciclano de Souza</strong> alterou
+							<strong>status</strong> da demanda de <strong>Aberta</strong> para
+							<strong>Em andamento</strong>.
 						</p>
-						<p>Alteração: Status = Aberta → Em andamento</p>
+						<p class="demand-details-history-change">
+							Alteração: Status = Aberta → Em andamento
+						</p>
 					</div>
 				</div>
 				<div
@@ -315,19 +333,22 @@
 				>
 					<div class="demand-details-section-heading">
 						<div class="demand-details-history-title">
-							<img src="../../../assets/icons/history.png" alt="Usuário" />
-							Histórico e anotações
+							<span
+								class="demand-details-history-icon demand-details-comment-icon"
+								aria-hidden="true"
+							></span>
+							<p>Comentário</p>
 						</div>
 						<div class="demand-details-history-date">
-							<p><span>Alteração de status</span><span>16/09/2026</span></p>
+							<p>Comentário - 16/09/2026 15:03:11</p>
 						</div>
 					</div>
 
-					<div>
-						<p>Ciclano de Souza:</p>
-						<p>
+					<div class="demand-details-history-content">
+						<p class="demand-details-history-author">Ciclano de Souza:</p>
+						<p class="demand-details-history-comment">
 							Favor verificar a demanda. Não esquecer do prazo (SLA). Tratar com
-							o cliente. Qualquer dúvida, estou à disposição.
+							o cliente.
 						</p>
 					</div>
 				</div>
