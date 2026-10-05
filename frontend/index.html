@@ -1,7 +1,7 @@
 <!-- 
-	Arquivo de entrypoint, serve pra redirecionar o usuário baseado em seu token de autentificação.
+    Arquivo de entrypoint, serve pra redirecionar o usuário baseado em seu token de autentificação.
 
-	Autor principal: Matheus Camargo Ginebro
+    Autor principal do arquivo: Matheus Camargo Ginebro
 -->
 
 <!doctype html>
@@ -10,25 +10,63 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sistema de Projetos</title>
+
+		<link rel="stylesheet" href="./assets/styles/global.css" />
 	</head>
-	<body>
-		<!-- Navegação temporária (futuramente será substituído por lógica/script js) -->
+	<body id="app">
 		<nav>
 			<ul>
-				<li><a href="pages/dashboard/dashboard.html">Dashboard</a></li>
-				<li>
-					<a href="pages/demand/demands_list/demands_list.html">Demandas</a>
-				</li>
-				<li>
-					<a href="pages/project/projects_list/projects_list.html">Projetos</a>
-				</li>
-				<li><a href="pages/user/login/login.html">Login</a></li>
-				<li><a href="pages/user/register/register.html">Registrar</a></li>
+				<li><a href="./pages/dashboard/dashboard.html">Dashboard</a></li>
+				<ul>
+					<li>
+						<a href="./pages/demand/demand_details/demand_details.html"
+							>Demand details</a
+						>
+					</li>
+					<li>
+						<a href="./pages/demand/demands_list/demands_list.html"
+							>Demand list</a
+						>
+					</li>
+					<li>
+						<a href="./pages/demand/register_demand/register_demand.html"
+							>Register demand</a
+						>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="./pages/project/project_details/project_details.html"
+							>Project details</a
+						>
+					</li>
+					<li>
+						<a
+							href="./pages/project/project_member_details/project_member_details.html"
+							>Project member details</a
+						>
+					</li>
+					<li>
+						<a href="./pages/project/project_members/project_members.html"
+							>project members</a
+						>
+					</li>
+					<li>
+						<a href="./pages/project/projects_list/projects_list.html"
+							>Projects list</a
+						>
+					</li>
+				</ul>
+
+				<ul>
+					<li>
+						<a href="./pages/user/login/login.html">Login</a>
+					</li>
+					<li>
+						<a href="./pages/user/register/register.html">Register</a>
+					</li>
+				</ul>
 			</ul>
 		</nav>
-
-		<main>
-			<h1>It's aliveee</h1>
-		</main>
 	</body>
 </html>

@@ -1,18 +1,25 @@
+/* 
+    Arquivo de definição de states globais;
+
+    Autor principal: Matheus Camargo Ginebro;
+*/
+
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
 
 * {
-	font-family: "Space Grotesk", sans-serif;
-	display: block;
-	padding: 0;
 	margin: 0;
-	scroll-behavior: smooth;
+	padding: 0;
+	box-sizing: border-box;
 }
 
+html,
 body {
-	background-color: var(--color-neutral-100);
+	background-color: var(--color-neutral-200);
 	color: var(--color-neutral-900);
 	font-size: 16px;
 	line-height: 1.5;
+	font-family: "Space Grotesk", sans-serif;
+	scroll-behavior: smooth;
 }
 
 a {
@@ -21,27 +28,26 @@ a {
 }
 
 button,
-input {
+input,
+textarea {
 	background: none;
 	outline: none;
 	border: none;
-	cursor: pointer;
 	font: inherit;
+	scrollbar-width: none;
 }
 
 :root {
-	/* Brand */
-	--color-brand-primary-900: #000b0b;
-	--color-brand-primary-800: #002020;
-	--color-brand-primary-700: #004040;
-	--color-brand-primary-600: #005656;
-	--color-brand-primary-500: #006b6b;
-	--color-brand-primary-400: #338989;
-	--color-brand-primary-300: #66a6a6;
-	--color-brand-primary-200: #99c4c4;
-	--color-brand-primary-100: #cce1e1;
+	--color-primary-900: #000b0b;
+	--color-primary-800: #002020;
+	--color-primary-700: #004040;
+	--color-primary-600: #005656;
+	--color-primary-500: #006b6b;
+	--color-primary-400: #338989;
+	--color-primary-300: #66a6a6;
+	--color-primary-200: #99c4c4;
+	--color-primary-100: #cce1e1;
 
-	/* Accent */
 	--color-accent-100: #ccfbfb;
 	--color-accent-200: #99f7f7;
 	--color-accent-300: #66f3f4;
@@ -52,7 +58,6 @@ input {
 	--color-accent-800: #005e5e;
 	--color-accent-900: #002f2f;
 
-	/* Neutral */
 	--color-neutral-900: #19191a;
 	--color-neutral-800: #323233;
 	--color-neutral-700: #646466;
@@ -63,12 +68,10 @@ input {
 	--color-neutral-200: #e2e2e6;
 	--color-neutral-100: #fbfbff;
 
-	/* Containers */
 	--container-small: 768px;
 	--container-medium: 1024px;
 	--container-large: 1280px;
 
-	/* Max Widths */
 	--max-width-xxsmall: 320px;
 	--max-width-xsmall: 400px;
 	--max-width-small: 480px;
@@ -77,11 +80,27 @@ input {
 	--max-width-xlarge: 1024px;
 	--max-width-xxlarge: 1280px;
 
-	/* Section Padding */
 	--padding-section-small: 48px;
 	--padding-section-medium: 80px;
 	--padding-section-large: 112px;
 
-	/* Global Page Padding */
 	--padding-global: 64px;
+
+	--size-xxxs: 1px;
+	--size-xxs: 2px;
+	--size-xs: 4px;
+	--size-sm: 8px;
+	--size-md: 16px;
+	--size-lg: 24px;
+	--size-xl: 32px;
+	--size-xxl: 48px;
+	--size-xxxl: 64px;
+	--size-xxxxl: 128px;
+
+	--radius-xs: 2px;
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+	--radius-xl: 12px;
+	--radius-full: 100%;
 }
