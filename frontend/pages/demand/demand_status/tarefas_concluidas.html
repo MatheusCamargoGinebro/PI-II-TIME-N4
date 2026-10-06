@@ -1,778 +1,839 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskOps - Tarefas Concluídas</title>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
-
-        :root {
-            /* Brand */
-            --color-brand-primary-900: #000b0b;
-            --color-brand-primary-800: #002020;
-            --color-brand-primary-700: #004040;
-            --color-brand-primary-600: #005656;
-            --color-brand-primary-500: #006b6b;
-            --color-brand-primary-400: #338989;
-            --color-brand-primary-300: #66a6a6;
-            --color-brand-primary-200: #99c4c4;
-            --color-brand-primary-100: #cce1e1;
-
-            /* Accent */
-            --color-accent-100: #ccfbfb;
-            --color-accent-200: #99f7f7;
-            --color-accent-300: #66f3f4;
-            --color-accent-400: #33eff0;
-            --color-accent-500: #00ebec;
-            --color-accent-600: #00bcbd;
-            --color-accent-700: #008d8e;
-            --color-accent-800: #005e5e;
-            --color-accent-900: #002f2f;
-
-            /* Neutral */
-            --color-neutral-900: #19191a;
-            --color-neutral-800: #323233;
-            --color-neutral-700: #646466;
-            --color-neutral-600: #7e7e80;
-            --color-neutral-500: #979799;
-            --color-neutral-400: #b0b0b3;
-            --color-neutral-300: #c9c9cc;
-            --color-neutral-200: #e2e2e6;
-            --color-neutral-100: #fbfbff;
-
-            /* Additional design tokens for status */
-            --color-status-success: #22c55e;
-
-            /* Containers */
-            --container-small: 768px;
-            --container-medium: 1024px;
-            --container-large: 1280px;
-
-            /* Max Widths */
-            --max-width-xxsmall: 320px;
-            --max-width-xsmall: 400px;
-            --max-width-small: 480px;
-            --max-width-medium: 560px;
-            --max-width-large: 768px;
-            --max-width-xlarge: 1024px;
-            --max-width-xxlarge: 1280px;
-
-            /* Section Padding */
-            --padding-section-small: 48px;
-            --padding-section-medium: 80px;
-            --padding-section-large: 112px;
-
-            /* Global Page Padding */
-            --padding-global: 64px;
-        }
-
-        * {
-            font-family: "Space Grotesk", sans-serif;
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--color-neutral-200);
-            color: var(--color-neutral-900);
-            font-size: 15px;
-            line-height: 1.5;
-            padding: 24px;
-            min-height: 100vh;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        button, input {
-            background: none;
-            outline: none;
-            border: none;
-            cursor: pointer;
-            font: inherit;
-        }
-
-        /* Layout Container */
-        .page-container {
-            max-width: var(--container-large);
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        header {
-            background-color: var(--color-neutral-100);
-            padding: 12px 24px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            font-size: 20px;
-            color: var(--color-brand-primary-500);
-        }
-
-        .logo-icon {
-            color: var(--color-brand-primary-500);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo span {
-            color: var(--color-neutral-900);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-link {
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--color-neutral-700);
-            transition: all 0.2s ease;
-        }
-
-        .nav-link.active {
-            background-color: var(--color-brand-primary-500);
-            color: var(--color-neutral-100);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 12px;
-            transition: background 0.2s;
-        }
-
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-name {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--color-brand-primary-500);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .user-email {
-            font-size: 11px;
-            color: var(--color-neutral-600);
-        }
-
-        .breadcrumbs {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--color-neutral-600);
-            font-weight: 500;
-        }
-
-        .breadcrumbs a:hover {
-            text-decoration: underline;
-        }
-
-        .breadcrumbs .active {
-            color: var(--color-brand-primary-500);
-            font-weight: 600;
-        }
-
-        .page-header {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .page-title {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--color-brand-primary-500);
-            letter-spacing: -0.5px;
-        }
-
-        .page-subtitle {
-            font-size: 14px;
-            color: var(--color-neutral-600);
-        }
-
-        .page-subtitle strong {
-            color: var(--color-neutral-900);
-        }
-
-        .toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .filter-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            overflow-x: auto;
-        }
-
-        .filter-btn {
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--color-neutral-700);
-            transition: all 0.2s ease;
-        }
-
-        .filter-btn.active {
-            background-color: var(--color-neutral-100);
-            color: var(--color-neutral-900);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-        }
-
-        .search-box {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 12px;
-            color: var(--color-neutral-500);
-            pointer-events: none;
-            width: 16px;
-            height: 16px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 10px 14px 10px 36px;
-            background-color: var(--color-neutral-300);
-            border-radius: 12px;
-            font-size: 13px;
-            color: var(--color-neutral-900);
-            transition: all 0.2s ease;
-        }
-
-        .search-box input::placeholder {
-            color: var(--color-neutral-600);
-        }
-
-        .search-box input:focus {
-            background-color: var(--color-neutral-100);
-            box-shadow: 0 0 0 2px var(--color-brand-primary-400);
-        }
-
-        .table-card {
-            background-color: var(--color-neutral-100);
-            border-radius: 16px;
-            border: 1px solid var(--color-neutral-300);
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 13px;
-        }
-
-        thead {
-            background-color: var(--color-neutral-200);
-            border-b: 1px solid var(--color-neutral-300);
-        }
-
-        th {
-            padding: 14px 20px;
-            font-weight: 700;
-            color: var(--color-neutral-800);
-            font-size: 12px;
-            white-space: nowrap;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid var(--color-neutral-200);
-            transition: background 0.15s ease;
-        }
-
-        tbody tr:hover {
-            background-color: rgba(0, 0, 0, 0.015);
-        }
-
-        td {
-            padding: 14px 20px;
-            color: var(--color-neutral-800);
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-
-        .code-col {
-            font-weight: 700;
-            color: var(--color-brand-primary-500);
-        }
-
-        .title-col {
-            font-weight: 500;
-            color: var(--color-neutral-900);
-        }
-
-        /* Badge Status */
-        .badge-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            background-color: var(--color-status-success);
-            color: var(--color-neutral-100);
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .badge-status::before {
-            content: "";
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background-color: #ffffff;
-            border-radius: 50%;
-        }
-
-        /* Assignee Column */
-        .assignee-cell {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-        }
-
-        .assignee-cell img {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Date Column */
-        .date-cell {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--color-neutral-700);
-        }
-
-        .date-cell i {
-            width: 16px;
-            height: 16px;
-            color: var(--color-neutral-500);
-        }
-
-        /* Project Column */
-        .project-cell {
-            color: var(--color-neutral-700);
-        }
-
-        .table-footer {
-            padding: 16px 20px;
-            background-color: var(--color-neutral-100);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .footer-info {
-            font-size: 12px;
-            color: var(--color-neutral-600);
-        }
-
-        .footer-info strong {
-            color: var(--color-neutral-900);
-        }
-
-        .pagination {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .page-btn {
-            padding: 8px 18px;
-            border-radius: 10px;
-            background-color: var(--color-neutral-300);
-            color: var(--color-neutral-800);
-            font-size: 12px;
-            font-weight: 700;
-            transition: background 0.2s ease;
-        }
-
-        .page-btn:hover {
-            background-color: var(--color-neutral-400);
-        }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 768px) {
-            body {
-                padding: 16px;
-            }
-            .header-left {
-                gap: 16px;
-            }
-            .search-box {
-                max-width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="page-container">
-
-        <!-- Top Navigation Header -->
-        <header>
-            <div class="header-left">
-                <div class="logo">
-                    <i data-lucide="layers" class="logo-icon"></i>
-                    Task<span>Ops</span>
-                </div>
-                <nav class="nav-links">
-                    <a href="#" class="nav-link">Dashboard</a>
-                    <a href="#" class="nav-link active">Projetos</a>
-                </nav>
-            </div>
-
-            <div class="user-profile">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" 
-                     alt="Fulano da Silva" 
-                     class="user-avatar"
-                     onerror="this.src='https://placehold.co/100x100/005656/ffffff?text=FS'">
-                <div class="user-info">
-                    <span class="user-name">
-                        Fulano da S.
-                    </span>
-                    <span class="user-email">fulano@email.com</span>
-                </div>
-                <i data-lucide="chevron-down" style="width:16px; height:16px; color:var(--color-neutral-600);"></i>
-            </div>
-        </header>
-
-        <!-- Main Content Section -->
-        <main style="display: flex; flex-direction: column; gap: 20px;">
-            
-            <!-- Breadcrumbs Navigation -->
-            <div class="breadcrumbs">
-                <a href="#">Projetos</a>
-                <i data-lucide="chevron-right" style="width:12px; height:12px;"></i>
-                <a href="#">Projeto Inovador</a>
-                <i data-lucide="chevron-right" style="width:12px; height:12px;"></i>
-                <span class="active">Tarefas Concluídas</span>
-            </div>
-
-            <!-- Page Title Header -->
-            <div class="page-header">
-                <h1 class="page-title">Tarefas Concluídas</h1>
-                <p class="page-subtitle">
-                    Você possui <strong id="total-count">21</strong> demandas concluídas nesta etapa
-                </p>
-            </div>
-
-            <div class="toolbar">
-                <div class="filter-group">
-                    <button class="filter-btn active" onclick="filterByPriority('todas', this)">Todas</button>
-                    <button class="filter-btn" onclick="filterByPriority('alta', this)">Alta Prioridade</button>
-                    <button class="filter-btn" onclick="filterByPriority('media', this)">Média Prioridade</button>
-                    <button class="filter-btn" onclick="filterByPriority('baixa', this)">Baixa Prioridade</button>
-                </div>
-
-                <div class="search-box">
-                    <i data-lucide="search"></i>
-                    <input type="text" id="search-input" onkeyup="applyFilters()" placeholder="Buscar tarefas por título ou código...">
-                </div>
-            </div>
-
-            <div class="table-card">
-                <div class="table-wrapper">
-                    <table id="tasks-table">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Título da Tarefa</th>
-                                <th>Prioridade</th>
-                                <th>Responsável</th>
-                                <th>Data Limite</th>
-                                <th>Projeto</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body">
-                            <!-- Row 1 -->
-                            <tr class="task-row" data-priority="alta">
-                                <td class="code-col">TAR00201</td>
-                                <td class="title-col">Configuração inicial do servidor de produção</td>
-                                <td><span class="badge-status">Concluída</span></td>
-                                <td>
-                                    <div class="assignee-cell">
-                                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Fulano da Silva">
-                                        <span>Fulano da Silva</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="date-cell">
-                                        <i data-lucide="calendar"></i>
-                                        <span>10 Set 2026</span>
-                                    </div>
-                                </td>
-                                <td class="project-cell">Projeto Inovador</td>
-                            </tr>
-
-                            <!-- Row 2 -->
-                            <tr class="task-row" data-priority="alta">
-                                <td class="code-col">TAR00202</td>
-                                <td class="title-col">Implementação do sistema de autenticação 2FA</td>
-                                <td><span class="badge-status">Concluída</span></td>
-                                <td>
-                                    <div class="assignee-cell">
-                                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Sarah Chen">
-                                        <span>Sarah Chen</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="date-cell">
-                                        <i data-lucide="calendar"></i>
-                                        <span>12 Set 2026</span>
-                                    </div>
-                                </td>
-                                <td class="project-cell">Projeto Inovador</td>
-                            </tr>
-
-                            <!-- Row 3 -->
-                            <tr class="task-row" data-priority="media">
-                                <td class="code-col">TAR00203</td>
-                                <td class="title-col">Design do fluxo de onboarding</td>
-                                <td><span class="badge-status">Concluída</span></td>
-                                <td>
-                                    <div class="assignee-cell">
-                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="James Park">
-                                        <span>James Park</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="date-cell">
-                                        <i data-lucide="calendar"></i>
-                                        <span>15 Set 2026</span>
-                                    </div>
-                                </td>
-                                <td class="project-cell">Projeto Inovador</td>
-                            </tr>
-
-                            <!-- Row 4 -->
-                            <tr class="task-row" data-priority="alta">
-                                <td class="code-col">TAR00204</td>
-                                <td class="title-col">Criação dos endpoints REST da API</td>
-                                <td><span class="badge-status">Concluída</span></td>
-                                <td>
-                                    <div class="assignee-cell">
-                                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" alt="Lisa Anderson">
-                                        <span>Lisa Anderson</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="date-cell">
-                                        <i data-lucide="calendar"></i>
-                                        <span>16 Set 2026</span>
-                                    </div>
-                                </td>
-                                <td class="project-cell">Projeto Inovador</td>
-                            </tr>
-
-                            <!-- Row 5 -->
-                            <tr class="task-row" data-priority="media">
-                                <td class="code-col">TAR00205</td>
-                                <td class="title-col">Testes de integração do módulo financeiro</td>
-                                <td><span class="badge-status">Concluída</span></td>
-                                <td>
-                                    <div class="assignee-cell">
-                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" alt="Michael Torres">
-                                        <span>Michael Torres</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="date-cell">
-                                        <i data-lucide="calendar"></i>
-                                        <span>18 Set 2026</span>
-                                    </div>
-                                </td>
-                                <td class="project-cell">Projeto Inovador</td>
-                            </tr>
-
-                            <!-- Row 6 -->
-                            <tr class="task-row" data-priority="baixa">
-                                <td class="code-col">TAR00206</td>
-                                <td class="title-col">Documentação técnica da arquitetura</td>
-                                <td><span class="badge-status">Concluída</span></td>
-                                <td>
-                                    <div class="assignee-cell">
-                                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Fulano da Silva">
-                                        <span>Fulano da Silva</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="date-cell">
-                                        <i data-lucide="calendar"></i>
-                                        <span>19 Set 2026</span>
-                                    </div>
-                                </td>
-                                <td class="project-cell">Projeto Inovador</td>
-                            </tr>
-
-                            <!-- Row 7 -->
-                            <tr class="task-row" data-priority="alta">
-                                <td class="code-col">TAR00207</td>
-                                <td class="title-col">Setup do pipeline de CI/CD</td>
-                                <td><span class="badge-status">Concluída</span></td>
-                                <td>
-                                    <div class="assignee-cell">
-                                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Sarah Chen">
-                                        <span>Sarah Chen</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="date-cell">
-                                        <i data-lucide="calendar"></i>
-                                        <span>20 Set 2026</span>
-                                    </div>
-                                </td>
-                                <td class="project-cell">Projeto Inovador</td>
-                            </tr>
-
-                            <!-- Row 8 -->
-                            <tr class="task-row" data-priority="media">
-                                <td class="code-col">TAR00208</td>
-                                <td class="title-col">Migração do banco de dados legado</td>
-                                <td><span class="badge-status">Concluída</span></td>
-                                <td>
-                                    <div class="assignee-cell">
-                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="James Park">
-                                        <span>James Park</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="date-cell">
-                                        <i data-lucide="calendar"></i>
-                                        <span>22 Set 2026</span>
-                                    </div>
-                                </td>
-                                <td class="project-cell">Projeto Inovador</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Footer Pagination -->
-                <div class="table-footer">
-                    <p class="footer-info">
-                        Mostrando <strong id="visible-count">8</strong> de <strong>21</strong> tarefas concluídas
-                    </p>
-                    <div class="pagination">
-                        <button class="page-btn">Anterior</button>
-                        <button class="page-btn">Próximo</button>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
-    <script>
-        // Render Icons
-        lucide.createIcons();
-
-        let currentPriority = 'todas';
-
-        function filterByPriority(priority, element) {
-            currentPriority = priority;
-
-            // Highlight Active Button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            element.classList.add('active');
-
-            applyFilters();
-        }
-
-        function applyFilters() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const rows = document.querySelectorAll('.task-row');
-            let visibleCount = 0;
-
-            rows.forEach(row => {
-                const rowPriority = row.getAttribute('data-priority');
-                const rowText = row.innerText.toLowerCase();
-
-                const matchesPriority = (currentPriority === 'todas') || (rowPriority === currentPriority);
-                const matchesSearch = rowText.includes(query);
-
-                if (matchesPriority && matchesSearch) {
-                    row.style.display = '';
-                    visibleCount++;
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-
-            document.getElementById('visible-count').textContent = visibleCount;
-        }
-    </script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>TaskOps - Tarefas Concluídas</title>
+		<!-- Lucide Icons -->
+		<script src="https://unpkg.com/lucide@latest"></script>
+		<style>
+			@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+
+			:root {
+				/* Brand */
+				--color-brand-primary-900: #000b0b;
+				--color-brand-primary-800: #002020;
+				--color-brand-primary-700: #004040;
+				--color-brand-primary-600: #005656;
+				--color-brand-primary-500: #006b6b;
+				--color-brand-primary-400: #338989;
+				--color-brand-primary-300: #66a6a6;
+				--color-brand-primary-200: #99c4c4;
+				--color-brand-primary-100: #cce1e1;
+
+				/* Accent */
+				--color-accent-100: #ccfbfb;
+				--color-accent-200: #99f7f7;
+				--color-accent-300: #66f3f4;
+				--color-accent-400: #33eff0;
+				--color-accent-500: #00ebec;
+				--color-accent-600: #00bcbd;
+				--color-accent-700: #008d8e;
+				--color-accent-800: #005e5e;
+				--color-accent-900: #002f2f;
+
+				/* Neutral */
+				--color-neutral-900: #19191a;
+				--color-neutral-800: #323233;
+				--color-neutral-700: #646466;
+				--color-neutral-600: #7e7e80;
+				--color-neutral-500: #979799;
+				--color-neutral-400: #b0b0b3;
+				--color-neutral-300: #c9c9cc;
+				--color-neutral-200: #e2e2e6;
+				--color-neutral-100: #fbfbff;
+
+				/* Additional design tokens for status */
+				--color-status-success: #22c55e;
+
+				/* Containers */
+				--container-small: 768px;
+				--container-medium: 1024px;
+				--container-large: 1280px;
+
+				/* Max Widths */
+				--max-width-xxsmall: 320px;
+				--max-width-xsmall: 400px;
+				--max-width-small: 480px;
+				--max-width-medium: 560px;
+				--max-width-large: 768px;
+				--max-width-xlarge: 1024px;
+				--max-width-xxlarge: 1280px;
+
+				/* Section Padding */
+				--padding-section-small: 48px;
+				--padding-section-medium: 80px;
+				--padding-section-large: 112px;
+
+				/* Global Page Padding */
+				--padding-global: 64px;
+			}
+
+			* {
+				font-family: "Space Grotesk", sans-serif;
+				box-sizing: border-box;
+				padding: 0;
+				margin: 0;
+				scroll-behavior: smooth;
+			}
+
+			body {
+				background-color: var(--color-neutral-200);
+				color: var(--color-neutral-900);
+				font-size: 15px;
+				line-height: 1.5;
+				padding: 24px;
+				min-height: 100vh;
+			}
+
+			a {
+				text-decoration: none;
+				color: inherit;
+			}
+
+			button,
+			input {
+				background: none;
+				outline: none;
+				border: none;
+				cursor: pointer;
+				font: inherit;
+			}
+
+			/* Layout Container */
+			.page-container {
+				max-width: var(--container-large);
+				margin: 0 auto;
+				display: flex;
+				flex-direction: column;
+				gap: 24px;
+			}
+
+			header {
+				background-color: var(--color-neutral-100);
+				padding: 12px 24px;
+				border-radius: 16px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+				flex-wrap: wrap;
+				gap: 16px;
+			}
+
+			.header-left {
+				display: flex;
+				align-items: center;
+				gap: 32px;
+			}
+			.logo img {
+				width: 75px;
+			}
+
+			.logo {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-weight: 700;
+				font-size: 20px;
+				color: var(--color-brand-primary-500);
+			}
+
+			.logo-icon {
+				color: var(--color-brand-primary-500);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.logo span {
+				color: var(--color-neutral-900);
+			}
+
+			.nav-links {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+
+			.nav-link {
+				padding: 8px 16px;
+				border-radius: 10px;
+				font-weight: 600;
+				font-size: 14px;
+				color: var(--color-neutral-700);
+				transition: all 0.2s ease;
+			}
+
+			.nav-link.active {
+				background-color: var(--color-brand-primary-500);
+				color: var(--color-neutral-100);
+			}
+
+			.user-profile {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				cursor: pointer;
+				padding: 4px 8px;
+				border-radius: 12px;
+				transition: background 0.2s;
+			}
+
+			.user-avatar {
+				width: 36px;
+				height: 36px;
+				border-radius: 50%;
+				object-fit: cover;
+			}
+
+			.user-info {
+				display: flex;
+				flex-direction: column;
+			}
+
+			.user-name {
+				font-size: 14px;
+				font-weight: 700;
+				color: var(--color-brand-primary-500);
+				display: flex;
+				align-items: center;
+				gap: 4px;
+			}
+
+			.user-email {
+				font-size: 11px;
+				color: var(--color-neutral-600);
+			}
+
+			.breadcrumbs {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-size: 12px;
+				color: var(--color-neutral-600);
+				font-weight: 500;
+			}
+
+			.breadcrumbs a:hover {
+				text-decoration: underline;
+			}
+
+			.breadcrumbs .active {
+				color: var(--color-brand-primary-500);
+				font-weight: 600;
+			}
+
+			.page-header {
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+
+			.page-title {
+				font-size: 36px;
+				font-weight: 700;
+				color: var(--color-brand-primary-500);
+				letter-spacing: -0.5px;
+			}
+
+			.page-subtitle {
+				font-size: 14px;
+				color: var(--color-neutral-600);
+			}
+
+			.page-subtitle strong {
+				color: var(--color-neutral-900);
+			}
+
+			.toolbar {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 16px;
+				flex-wrap: wrap;
+			}
+
+			.filter-group {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				overflow-x: auto;
+			}
+
+			.filter-btn {
+				padding: 8px 16px;
+				border-radius: 12px;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--color-neutral-700);
+				transition: all 0.2s ease;
+			}
+
+			.filter-btn.active {
+				background-color: var(--color-neutral-100);
+				color: var(--color-neutral-900);
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+			}
+
+			.search-box {
+				position: relative;
+				width: 100%;
+				max-width: 320px;
+				display: flex;
+				align-items: center;
+			}
+
+			.search-box i {
+				position: absolute;
+				left: 12px;
+				color: var(--color-neutral-500);
+				pointer-events: none;
+				width: 16px;
+				height: 16px;
+			}
+
+			.search-box input {
+				width: 100%;
+				padding: 10px 14px 10px 36px;
+				background-color: var(--color-neutral-300);
+				border-radius: 12px;
+				font-size: 13px;
+				color: var(--color-neutral-900);
+				transition: all 0.2s ease;
+			}
+
+			.search-box input::placeholder {
+				color: var(--color-neutral-600);
+			}
+
+			.search-box input:focus {
+				background-color: var(--color-neutral-100);
+				box-shadow: 0 0 0 2px var(--color-brand-primary-400);
+			}
+
+			.table-card {
+				background-color: var(--color-neutral-100);
+				border-radius: 16px;
+				border: 1px solid var(--color-neutral-300);
+				overflow: hidden;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+			}
+
+			.table-wrapper {
+				overflow-x: auto;
+			}
+
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				text-align: left;
+				font-size: 13px;
+			}
+
+			thead {
+				background-color: var(--color-neutral-200);
+				border-b: 1px solid var(--color-neutral-300);
+			}
+
+			th {
+				padding: 14px 20px;
+				font-weight: 700;
+				color: var(--color-neutral-800);
+				font-size: 12px;
+				white-space: nowrap;
+			}
+
+			tbody tr {
+				border-bottom: 1px solid var(--color-neutral-200);
+				transition: background 0.15s ease;
+			}
+
+			tbody tr:hover {
+				background-color: rgba(0, 0, 0, 0.015);
+			}
+
+			td {
+				padding: 14px 20px;
+				color: var(--color-neutral-800);
+				vertical-align: middle;
+				white-space: nowrap;
+			}
+
+			.code-col {
+				font-weight: 700;
+				color: var(--color-brand-primary-500);
+			}
+
+			.title-col {
+				font-weight: 500;
+				color: var(--color-neutral-900);
+			}
+
+			/* Badge Status */
+			.badge-status {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				padding: 4px 10px;
+				background-color: var(--color-status-success);
+				color: var(--color-neutral-100);
+				border-radius: 8px;
+				font-size: 11px;
+				font-weight: 700;
+			}
+
+			.badge-status::before {
+				content: "";
+				display: inline-block;
+				width: 6px;
+				height: 6px;
+				background-color: #ffffff;
+				border-radius: 50%;
+			}
+
+			/* Assignee Column */
+			.assignee-cell {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-weight: 600;
+			}
+
+			.assignee-cell img {
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				object-fit: cover;
+			}
+
+			/* Date Column */
+			.date-cell {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				color: var(--color-neutral-700);
+			}
+
+			.date-cell i {
+				width: 16px;
+				height: 16px;
+				color: var(--color-neutral-500);
+			}
+
+			/* Project Column */
+			.project-cell {
+				color: var(--color-neutral-700);
+			}
+
+			.table-footer {
+				padding: 16px 20px;
+				background-color: var(--color-neutral-100);
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 16px;
+				flex-wrap: wrap;
+			}
+
+			.footer-info {
+				font-size: 12px;
+				color: var(--color-neutral-600);
+			}
+
+			.footer-info strong {
+				color: var(--color-neutral-900);
+			}
+
+			.pagination {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.page-btn {
+				padding: 8px 18px;
+				border-radius: 10px;
+				background-color: var(--color-neutral-300);
+				color: var(--color-neutral-800);
+				font-size: 12px;
+				font-weight: 700;
+				transition: background 0.2s ease;
+			}
+
+			.page-btn:hover {
+				background-color: var(--color-neutral-400);
+			}
+
+			/* Responsive Breakpoints */
+			@media (max-width: 768px) {
+				body {
+					padding: 16px;
+				}
+				.header-left {
+					gap: 16px;
+				}
+				.search-box {
+					max-width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="page-container">
+			<!-- Top Navigation Header -->
+			<header>
+				<div class="header-left">
+					<div class="logo">
+						<img src="../../../assets/images/logo.png" alt="TaskOps" />
+					</div>
+					<nav class="nav-links">
+						<a href="#" class="nav-link">Dashboard</a>
+						<a href="#" class="nav-link active">Projetos</a>
+					</nav>
+				</div>
+
+				<div class="user-profile">
+					<img
+						src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+						alt="Fulano da Silva"
+						class="user-avatar"
+						onerror="
+							this.src = 'https://placehold.co/100x100/005656/ffffff?text=FS'
+						"
+					/>
+					<div class="user-info">
+						<span class="user-name"> Fulano da S. </span>
+						<span class="user-email">fulano@email.com</span>
+					</div>
+					<i
+						data-lucide="chevron-down"
+						style="width: 16px; height: 16px; color: var(--color-neutral-600)"
+					></i>
+				</div>
+			</header>
+
+			<!-- Main Content Section -->
+			<main style="display: flex; flex-direction: column; gap: 20px">
+				<!-- Breadcrumbs Navigation -->
+				<div class="breadcrumbs">
+					<a href="#">Projetos</a>
+					<i data-lucide="chevron-right" style="width: 12px; height: 12px"></i>
+					<a href="#">Projeto Inovador</a>
+					<i data-lucide="chevron-right" style="width: 12px; height: 12px"></i>
+					<span class="active">Tarefas Concluídas</span>
+				</div>
+
+				<!-- Page Title Header -->
+				<div class="page-header">
+					<h1 class="page-title">Tarefas Concluídas</h1>
+					<p class="page-subtitle">
+						Você possui <strong id="total-count">21</strong> demandas concluídas
+						nesta etapa
+					</p>
+				</div>
+
+				<div class="toolbar">
+					<div class="filter-group">
+						<button
+							class="filter-btn active"
+							onclick="filterByPriority('todas', this)"
+						>
+							Todas
+						</button>
+						<button class="filter-btn" onclick="filterByPriority('alta', this)">
+							Alta Prioridade
+						</button>
+						<button
+							class="filter-btn"
+							onclick="filterByPriority('media', this)"
+						>
+							Média Prioridade
+						</button>
+						<button
+							class="filter-btn"
+							onclick="filterByPriority('baixa', this)"
+						>
+							Baixa Prioridade
+						</button>
+					</div>
+
+					<div class="search-box">
+						<i data-lucide="search"></i>
+						<input
+							type="text"
+							id="search-input"
+							onkeyup="applyFilters()"
+							placeholder="Buscar tarefas por título ou código..."
+						/>
+					</div>
+				</div>
+
+				<div class="table-card">
+					<div class="table-wrapper">
+						<table id="tasks-table">
+							<thead>
+								<tr>
+									<th>Código</th>
+									<th>Título da Tarefa</th>
+									<th>Prioridade</th>
+									<th>Responsável</th>
+									<th>Data Limite</th>
+									<th>Projeto</th>
+								</tr>
+							</thead>
+							<tbody id="table-body">
+								<!-- Row 1 -->
+								<tr class="task-row" data-priority="alta">
+									<td class="code-col">TAR00201</td>
+									<td class="title-col">
+										Configuração inicial do servidor de produção
+									</td>
+									<td><span class="badge-status">Concluída</span></td>
+									<td>
+										<div class="assignee-cell">
+											<img
+												src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+												alt="Fulano da Silva"
+											/>
+											<span>Fulano da Silva</span>
+										</div>
+									</td>
+									<td>
+										<div class="date-cell">
+											<i data-lucide="calendar"></i>
+											<span>10 Set 2026</span>
+										</div>
+									</td>
+									<td class="project-cell">Projeto Inovador</td>
+								</tr>
+
+								<!-- Row 2 -->
+								<tr class="task-row" data-priority="alta">
+									<td class="code-col">TAR00202</td>
+									<td class="title-col">
+										Implementação do sistema de autenticação 2FA
+									</td>
+									<td><span class="badge-status">Concluída</span></td>
+									<td>
+										<div class="assignee-cell">
+											<img
+												src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80"
+												alt="Sarah Chen"
+											/>
+											<span>Sarah Chen</span>
+										</div>
+									</td>
+									<td>
+										<div class="date-cell">
+											<i data-lucide="calendar"></i>
+											<span>12 Set 2026</span>
+										</div>
+									</td>
+									<td class="project-cell">Projeto Inovador</td>
+								</tr>
+
+								<!-- Row 3 -->
+								<tr class="task-row" data-priority="media">
+									<td class="code-col">TAR00203</td>
+									<td class="title-col">Design do fluxo de onboarding</td>
+									<td><span class="badge-status">Concluída</span></td>
+									<td>
+										<div class="assignee-cell">
+											<img
+												src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
+												alt="James Park"
+											/>
+											<span>James Park</span>
+										</div>
+									</td>
+									<td>
+										<div class="date-cell">
+											<i data-lucide="calendar"></i>
+											<span>15 Set 2026</span>
+										</div>
+									</td>
+									<td class="project-cell">Projeto Inovador</td>
+								</tr>
+
+								<!-- Row 4 -->
+								<tr class="task-row" data-priority="alta">
+									<td class="code-col">TAR00204</td>
+									<td class="title-col">Criação dos endpoints REST da API</td>
+									<td><span class="badge-status">Concluída</span></td>
+									<td>
+										<div class="assignee-cell">
+											<img
+												src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80"
+												alt="Lisa Anderson"
+											/>
+											<span>Lisa Anderson</span>
+										</div>
+									</td>
+									<td>
+										<div class="date-cell">
+											<i data-lucide="calendar"></i>
+											<span>16 Set 2026</span>
+										</div>
+									</td>
+									<td class="project-cell">Projeto Inovador</td>
+								</tr>
+
+								<!-- Row 5 -->
+								<tr class="task-row" data-priority="media">
+									<td class="code-col">TAR00205</td>
+									<td class="title-col">
+										Testes de integração do módulo financeiro
+									</td>
+									<td><span class="badge-status">Concluída</span></td>
+									<td>
+										<div class="assignee-cell">
+											<img
+												src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80"
+												alt="Michael Torres"
+											/>
+											<span>Michael Torres</span>
+										</div>
+									</td>
+									<td>
+										<div class="date-cell">
+											<i data-lucide="calendar"></i>
+											<span>18 Set 2026</span>
+										</div>
+									</td>
+									<td class="project-cell">Projeto Inovador</td>
+								</tr>
+
+								<!-- Row 6 -->
+								<tr class="task-row" data-priority="baixa">
+									<td class="code-col">TAR00206</td>
+									<td class="title-col">Documentação técnica da arquitetura</td>
+									<td><span class="badge-status">Concluída</span></td>
+									<td>
+										<div class="assignee-cell">
+											<img
+												src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+												alt="Fulano da Silva"
+											/>
+											<span>Fulano da Silva</span>
+										</div>
+									</td>
+									<td>
+										<div class="date-cell">
+											<i data-lucide="calendar"></i>
+											<span>19 Set 2026</span>
+										</div>
+									</td>
+									<td class="project-cell">Projeto Inovador</td>
+								</tr>
+
+								<!-- Row 7 -->
+								<tr class="task-row" data-priority="alta">
+									<td class="code-col">TAR00207</td>
+									<td class="title-col">Setup do pipeline de CI/CD</td>
+									<td><span class="badge-status">Concluída</span></td>
+									<td>
+										<div class="assignee-cell">
+											<img
+												src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80"
+												alt="Sarah Chen"
+											/>
+											<span>Sarah Chen</span>
+										</div>
+									</td>
+									<td>
+										<div class="date-cell">
+											<i data-lucide="calendar"></i>
+											<span>20 Set 2026</span>
+										</div>
+									</td>
+									<td class="project-cell">Projeto Inovador</td>
+								</tr>
+
+								<!-- Row 8 -->
+								<tr class="task-row" data-priority="media">
+									<td class="code-col">TAR00208</td>
+									<td class="title-col">Migração do banco de dados legado</td>
+									<td><span class="badge-status">Concluída</span></td>
+									<td>
+										<div class="assignee-cell">
+											<img
+												src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
+												alt="James Park"
+											/>
+											<span>James Park</span>
+										</div>
+									</td>
+									<td>
+										<div class="date-cell">
+											<i data-lucide="calendar"></i>
+											<span>22 Set 2026</span>
+										</div>
+									</td>
+									<td class="project-cell">Projeto Inovador</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<!-- Footer Pagination -->
+					<div class="table-footer">
+						<p class="footer-info">
+							Mostrando <strong id="visible-count">8</strong> de
+							<strong>21</strong> tarefas concluídas
+						</p>
+						<div class="pagination">
+							<button class="page-btn">Anterior</button>
+							<button class="page-btn">Próximo</button>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+
+		<script>
+			// Render Icons
+			lucide.createIcons();
+
+			let currentPriority = "todas";
+
+			function filterByPriority(priority, element) {
+				currentPriority = priority;
+
+				// Highlight Active Button
+				document.querySelectorAll(".filter-btn").forEach((btn) => {
+					btn.classList.remove("active");
+				});
+				element.classList.add("active");
+
+				applyFilters();
+			}
+
+			function applyFilters() {
+				const query = document
+					.getElementById("search-input")
+					.value.toLowerCase();
+				const rows = document.querySelectorAll(".task-row");
+				let visibleCount = 0;
+
+				rows.forEach((row) => {
+					const rowPriority = row.getAttribute("data-priority");
+					const rowText = row.innerText.toLowerCase();
+
+					const matchesPriority =
+						currentPriority === "todas" || rowPriority === currentPriority;
+					const matchesSearch = rowText.includes(query);
+
+					if (matchesPriority && matchesSearch) {
+						row.style.display = "";
+						visibleCount++;
+					} else {
+						row.style.display = "none";
+					}
+				});
+
+				document.getElementById("visible-count").textContent = visibleCount;
+			}
+		</script>
+	</body>
 </html>
