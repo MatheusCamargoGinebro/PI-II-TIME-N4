@@ -1,231 +1,267 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TaskOps - Dashboard</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>TaskOps - Dashboard</title>
 
-    <link rel="stylesheet" href="./dashboard.css" />
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-  </head>
+		<link rel="stylesheet" href="./dashboard.css" />
+		<!-- Lucide Icons -->
+		<script src="https://unpkg.com/lucide@latest"></script>
+	</head>
 
-  <body class="container">
-    <header class="header">
-      <nav class="nav">
-        <span class="nav-brand">TaskOps</span>
-        <ul class="nav-list">
-          <li><a href="#" class="btn btn-lg primary-btn">Dashboard</a></li>
-          <li><a href="#" class="btn btn-lg ghost-btn">Projetos</a></li>
-        </ul>
-      </nav>
-      <button type="button" class="btn btn-lg primary-btn">Criar Tarefa</button>
-    </header>
+	<body class="container">
+		<header class="header">
+			<nav class="nav">
+				<img src="../../assets/images/logo.png" alt="TaskOps" />
 
-    <main class="container">
-      <div class="dashboard-content">
-        <div class="dashboard-header">
-          <div>
-            <h2 class="text-primary">Seja Bem-vindo, Fulano.</h2>
-            <p class="text-subtitle text-small">
-              Acompanhe seus projetos, gerencie suas tarefas e fique produtivo.
-            </p>
-          </div>
-          <div class="dashboard-header-date">
-            <h4 class="text-primary">15h00</h4>
-            <p class="text-subtitle text-small">5 de setembro de 2026</p>
-          </div>
-        </div>
+				<ul class="nav-list">
+					<li><a href="#" class="btn btn-lg primary-btn">Dashboard</a></li>
+					<li><a href="#" class="btn btn-lg ghost-btn">Projetos</a></li>
+				</ul>
+			</nav>
+			<button type="button" class="btn btn-lg primary-btn">Criar Tarefa</button>
+		</header>
 
-        <div class="dashboard-grid">
-          <!-- Card 1 -->
-          <div class="base-card">
-            <div class="justify-center align-center between">
-              <div class="justify-center align-center gap-8">
-                <i class="card-icon" data-lucide="calendar"></i>
-                <p class="text-neutral font-inter text-regular">Total de Tarefas</p>
-              </div>
-              <i class="card-icon" data-lucide="arrow-up-right"></i>
-            </div>
-            <div>
-              <h1 class="text-primary">50</h1>
-            </div>
-            <div class="align-center gap-8">
-              <i class="icon-small" data-lucide="plus"></i>
-              <p class="text-subtitle  font-inter text-small">27 tarefas a mais que o mês passado.</p>
-            </div>
-          </div>
+		<main class="container">
+			<div class="dashboard-content">
+				<div class="dashboard-header">
+					<div>
+						<h2 class="text-primary">Seja Bem-vindo, Fulano.</h2>
+						<p class="text-subtitle text-small">
+							Acompanhe seus projetos, gerencie suas tarefas e fique produtivo.
+						</p>
+					</div>
+					<div class="dashboard-header-date">
+						<h4 class="text-primary">15h00</h4>
+						<p class="text-subtitle text-small">5 de setembro de 2026</p>
+					</div>
+				</div>
 
-          <!-- Card 2 -->
-          <div class="base-card">
-            <div class="justify-center align-center between">
-              <div class="justify-center align-center gap-8">
-                <i class="card-icon" data-lucide="loader-circle"></i>
-                <p class="text-neutral font-inter text-regular">Tarefas Abertas</p>
-              </div>
-              <i class="card-icon" data-lucide="arrow-up-right"></i>
-            </div>
-            <div>
-              <h1 class="text-primary">50</h1>
-            </div>
-            <div class="align-center gap-8">
-              <i class="icon-small" data-lucide="plus"></i>
-              <p class="text-subtitle  font-inter text-small">27 tarefas a mais que o mês passado.</p>
-            </div>
-          </div>
+				<div class="dashboard-grid">
+					<!-- Card 1 -->
+					<div class="base-card">
+						<div class="justify-center align-center between">
+							<div class="justify-center align-center gap-8">
+								<i class="card-icon" data-lucide="calendar"></i>
+								<p class="text-neutral font-inter text-regular">
+									Total de Tarefas
+								</p>
+							</div>
+							<i class="card-icon" data-lucide="arrow-up-right"></i>
+						</div>
+						<div>
+							<h1 class="text-primary">50</h1>
+						</div>
+						<div class="align-center gap-8">
+							<i class="icon-small" data-lucide="plus"></i>
+							<p class="text-subtitle font-inter text-small">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
 
-          <!-- Card 3 -->
-          <div class="base-card">
-            <div class="justify-center align-center between">
-              <div class="justify-center align-center gap-8">
-                <i class="card-icon" data-lucide="circle-alert"></i>
-                <p class="text-neutral font-inter text-regular">Tarefas Pendentes</p>
-              </div>
-              <i class="card-icon" data-lucide="arrow-up-right"></i>
-            </div>
-            <div>
-              <h1 class="text-primary">50</h1>
-            </div>
-            <div class="align-center gap-8">
-              <i class="icon-small" data-lucide="plus"></i>
-              <p class="text-subtitle  font-inter text-small">27 tarefas a mais que o mês passado.</p>
-            </div>
-          </div>
+					<!-- Card 2 -->
+					<div class="base-card">
+						<div class="justify-center align-center between">
+							<div class="justify-center align-center gap-8">
+								<i class="card-icon" data-lucide="loader-circle"></i>
+								<p class="text-neutral font-inter text-regular">
+									Tarefas Abertas
+								</p>
+							</div>
+							<i class="card-icon" data-lucide="arrow-up-right"></i>
+						</div>
+						<div>
+							<h1 class="text-primary">50</h1>
+						</div>
+						<div class="align-center gap-8">
+							<i class="icon-small" data-lucide="plus"></i>
+							<p class="text-subtitle font-inter text-small">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
 
-          <!-- Card 4: Agenda (ocupa 2 linhas) -->
-          <div class="base-card dashboard-card-agenda">
-            <div class="justify-center align-center between">
-              <div class="justify-center align-center gap-8">
-                <i class="card-icon" data-lucide="calendar"></i>
-                <p class="text-neutral font-inter text-regular">Agenda</p>
-              </div>
-              <i class="card-icon" data-lucide="arrow-up-right"></i>
-            </div>
-            <div class="dashboard-card-agenda-content">
-              <p class="text-neutral text-small">Hoje</p>
-              <ul class="dashboard-card-agenda-list">
-                <li class="dashboard-card-agenda-item">
-                  <div class="align-center gap-8">
-                    <i class="icon-small dashboard-card-agenda-item-icon" data-lucide="clock"></i>
-                    <div>
-                      <p class="text-neutral font-inter text-regular">Reunião com o time</p>
-                      <div class="align-center">
-                        <p class="text-subtitle text-small">Quinta</p>
-                        <i class="text-subititle" data-lucide="dot"></i>
-                        <p class="text-subtitle text-small">14h00 pm</p>
-                      </div>
-                    </div>
-                  </div>
-                  <i class="icon-small" data-lucide="ellipsis-vertical"></i>
-                </li>
-              </ul>
-            </div>
-          </div>
+					<!-- Card 3 -->
+					<div class="base-card">
+						<div class="justify-center align-center between">
+							<div class="justify-center align-center gap-8">
+								<i class="card-icon" data-lucide="circle-alert"></i>
+								<p class="text-neutral font-inter text-regular">
+									Tarefas Pendentes
+								</p>
+							</div>
+							<i class="card-icon" data-lucide="arrow-up-right"></i>
+						</div>
+						<div>
+							<h1 class="text-primary">50</h1>
+						</div>
+						<div class="align-center gap-8">
+							<i class="icon-small" data-lucide="plus"></i>
+							<p class="text-subtitle font-inter text-small">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
 
-          <!-- Card 5 -->
-          <div class="base-card">
-            <div class="justify-center align-center between">
-              <div class="justify-center align-center gap-8">
-                <i class="card-icon" data-lucide="loader-circle"></i>
-                <p class="text-neutral font-inter text-regular">Tarefas em revisão</p>
-              </div>
-              <i class="card-icon" data-lucide="arrow-up-right"></i>
-            </div>
-            <div>
-              <h1 class="text-primary">50</h1>
-            </div>
-            <div class="align-center gap-8">
-              <i class="icon-small" data-lucide="plus"></i>
-              <p class="text-subtitle  font-inter text-small">27 tarefas a mais que o mês passado.</p>
-            </div>
-          </div>
+					<!-- Card 4: Agenda (ocupa 2 linhas) -->
+					<div class="base-card dashboard-card-agenda">
+						<div class="justify-center align-center between">
+							<div class="justify-center align-center gap-8">
+								<i class="card-icon" data-lucide="calendar"></i>
+								<p class="text-neutral font-inter text-regular">Agenda</p>
+							</div>
+							<i class="card-icon" data-lucide="arrow-up-right"></i>
+						</div>
+						<div class="dashboard-card-agenda-content">
+							<p class="text-neutral text-small">Hoje</p>
+							<ul class="dashboard-card-agenda-list">
+								<li class="dashboard-card-agenda-item">
+									<div class="align-center gap-8">
+										<i
+											class="icon-small dashboard-card-agenda-item-icon"
+											data-lucide="clock"
+										></i>
+										<div>
+											<p class="text-neutral font-inter text-regular">
+												Reunião com o time
+											</p>
+											<div class="align-center">
+												<p class="text-subtitle text-small">Quinta</p>
+												<i class="text-subititle" data-lucide="dot"></i>
+												<p class="text-subtitle text-small">14h00 pm</p>
+											</div>
+										</div>
+									</div>
+									<i class="icon-small" data-lucide="ellipsis-vertical"></i>
+								</li>
+							</ul>
+						</div>
+					</div>
 
-          <!-- Card 6 -->
-          <div class="base-card">
-            <div class="justify-center align-center between">
-              <div class="justify-center align-center gap-8">
-                <i class="card-icon" data-lucide="circle-x"></i>
-                <p class="text-neutral font-inter text-regular">Tarefas Canceladas</p>
-              </div>
-              <i class="card-icon" data-lucide="arrow-up-right"></i>
-            </div>
-            <div>
-              <h1 class="text-primary">50</h1>
-            </div>
-            <div class="align-center gap-8">
-              <i class="icon-small" data-lucide="plus"></i>
-              <p class="text-subtitle  font-inter text-small">27 tarefas a mais que o mês passado.</p>
-            </div>
-          </div>
+					<!-- Card 5 -->
+					<div class="base-card">
+						<div class="justify-center align-center between">
+							<div class="justify-center align-center gap-8">
+								<i class="card-icon" data-lucide="loader-circle"></i>
+								<p class="text-neutral font-inter text-regular">
+									Tarefas em revisão
+								</p>
+							</div>
+							<i class="card-icon" data-lucide="arrow-up-right"></i>
+						</div>
+						<div>
+							<h1 class="text-primary">50</h1>
+						</div>
+						<div class="align-center gap-8">
+							<i class="icon-small" data-lucide="plus"></i>
+							<p class="text-subtitle font-inter text-small">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
 
-          <!-- Card 7 -->
-          <div class="base-card">
-            <div class="justify-center align-center between">
-              <div class="justify-center align-center gap-8">
-                <i class="card-icon" data-lucide="calendar"></i>
-                <p class="text-neutral font-inter text-regular">Tarefas Abertas</p>
-              </div>
-              <i class="card-icon" data-lucide="arrow-up-right"></i>
-            </div>
-            <div>
-              <h1 class="text-primary">50</h1>
-            </div>
-            <div class="align-center gap-8">
-              <i class="icon-small" data-lucide="plus"></i>
-              <p class="text-subtitle  font-inter text-small">27 tarefas a mais que o mês passado.</p>
-            </div>
-          </div>
+					<!-- Card 6 -->
+					<div class="base-card">
+						<div class="justify-center align-center between">
+							<div class="justify-center align-center gap-8">
+								<i class="card-icon" data-lucide="circle-x"></i>
+								<p class="text-neutral font-inter text-regular">
+									Tarefas Canceladas
+								</p>
+							</div>
+							<i class="card-icon" data-lucide="arrow-up-right"></i>
+						</div>
+						<div>
+							<h1 class="text-primary">50</h1>
+						</div>
+						<div class="align-center gap-8">
+							<i class="icon-small" data-lucide="plus"></i>
+							<p class="text-subtitle font-inter text-small">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
 
-          <!-- Card 8: Tasks (ocupa 3 colunas e 2 linhas) -->
-          <div class="base-card dashboard-card-tasks">
-            <div class="justify-center align-center between">
-              <div class="justify-center align-center gap-8">
-                <i class="card-icon" data-lucide="chart-no-axes-combined"></i>
-                <p class="text-neutral font-inter text-regular">Lista de Tarefas</p>
-              </div>
-              <i class="card-icon" data-lucide="arrow-up-right"></i>
-            </div>
-            <div>
-              <ul class="tab-bar">
-                <li class="tab tab-active">Ver Todos</li>
-                <li class="tab">Ordem de Prioridade</li>
-                <li class="tab">Prazo mais Próximo</li>
-              </ul>
-            </div>
-          </div>
+					<!-- Card 7 -->
+					<div class="base-card">
+						<div class="justify-center align-center between">
+							<div class="justify-center align-center gap-8">
+								<i class="card-icon" data-lucide="calendar"></i>
+								<p class="text-neutral font-inter text-regular">
+									Tarefas Abertas
+								</p>
+							</div>
+							<i class="card-icon" data-lucide="arrow-up-right"></i>
+						</div>
+						<div>
+							<h1 class="text-primary">50</h1>
+						</div>
+						<div class="align-center gap-8">
+							<i class="icon-small" data-lucide="plus"></i>
+							<p class="text-subtitle font-inter text-small">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
 
-          <!-- Card 9: Inbox (ocupa 1 coluna e 2 linhas) -->
-          <div class="base-card dashboard-card-inbox">
-            <div class="justify-center align-center between">
-              <div class="justify-center align-center gap-8">
-                <i class="card-icon" data-lucide="inbox"></i>
-                <p class="text-neutral font-inter text-regular">Caixa de Entrada</p>
-              </div>
-              <i class="card-icon" data-lucide="arrow-up-right"></i>
-            </div>
-            <ul class="dashboard-card-inbox-list">
-              <li class="dashboard-card-inbox-item">
-                <div class="align-center gap-8">
-                  <div>
-                    <p class="text-neutral font-inter text-regular">Matheus entregou uma Atividade</p>
-                    <div class="align-center">
-                      <p class="text-subtitle text-small">Projeto Inovador</p>
-                      <i class="text-subititle" data-lucide="dot"></i>
-                      <p class="text-subtitle text-small">14h00 pm</p>
-                    </div>
-                  </div>
-                </div>
-                <i class="icon-small" data-lucide="ellipsis-vertical"></i>
-              </li>
-            </ul>
-          </div>
+					<!-- Card 8: Tasks (ocupa 3 colunas e 2 linhas) -->
+					<div class="base-card dashboard-card-tasks">
+						<div class="justify-center align-center between">
+							<div class="justify-center align-center gap-8">
+								<i class="card-icon" data-lucide="chart-no-axes-combined"></i>
+								<p class="text-neutral font-inter text-regular">
+									Lista de Tarefas
+								</p>
+							</div>
+							<i class="card-icon" data-lucide="arrow-up-right"></i>
+						</div>
+						<div>
+							<ul class="tab-bar">
+								<li class="tab tab-active">Ver Todos</li>
+								<li class="tab">Ordem de Prioridade</li>
+								<li class="tab">Prazo mais Próximo</li>
+							</ul>
+						</div>
+					</div>
 
-        </div> <!-- Fechamento correto do .dashboard-grid -->
-      </div>
-    </main>
+					<!-- Card 9: Inbox (ocupa 1 coluna e 2 linhas) -->
+					<div class="base-card dashboard-card-inbox">
+						<div class="justify-center align-center between">
+							<div class="justify-center align-center gap-8">
+								<i class="card-icon" data-lucide="inbox"></i>
+								<p class="text-neutral font-inter text-regular">
+									Caixa de Entrada
+								</p>
+							</div>
+							<i class="card-icon" data-lucide="arrow-up-right"></i>
+						</div>
+						<ul class="dashboard-card-inbox-list">
+							<li class="dashboard-card-inbox-item">
+								<div class="align-center gap-8">
+									<div>
+										<p class="text-neutral font-inter text-regular">
+											Matheus entregou uma Atividade
+										</p>
+										<div class="align-center">
+											<p class="text-subtitle text-small">Projeto Inovador</p>
+											<i class="text-subititle" data-lucide="dot"></i>
+											<p class="text-subtitle text-small">14h00 pm</p>
+										</div>
+									</div>
+								</div>
+								<i class="icon-small" data-lucide="ellipsis-vertical"></i>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- Fechamento correto do .dashboard-grid -->
+			</div>
+		</main>
 
-    <script>
-      lucide.createIcons();
-    </script>
-  </body>
+		<script>
+			lucide.createIcons();
+		</script>
+	</body>
 </html>
