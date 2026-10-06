@@ -17,6 +17,7 @@
 
 
 
+
 * {
 	font-family: "Space Grotesk", sans-serif;
 	margin: 0;
@@ -73,8 +74,6 @@ textarea {
 	display: flex;
 	justify-content: space-between;
 }
-
-
 
 .around{
 	display: flex;
