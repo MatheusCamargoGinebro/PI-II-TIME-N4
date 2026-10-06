@@ -63,7 +63,7 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #0b6b63;
+  border-color: #006b6b;
 }
 
 button {
@@ -77,20 +77,20 @@ button {
 }
 
 button:hover {
-  background: #095650;
+  background: #006b6b;
 }
 
 .link {
   margin-top: 16px;
   font-size: 12px;
   text-align: center;
-  color: #0b6b63;
+  color: #006b6b;
 }
 
 .voltar {
   font-size: 20px;
   text-decoration: none;
-  color: #0b6b63;
+  color: #006b6b;
   margin-bottom: 12px;
 }
 
