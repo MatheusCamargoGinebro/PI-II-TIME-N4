@@ -1,1 +1,90 @@
+@import url(../../assets/styles/global.css);
 
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.dashboard-content {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 38px;
+}
+
+.dashboard-header-date {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto; /* Permite que o Grid ajuste as linhas automaticamente conforme o contéudo */
+    gap: 8px;
+}
+
+.dashboard-card-agenda {
+    grid-row: span 2;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-card-tasks {
+    grid-column: span 3;
+    grid-row: span 2;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-card-inbox {
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column; 
+    gap: 16px;
+}
+
+/* Restante dos estilos mantidos */
+.dashboard-card-agenda-list,
+.dashboard-card-inbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dashboard-card-agenda-item,
+.dashboard-card-inbox-item {
+    display: flex;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: var(--color-neutral-200);
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.dashboard-card-agenda-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dashboard-card-agenda-item-icon {
+    max-width: 32px;
+    max-height: 32px;
+    padding: 4px;
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.dashboard-card-agenda-item:hover,
+.dashboard-card-inbox-item:hover {
+    cursor: pointer;
+    color: var(--color-brand-neutral-600);
+    background-color: var(--color-neutral-300);
+}

@@ -1,0 +1,29 @@
+.tab{
+    display: flex;
+    gap: 8px;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    color: var(--color-neutral-700);
+    background-color: var(--color-neutral-100);
+    text-decoration: none;
+    text-size: var(--text-regular);
+}
+
+.tab-bar{
+    display: flex;
+    gap: 8px;
+}
+
+.tab-active{
+    background-color: var(--color-neutral-200);
+   
+}
+
+.tab:hover{
+    cursor: pointer;
+    background-color: var(--color-neutral-100);
+
+}
+

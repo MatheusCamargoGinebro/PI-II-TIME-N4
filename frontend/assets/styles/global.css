@@ -1,4 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import url(./components/buttons.css);
+@import url(./components/nav.css);
+@import url(./components/heading.css);
+@import url(./typography.css);
+@import url(./components/card.css);
+@import url(./components/icons.css);
+@import url(./components/tabs.css);
+
+
 
 * {
 	font-family: "Space Grotesk", sans-serif;
@@ -6,10 +17,12 @@
 	padding: 0;
 	margin: 0;
 	scroll-behavior: smooth;
+
 }
 
+
 body {
-	background-color: var(--color-neutral-100);
+	background-color: var(--color-neutral-200);
 	color: var(--color-neutral-900);
 	font-size: 16px;
 	line-height: 1.5;
@@ -27,6 +40,45 @@ input {
 	border: none;
 	cursor: pointer;
 	font: inherit;
+}
+
+.justify-center{
+	display: flex;
+	justify-content: center;
+}
+.align-center{
+	display: flex;
+	align-items: center;
+}
+
+.center{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.between{
+	display: flex;
+	justify-content: space-between;
+}
+
+
+
+.around{
+	display: flex;
+	justify-content: space-around;
+}
+
+.gap-8{
+	gap: 8px;
+}
+.gap-16{
+	gap: 16px;
+}
+
+.container {
+	
+	padding: 0 var(--padding-global);
 }
 
 :root {
@@ -83,5 +135,26 @@ input {
 	--padding-section-large: 112px;
 
 	/* Global Page Padding */
-	--padding-global: 64px;
+	--padding-global: 48px;
+
+	/* Text sizing */
+
+	--text-large:20px;
+	--text-medium:18px;
+	--text-regular:16px;
+	--text-small:14px;
+	--text-tiny:12px;
+	--text-line-height:150%;
+
+	/* Heading sizing */
+
+	--h1:56px;
+	--h2:48px;
+	--h3:40x;
+	--h4:32px;
+	--h5:24px;
+	--h6:20px;
+	--tagline:16px;
+	--heading-line-height:150%;
 }
+

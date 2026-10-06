@@ -1,0 +1,24 @@
+.base-card{
+    padding: 16px;
+    gap: 8px;
+    background-color: var(--color-neutral-100);
+    border-radius: 8px;
+    
+}
+
+.card-icon{
+    max-width:32px;
+    max-height:32px;
+    padding: 4px;
+    color: var(--neutral-700);
+    background-color: var(--color-neutral-200);
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.card-icon:hover{
+    cursor: pointer;
+    color: var(--color-brand-neutral-200);
+    background-color: var(--color-neutral-300);
+}
