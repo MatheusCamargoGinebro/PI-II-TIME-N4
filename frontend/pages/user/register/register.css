@@ -34,15 +34,17 @@
 }
 
 h1 {
-  font-size: 32px;
+  font-size: 56px;
   color: #006b6b;   /* troque pelo verde exato do Figma */
   margin-bottom: 4px;
+  font-family: 'Space Grotesk';
 }
 
 .subtitulo {
-  font-size: 14px;
+  font-size: 20px;
   margin-bottom: 24px;
   color: #646466;
+  font-family: 'Inter';
 }
 
 label {
