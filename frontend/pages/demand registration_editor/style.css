@@ -1,0 +1,713 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+
+
+/* reset */
+
+* {
+    font-family: "Space Grotesk", sans-serif;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
+script {
+    display: none !important;
+}
+
+body {
+    background-color: #dedee2;
+    color: var(--color-neutral-900);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+}
+
+
+/* cores e medidas */
+
+:root {
+    /* Brand */
+    --color-brand-primary-900: #000b0b;
+    --color-brand-primary-800: #002020;
+    --color-brand-primary-700: #004040;
+    --color-brand-primary-600: #005656;
+    --color-brand-primary-500: #006b6b;
+    --color-brand-primary-400: #338989;
+    --color-brand-primary-300: #66a6a6;
+    --color-brand-primary-200: #99c4c4;
+    --color-brand-primary-100: #cce1e1;
+
+    /* Accent */
+    --color-accent-100: #ccfbfb;
+    --color-accent-200: #99f7f7;
+    --color-accent-300: #66f3f4;
+    --color-accent-400: #33eff0;
+    --color-accent-500: #00ebec;
+    --color-accent-600: #00bcbd;
+    --color-accent-700: #008d8e;
+    --color-accent-800: #005e5e;
+    --color-accent-900: #002f2f;
+
+    /* Neutral */
+    --color-neutral-900: #19191a;
+    --color-neutral-800: #323233;
+    --color-neutral-700: #646466;
+    --color-neutral-600: #7e7e80;
+    --color-neutral-500: #979799;
+    --color-neutral-400: #b0b0b3;
+    --color-neutral-300: #c9c9cc;
+    --color-neutral-200: #e2e2e6;
+    --color-neutral-100: #fbfbff;
+
+    /* Containers */
+    --container-small: 768px;
+    --container-medium: 1024px;
+    --container-large: 1280px;
+
+    /* Max Widths */
+    --max-width-xxsmall: 320px;
+    --max-width-xsmall: 400px;
+    --max-width-small: 480px;
+    --max-width-medium: 560px;
+    --max-width-large: 768px;
+    --max-width-xlarge: 1024px;
+    --max-width-xxlarge: 1280px;
+
+    /* Section Padding */
+    --padding-section-small: 48px;
+    --padding-section-medium: 80px;
+    --padding-section-large: 112px;
+
+    /* Global Page Padding */
+    --padding-global: 64px;
+}
+
+
+/* barra superior */
+
+.topbar {
+    width: 100%;
+    height: 140px;
+
+    background-color: #dedee2;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 48px;
+}
+
+
+/* menu */
+
+.navbar {
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+
+    background-color: #ffffff;
+
+    border-radius: 9px;
+
+    padding: 0 9px;
+    gap: 8px;
+}
+
+.brand {
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 14px 0 12px;
+
+    color: var(--color-brand-primary-500);
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.brand-icon {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.nav-link {
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 20px;
+
+    border-radius: 4px;
+
+    color: var(--color-neutral-700);
+
+    font-size: 20px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.nav-link:hover {
+    background-color: var(--color-neutral-200);
+}
+
+.nav-link.active {
+    background-color: var(--color-brand-primary-500);
+    color: #ffffff;
+}
+
+
+/* usuário */
+
+.user-menu {
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+
+    background-color: #ffffff;
+
+    border-radius: 9px;
+
+    padding: 6px 12px 6px 8px;
+
+    gap: 10px;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background-color: var(--color-neutral-200);
+
+    font-size: 26px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1.15;
+
+    min-width: 120px;
+}
+
+.user-info strong {
+    color: var(--color-brand-primary-500);
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.user-info span {
+    margin-top: 4px;
+
+    color: var(--color-neutral-600);
+
+    font-size: 13px;
+}
+
+.dropdown-button {
+    width: 28px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--color-brand-primary-500);
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+.dropdown-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* página */
+
+.page {
+    width: 100%;
+
+    padding: 27px 0 40px;
+}
+
+
+/* caixa principal */
+
+.form-card {
+    width: min(1085px, calc(100% - 80px));
+
+    min-height: 875px;
+
+    margin: 0 auto;
+
+    background-color: #ffffff;
+
+    border-radius: 8px;
+
+    padding: 12px 70px 30px;
+}
+
+.form-card h1 {
+    margin: 0 0 43px;
+
+    color: var(--color-neutral-900);
+
+    text-align: center;
+
+    font-size: 38px;
+    line-height: 1.2;
+
+    font-weight: 700;
+}
+
+
+/* formulário */
+
+form {
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+
+    color: var(--color-neutral-900);
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* campos */
+
+input,
+textarea {
+    color: var(--color-neutral-700);
+
+    background-color: #ffffff;
+
+    border: 1px solid var(--color-neutral-300);
+
+    border-radius: 9px;
+
+    cursor: text;
+}
+
+input {
+    width: 100%;
+    height: 50px;
+
+    padding: 0 12px;
+
+    font-size: 16px;
+}
+
+textarea {
+    width: 100%;
+    height: 227px;
+
+    padding: 15px 12px;
+
+    resize: none;
+
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-neutral-600);
+
+    opacity: 1;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-brand-primary-500);
+
+    box-shadow: 0 0 0 2px rgba(0, 107, 107, 0.12);
+}
+
+
+/* nome */
+
+.name-group {
+    width: 555px;
+
+    margin: 0 auto 80px;
+}
+
+
+/* descrição */
+
+.description-group {
+    width: 555px;
+
+    margin: 0 auto 106px;
+}
+
+
+/* prioridade e status */
+
+.fields-row {
+    width: 735px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: 267px 267px;
+
+    justify-content: space-between;
+}
+
+.fields-row .form-group {
+    width: 267px;
+}
+
+.fields-row .form-group label {
+    width: 100%;
+
+    text-align: center;
+}
+
+
+/* responsável */
+
+.responsible-group {
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 2px;
+}
+
+.responsible-group .form-group {
+    width: 274px;
+}
+
+.responsible-group .form-group label {
+    width: 100%;
+
+    text-align: center;
+}
+
+
+/* selects */
+
+.select-wrapper {
+    position: relative;
+
+    width: 100%;
+}
+
+select {
+    width: 100%;
+    height: 50px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    padding: 0 40px 0 12px;
+
+    color: var(--color-neutral-600);
+
+    background-color: #ffffff;
+
+    border: 1px solid var(--color-neutral-300);
+
+    border-radius: 9px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+select option {
+    color: var(--color-neutral-900);
+}
+
+.select-arrow {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+
+    transform: translateY(-50%);
+
+    color: var(--color-neutral-600);
+
+    pointer-events: none;
+}
+
+.select-arrow svg {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* botões */
+
+.actions {
+    width: 555px;
+
+    margin: 33px auto 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button {
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 0 19px;
+
+    border-radius: 4px;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.button svg {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* cancelar */
+
+.button-cancel {
+    min-width: 153px;
+
+    background-color: #ffffff;
+
+    border: 1px solid var(--color-neutral-500);
+
+    color: var(--color-neutral-700);
+}
+
+.button-cancel:hover {
+    background-color: var(--color-neutral-200);
+}
+
+
+/* salvar */
+
+.button-save {
+    min-width: 151px;
+
+    background-color: var(--color-brand-primary-500);
+
+    border: 1px solid var(--color-brand-primary-500);
+
+    color: #ffffff;
+}
+
+.button-save:hover {
+    background-color: var(--color-brand-primary-600);
+}
+
+
+/* telas menores */
+
+@media (max-width: 1100px) {
+
+    .topbar {
+        padding: 0 25px;
+    }
+
+    .form-card {
+        width: calc(100% - 40px);
+
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .fields-row {
+        width: 100%;
+
+        max-width: 735px;
+
+        gap: 60px;
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .topbar {
+        height: auto;
+
+        padding: 15px;
+
+        gap: 15px;
+
+        flex-wrap: wrap;
+    }
+
+    .navbar {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .user-menu {
+        margin-left: auto;
+    }
+
+    .form-card {
+        width: calc(100% - 30px);
+
+        min-height: auto;
+
+        padding: 25px;
+    }
+
+    .form-card h1 {
+        margin-bottom: 35px;
+
+        font-size: 30px;
+    }
+
+    .name-group,
+    .description-group,
+    .actions {
+        width: 100%;
+    }
+
+    .fields-row {
+        width: 100%;
+
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+
+    .fields-row .form-group {
+        width: 100%;
+    }
+
+    .responsible-group .form-group {
+        width: 100%;
+    }
+
+    .description-group {
+        margin-bottom: 50px;
+    }
+
+    .actions {
+        margin-top: 35px;
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .navbar {
+        height: auto;
+
+        flex-wrap: wrap;
+
+        padding: 8px;
+    }
+
+    .brand {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .nav-link {
+        flex: 1;
+
+        font-size: 16px;
+    }
+
+    .user-menu {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .form-card h1 {
+        font-size: 26px;
+    }
+
+    .actions {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .button {
+        width: 100%;
+    }
+}
