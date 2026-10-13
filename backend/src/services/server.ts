@@ -5,6 +5,9 @@
 
 import app from "./app";
 import http from "http";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = process.env.HOST || "localhost";
