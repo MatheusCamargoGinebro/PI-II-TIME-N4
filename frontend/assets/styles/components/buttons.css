@@ -23,6 +23,11 @@
 
 }
 
+.btn-full{
+    width: 100%;
+    
+}
+
 .primary-btn{
     background-color: var(--color-primary-500);
     color: var(--color-accent-100);

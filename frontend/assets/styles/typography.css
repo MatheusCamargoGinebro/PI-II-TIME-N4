@@ -31,6 +31,14 @@ h6{
 	color: var(--color-neutral-600);
 }
 
+.text-label {
+  
+  color: var(--color-neutral-700);
+  
+
+  
+}
+
 .text-neutral{
 	color: var(--color-neutral-800);
 }
@@ -39,6 +47,8 @@ h6{
 }
 .font-inter{
     font-family: 'Inter', sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 
 .text-regular{
@@ -61,3 +71,26 @@ h6{
     font-size: var(--text-large);
     line-height: var(--text-line-height);
 }
+
+.link {
+    color: var(--color-primary-500);
+    text-decoration: none;
+    font-size: var(--text-tiny);
+    font-family: 'Inter', sans-serif;
+}
+
+.text-weight-medium{
+    font-weight: 500;
+}
+.text-weight-semibold{
+    font-weight: 600;
+}
+
+.text-weight-bold{
+    font-weight: 700;
+}
+
+.text-weight-regular{
+    font-weight: 400;
+}
+
