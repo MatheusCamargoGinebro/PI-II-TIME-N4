@@ -1,27 +1,24 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", Arial, sans-serif;
-}
+@import url(../../../assets/styles/global.css);
 
-.container {
-  display: flex;
-  min-height: 100vh;
+
+
+main{
+  display: grid;
+  height: 100vh;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 /* Lado esquerdo */
 .lado-form {
-  flex: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5fbfa;
-  padding: 40px;
+
 }
 
 .form {
-  width: 100%;
+
   max-width: 380px;
   display: flex;
   flex-direction: column;
@@ -32,12 +29,7 @@
   margin-bottom: 24px;
 }
 
-h1 {
-  font-size: 56px;
-  color: #006b6b;   /* troque pelo verde exato do Figma */
-  margin-bottom: 4px;
-  font-family: 'Space Grotesk';
-}
+
 
 .subtitulo {
   font-size: 20px;
@@ -47,34 +39,8 @@ h1 {
 
 }
 
-label {
-  font-size: 12px;
-  margin-bottom: 6px;
-  color: #646466;
-}
 
-input {
-  padding: 12px;
-  margin-bottom: 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-}
 
-input:focus {
-  outline: none;
-  border-color: #006b6b;
-}
-
-button {
-  padding: 12px;
-  background: #006b6b;
-  color: #ccfbfb;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  cursor: pointer;
-}
 
 button:hover {
   background: #006b6b;
@@ -97,6 +63,7 @@ button:hover {
 /* Lado direito */
 .lado-imagem {
   flex: 1;
+  overflow: hidden;
 }
 
 .lado-imagem img {

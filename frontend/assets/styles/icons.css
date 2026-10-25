@@ -2,3 +2,13 @@
     width: 16px;
     height: 16px;
 }
+
+.icon-medium {
+    width: 24px;
+    height: 24px;
+}
+.icon-neutral  {
+    color: white !important;
+    stroke: var(--color-neutral-700);
+    
+}
