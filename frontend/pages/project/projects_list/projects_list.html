@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>TaskOps - Projetos</title>
+
+		<link rel="stylesheet" href="./projects_list.css" />
+		<!-- Lucide Icons -->
+		<script src="https://unpkg.com/lucide@latest"></script>
+	</head>
+
+	<body>
+
+		<header class="header">
+			<nav class="nav">
+				<img src="../../../assets/images/logo.png" alt="TaskOps" />
+
+				<ul class="nav-list">
+					<li><a href="../../dashboard/dashboard.html" class="btn btn-lg ghost-btn">Dashboard</a></li>
+					<li><a href="#" class="btn btn-lg primary-btn">Projetos</a></li>
+				</ul>
+			</nav>
+
+			<div class="align-center gap-16">
+				<button type="button" class="btn btn-lg primary-btn">
+					<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
+					Adicionar Tarefa
+				</button>
+
+				<div class="user-profile">
+					<div class="align-center gap-16">
+						<img class="user-profile-avatar" src="../../../assets/images/user.png" alt="Avatar" />
+						<div class="user-profile-info">
+							<p class="user-profile-name text-large">Fulano da S.</p>
+							<p class="user-profile-email font-inter text-tiny text-subtitle">fulano@email.com</p>
+						</div>
+					</div>
+					<i data-lucide="chevron-down" class="icon-medium" style="color: var(--color-primary-500)"></i>
+				</div>
+			</div>
+		</header>
+
+		<main class="container">
+			<div class="projects-content">
+				<!-- Título e botão criar projeto -->
+				<div class="projects-header">
+					<div class="projects-header-info">
+						<h2 class="text-primary">Projetos</h2>
+						<p class="font-inter text-regular text-subtitle">
+							Você tem <span class="text-primary">6</span> projetos
+						</p>
+					</div>
+					<button type="button" class="btn btn-lg primary-btn">
+						<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
+						Criar Projeto
+					</button>
+				</div>
+
+				<!-- Filtros e busca -->
+				<div class="projects-toolbar">
+					<ul class="tab-bar">
+						<li class="tab tab-active">Todos</li>
+						<li class="tab">Vizualizados recentemente</li>
+						<li class="tab">Meus Projetos</li>
+						<li class="tab">Compartilhados comigo</li>
+					</ul>
+
+					<div class="search-input">
+						<i data-lucide="search" class="icon-medium" style="color: var(--color-neutral-600)"></i>
+						<input type="text" placeholder="Search" />
+					</div>
+				</div>
+
+				<!-- Lista de projetos -->
+				<div class="projects-list">
+					<!-- Projeto 1 -->
+					<div class="project-card base-card">
+						<div class="project-card-header">
+							<p class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</p>
+							<div class="project-card-menu">
+								<i data-lucide="settings" class="icon-medium" style="color: var(--color-neutral-700)"></i>
+							</div>
+						</div>
+						<div class="project-card-progress">
+							<p class="text-label text-small text-weight-medium font-inter">Progresso</p>
+							<h1 class="text-primary">55%</h1>
+							<div class="progress-bar">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+						<div class="project-card-footer">
+							<div class="align-center gap-8">
+								<i data-lucide="clock" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								<p class="text-label text-tiny text-weight-medium font-inter">Editado 12 Set</p>
+							</div>
+							<p class="text-label text-tiny font-inter">27 membros</p>
+						</div>
+					</div>
+
+					<!-- Projeto 2 (com indicador de novo) -->
+					<div class="project-card base-card">
+						<div class="project-card-header">
+							<div class="align-center gap-8">
+								<p class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</p>
+								<span class="project-card-badge project-card-badge-indigo"></span>
+							</div>
+							<div class="project-card-menu">
+								<i data-lucide="settings" class="icon-medium" style="color: var(--color-neutral-700)"></i>
+							</div>
+						</div>
+						<div class="project-card-progress">
+							<p class="text-label text-small text-weight-medium font-inter">Progresso</p>
+							<h1 class="text-primary">55%</h1>
+							<div class="progress-bar">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+						<div class="project-card-footer">
+							<div class="align-center gap-8">
+								<i data-lucide="clock" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								<p class="text-label text-tiny text-weight-medium font-inter">Editado 12 Set</p>
+							</div>
+							<p class="text-label text-tiny font-inter">27 membros</p>
+						</div>
+					</div>
+
+					<!-- Projeto 3 (0%) -->
+					<div class="project-card base-card">
+						<div class="project-card-header">
+							<p class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</p>
+							<div class="project-card-menu">
+								<i data-lucide="settings" class="icon-medium" style="color: var(--color-neutral-700)"></i>
+							</div>
+						</div>
+						<div class="project-card-progress">
+							<p class="text-label text-small text-weight-medium font-inter">Progresso</p>
+							<h1 class="text-primary">0%</h1>
+							<div class="progress-bar">
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+						<div class="project-card-footer">
+							<div class="align-center gap-8">
+								<i data-lucide="clock" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								<p class="text-label text-tiny text-weight-medium font-inter">Editado 12 Set</p>
+							</div>
+							<p class="text-label text-tiny font-inter">27 membros</p>
+						</div>
+					</div>
+
+					<!-- Projeto 4 -->
+					<div class="project-card base-card">
+						<div class="project-card-header">
+							<p class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</p>
+							<div class="project-card-menu">
+								<i data-lucide="settings" class="icon-medium" style="color: var(--color-neutral-700)"></i>
+							</div>
+						</div>
+						<div class="project-card-progress">
+							<p class="text-label text-small text-weight-medium font-inter">Progresso</p>
+							<h1 class="text-primary">55%</h1>
+							<div class="progress-bar">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+						<div class="project-card-footer">
+							<div class="align-center gap-8">
+								<i data-lucide="clock" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								<p class="text-label text-tiny text-weight-medium font-inter">Editado 12 Set</p>
+							</div>
+							<p class="text-label text-tiny font-inter">27 membros</p>
+						</div>
+					</div>
+
+					<!-- Projeto 5 -->
+					<div class="project-card base-card">
+						<div class="project-card-header">
+							<p class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</p>
+							<div class="project-card-menu">
+								<i data-lucide="settings" class="icon-medium" style="color: var(--color-neutral-700)"></i>
+							</div>
+						</div>
+						<div class="project-card-progress">
+							<p class="text-label text-small text-weight-medium font-inter">Progresso</p>
+							<h1 class="text-primary">55%</h1>
+							<div class="progress-bar">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+						<div class="project-card-footer">
+							<div class="align-center gap-8">
+								<i data-lucide="clock" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								<p class="text-label text-tiny text-weight-medium font-inter">Editado 12 Set</p>
+							</div>
+							<p class="text-label text-tiny font-inter">27 membros</p>
+						</div>
+					</div>
+
+					<!-- Projeto 6 -->
+					<div class="project-card base-card">
+						<div class="project-card-header">
+							<p class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</p>
+							<div class="project-card-menu">
+								<i data-lucide="settings" class="icon-medium" style="color: var(--color-neutral-700)"></i>
+							</div>
+						</div>
+						<div class="project-card-progress">
+							<p class="text-label text-small text-weight-medium font-inter">Progresso</p>
+							<h1 class="text-primary">55%</h1>
+							<div class="progress-bar">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+						<div class="project-card-footer">
+							<div class="align-center gap-8">
+								<i data-lucide="clock" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								<p class="text-label text-tiny text-weight-medium font-inter">Editado 12 Set</p>
+							</div>
+							<p class="text-label text-tiny font-inter">27 membros</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script>
+			lucide.createIcons();
+		</script>
+	</body>
+</html>
