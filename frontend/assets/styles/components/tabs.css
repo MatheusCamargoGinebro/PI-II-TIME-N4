@@ -11,9 +11,15 @@
     text-size: var(--text-regular);
 }
 
+.tab-bar li{
+    list-style: none;
+}
+
 .tab-bar{
     display: flex;
     gap: 8px;
+    text-decoration: none;
+
 }
 
 .tab-active{

@@ -1,1 +1,142 @@
+@import url(../../../assets/styles/global.css);
 
+/* =============================================
+   Estilos específicos da página de Detalhes do Projeto
+   ============================================= */
+
+/* Conteúdo principal da página */
+.project-details-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 24px;
+    padding-top: 16px;
+}
+
+/* Cabeçalho do projeto (Breadcrumb + Título + Botão de ação) */
+.project-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.project-details-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Toolbar de navegação por abas */
+.project-details-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Grid principal com 4 colunas */
+.project-details-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    gap: 8px;
+}
+
+/* Cards de métricas */
+.project-metric-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 140px;
+}
+
+.project-metric-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Barra de filtro de data (Setembro / Esta Semana) */
+.project-date-filter {
+    grid-column: span 4;
+    padding: 16px;
+}
+
+.project-date-filter-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.project-date-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-date-divider {
+    width: 2px;
+    height: 36px;
+    background-color: var(--color-neutral-600);
+    border-radius: 15px;
+}
+
+.project-date-select {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+/* Colunas do quadro de status de tarefas */
+.project-board-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 200px;
+}
+
+.project-board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Lista e itens de tarefas */
+.project-task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.project-task-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    background-color: var(--color-neutral-200);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.project-task-item:hover {
+    background-color: var(--color-neutral-300);
+}
+
+.project-task-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 9999px;
+    object-fit: cover;
+}
+
+.dot-separator {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background-color: var(--color-neutral-700);
+    border-radius: 9999px;
+}

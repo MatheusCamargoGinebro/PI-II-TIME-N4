@@ -8,6 +8,11 @@
     width: 100%;
 }
 
+.progress-bar-compact {
+    width: 188px;
+    height: 39px;
+}
+
 .progress-bar-segment {
     flex: 1;
     height: 100%;
@@ -20,4 +25,12 @@
 
 .progress-bar-empty {
     background-color: var(--color-primary-100);
+}
+
+.progress-bar-accent-filled {
+    background-color: var(--color-accent-100);
+}
+
+.progress-bar-accent-empty {
+    background-color: var(--color-accent-700);
 }
