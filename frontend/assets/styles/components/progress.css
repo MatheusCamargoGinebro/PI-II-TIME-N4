@@ -13,6 +13,10 @@
     height: 39px;
 }
 
+.progress-bar-thin {
+    height: 4px;
+}
+
 .progress-bar-segment {
     flex: 1;
     height: 100%;

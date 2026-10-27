@@ -1,1 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>TaskOps - Membros do Projeto</title>
 
+		<link rel="stylesheet" href="./project_members.css" />
+		<!-- Lucide Icons -->
+		<script src="https://unpkg.com/lucide@latest"></script>
+	</head>
+
+	<body>
+		<header class="header">
+			<nav class="nav">
+				<img src="../../../assets/images/logo.png" alt="TaskOps" />
+
+				<ul class="nav-list">
+					<li><a href="../../dashboard/dashboard.html" class="btn btn-lg ghost-btn">Dashboard</a></li>
+					<li><a href="../projects_list/projects_list.html" class="btn btn-lg primary-btn">Projetos</a></li>
+				</ul>
+			</nav>
+
+			<div class="user-profile">
+				<div class="align-center gap-16">
+					<img class="user-profile-avatar" src="../../../assets/images/user.png" alt="Avatar" />
+					<div class="user-profile-info">
+						<p class="user-profile-name text-large">Fulano da S.</p>
+						<p class="user-profile-email font-inter text-tiny text-subtitle">fulano@email.com</p>
+					</div>
+				</div>
+				<i data-lucide="chevron-down" class="icon-medium" style="color: var(--color-primary-500)"></i>
+			</div>
+		</header>
+
+		<main class="container">
+			<div class="project-members-content">
+				<!-- Cabeçalho (Breadcrumb + Título + Botão) -->
+				<div class="project-members-header">
+					<div class="project-members-header-info">
+						<div class="breadcrumb">
+							<a href="../projects_list/projects_list.html" class="breadcrumb-item">Projetos</a>
+							<i data-lucide="chevron-right" class="breadcrumb-separator"></i>
+							<a href="../project_details/project_details.html" class="breadcrumb-item">Projeto Inovador</a>
+							<i data-lucide="chevron-right" class="breadcrumb-separator"></i>
+							<a href="./project_members.html" class="breadcrumb-item active">Membros</a>
+						</div>
+						<h2 class="text-primary">Membros</h2>
+					</div>
+					<button type="button" class="btn btn-lg primary-btn">
+						<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
+						Adicionar Tarefa
+					</button>
+				</div>
+
+				<!-- Abas (Painel / Membros) -->
+				<div class="project-members-toolbar">
+					<ul class="tab-bar">
+						<li><a href="../project_details/project_details.html" class="tab">Painel</a></li>
+						<li><a href="./project_members.html" class="tab tab-active">Membros</a></li>
+					</ul>
+				</div>
+
+				<!-- Grid de Membros -->
+				<div class="project-members-grid">
+					<!-- Membro 1: Sophia Bennet -->
+					<div class="base-card member-card">
+						<div class="member-card-image-wrapper">
+							<img
+								class="member-card-image"
+								src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=80"
+								alt="Sophia Bennet"
+								onerror="this.src='https://placehold.co/400x250/e2e2e6/646466?text=Sophia+Bennet'"
+							/>
+						</div>
+
+						<div class="member-card-info">
+							<h4 class="text-neutral font-inter text-large text-weight-medium">Sophia Bennet</h4>
+							<p class="text-subtitle font-inter text-small">Membro</p>
+						</div>
+
+						<div class="member-card-progress">
+							<div class="between align-center">
+								<div class="align-center gap-8">
+									<i data-lucide="check-circle-2" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<span class="text-subtitle font-inter text-tiny">Tarefas Concluidas</span>
+								</div>
+								<div class="member-card-counter font-inter text-regular">
+									<span class="text-primary">12</span><span class="text-primary-light">/22</span>
+								</div>
+							</div>
+							<div class="progress-bar progress-bar-thin">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+
+						<a href="../project_member_details/project_member_details.html" class="btn btn-full btn-sm secondary-btn member-card-btn">
+							<span>Ver Detalhes</span>
+							<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+						</a>
+					</div>
+
+					<!-- Membro 2: Charlie Kirk -->
+					<div class="base-card member-card">
+						<div class="member-card-image-wrapper">
+							<img
+								class="member-card-image"
+								src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80"
+								alt="Charlie Kirk"
+								onerror="this.src='https://placehold.co/400x250/e2e2e6/646466?text=Charlie+Kirk'"
+							/>
+						</div>
+
+						<div class="member-card-info">
+							<h4 class="text-neutral font-inter text-large text-weight-medium">Charlie Kirk</h4>
+							<p class="text-subtitle font-inter text-small">Membro</p>
+						</div>
+
+						<div class="member-card-progress">
+							<div class="between align-center">
+								<div class="align-center gap-8">
+									<i data-lucide="check-circle-2" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<span class="text-subtitle font-inter text-tiny">Tarefas Concluidas</span>
+								</div>
+								<div class="member-card-counter font-inter text-regular">
+									<span class="text-primary">12</span><span class="text-primary-light">/22</span>
+								</div>
+							</div>
+							<div class="progress-bar progress-bar-thin">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+
+						<a href="../project_member_details/project_member_details.html" class="btn btn-full btn-sm secondary-btn member-card-btn">
+							<span>Ver Detalhes</span>
+							<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+						</a>
+					</div>
+
+					<!-- Membro 3: Ivanova Liepchevel -->
+					<div class="base-card member-card">
+						<div class="member-card-image-wrapper">
+							<img
+								class="member-card-image"
+								src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80"
+								alt="Ivanova Liepchevel"
+								onerror="this.src='https://placehold.co/400x250/e2e2e6/646466?text=Ivanova+Liepchevel'"
+							/>
+						</div>
+
+						<div class="member-card-info">
+							<h4 class="text-neutral font-inter text-large text-weight-medium">Ivanova Liepchevel</h4>
+							<p class="text-subtitle font-inter text-small">Membro</p>
+						</div>
+
+						<div class="member-card-progress">
+							<div class="between align-center">
+								<div class="align-center gap-8">
+									<i data-lucide="check-circle-2" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<span class="text-subtitle font-inter text-tiny">Tarefas Concluidas</span>
+								</div>
+								<div class="member-card-counter font-inter text-regular">
+									<span class="text-primary">12</span><span class="text-primary-light">/22</span>
+								</div>
+							</div>
+							<div class="progress-bar progress-bar-thin">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+
+						<a href="../project_member_details/project_member_details.html" class="btn btn-full btn-sm secondary-btn member-card-btn">
+							<span>Ver Detalhes</span>
+							<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+						</a>
+					</div>
+
+					<!-- Membro 4: Manoel Gomes -->
+					<div class="base-card member-card">
+						<div class="member-card-image-wrapper">
+							<img
+								class="member-card-image"
+								src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80"
+								alt="Manoel Gomes"
+								onerror="this.src='https://placehold.co/400x250/e2e2e6/646466?text=Manoel+Gomes'"
+							/>
+						</div>
+
+						<div class="member-card-info">
+							<h4 class="text-neutral font-inter text-large text-weight-medium">Manoel Gomes</h4>
+							<p class="text-subtitle font-inter text-small">Membro</p>
+						</div>
+
+						<div class="member-card-progress">
+							<div class="between align-center">
+								<div class="align-center gap-8">
+									<i data-lucide="check-circle-2" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<span class="text-subtitle font-inter text-tiny">Tarefas Concluidas</span>
+								</div>
+								<div class="member-card-counter font-inter text-regular">
+									<span class="text-primary">22</span><span class="text-primary-light">/22</span>
+								</div>
+							</div>
+							<div class="progress-bar progress-bar-thin">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+							</div>
+						</div>
+
+						<a href="../project_member_details/project_member_details.html" class="btn btn-full btn-sm secondary-btn member-card-btn">
+							<span>Ver Detalhes</span>
+							<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script>
+			lucide.createIcons();
+		</script>
+	</body>
+</html>

@@ -23,6 +23,12 @@
 
 }
 
+.btn-sm{
+    font-size: var(--text-small);
+    padding: 8px 16px;
+    gap: 8px;
+}
+
 .btn-full{
     width: 100%;
     
@@ -32,6 +38,16 @@
     background-color: var(--color-primary-500);
     color: var(--color-accent-100);
     line-height: var(--heading-line-height);
+}
+
+.secondary-btn{
+    background-color: var(--color-neutral-200);
+    color: var(--color-neutral-800);
+    line-height: var(--heading-line-height);
+}
+
+.secondary-btn:hover{
+    background-color: var(--color-neutral-300);
 }
 
 .ghost-btn{

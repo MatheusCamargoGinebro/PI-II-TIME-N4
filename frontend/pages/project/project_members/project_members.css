@@ -1,1 +1,94 @@
+@import url(../../../assets/styles/global.css);
 
+/* =============================================
+   Estilos específicos da página de Membros do Projeto
+   ============================================= */
+
+/* Conteúdo principal da página */
+.project-members-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 24px;
+    padding-top: 16px;
+}
+
+/* Cabeçalho (Breadcrumb + Título + Botão de ação) */
+.project-members-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.project-members-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Toolbar de abas */
+.project-members-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Grid com 4 colunas para os membros */
+.project-members-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    gap: 8px;
+}
+
+/* Card individual de membro */
+.member-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.member-card-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-neutral-200);
+}
+
+.member-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.member-card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.member-card-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.member-card-counter {
+    font-size: var(--text-regular);
+}
+
+.member-card-counter .text-primary-light {
+    color: var(--color-primary-300);
+}
+
+.member-card-btn {
+    border-radius: 8px;
+}
