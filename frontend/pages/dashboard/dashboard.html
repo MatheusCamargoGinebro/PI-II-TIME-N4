@@ -11,9 +11,7 @@
 	</head>
 
 	<body>
-
-		
-		<header class=" header">
+		<header class="header">
 			<nav class="nav">
 				<img src="../../assets/images/logo.png" alt="TaskOps" />
 
@@ -22,7 +20,24 @@
 					<li><a href="../project/projects_list/projects_list.html" class="btn btn-lg ghost-btn">Projetos</a></li>
 				</ul>
 			</nav>
-			<button type="button" class="btn btn-lg primary-btn">Criar Tarefa</button>
+
+			<div class="align-center gap-16">
+				<button type="button" class="btn btn-lg primary-btn">
+					<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
+					Adicionar Tarefa
+				</button>
+
+				<div class="user-profile">
+					<div class="align-center gap-16">
+						<img class="user-profile-avatar" src="../../assets/images/user.png" alt="Avatar" />
+						<div class="user-profile-info">
+							<p class="user-profile-name text-large">Fulano da S.</p>
+							<p class="user-profile-email font-inter text-tiny text-subtitle">fulano@email.com</p>
+						</div>
+					</div>
+					<i data-lucide="chevron-down" class="icon-medium" style="color: var(--color-primary-500)"></i>
+				</div>
+			</div>
 		</header>
 		
 		<main class="container">
@@ -41,225 +56,538 @@
 				</div>
 
 				<div class="dashboard-grid">
-					<!-- Card 1 -->
-					<div class="base-card">
-						<div class="justify-center align-center between">
-							<div class="justify-center align-center gap-8">
-								<i style="color: var(--color-neutral-700)"  class="card-icon icon-neutral " data-lucide="calendar"></i>
-								<p class="text-neutral font-inter text-regular">
+					<!-- Card 1: Total de Tarefas -->
+					<div class="base-card dashboard-metric-card">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i data-lucide="calendar" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								</div>
+								<p class="text-neutral font-inter text-regular text-weight-medium">
 									Total de Tarefas
 								</p>
 							</div>
-							<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="arrow-up-right"></i>
+							<div class="card-icon">
+								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							</div>
 						</div>
-						<div>
+						<div class="dashboard-metric-body">
 							<h1 class="text-primary">50</h1>
 						</div>
-						<div class="align-center icon-neutral text-subtitle gap-8">
-							<i class="icon-small" style="color: var(--color-neutral-700)"  data-lucide="plus"></i>
+						<div class="align-center gap-8 text-subtitle">
+							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
 							<p class="font-inter text-small">
 								27 tarefas a mais que o mês passado.
 							</p>
 						</div>
 					</div>
 
-					<!-- Card 2 -->
-					<div class="base-card">
-						<div class="justify-center align-center between">
-							<div class="justify-center align-center gap-8">
-								<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="loader-circle"></i>
-								<p class="text-neutral font-inter text-regular">
+					<!-- Card 2: Tarefas Abertas -->
+					<div class="base-card dashboard-metric-card">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i data-lucide="loader-circle" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								</div>
+								<p class="text-neutral font-inter text-regular text-weight-medium">
 									Tarefas Abertas
 								</p>
 							</div>
-							<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="arrow-up-right"></i>
-						</div>
-						<div>
-							<h1 class="text-primary">50</h1>
-						</div>
-						<div class="align-center gap-8">
-							<i class="icon-small" style="color: var(--color-neutral-700)"  data-lucide="plus"></i>
-							<p class="text-subtitle font-inter text-small">
-								27 tarefas a mais que o mês passado.
-							</p>
-						</div>
-					</div>
-
-					<!-- Card 3 -->
-					<div class="base-card">
-						<div class="justify-center align-center between">
-							<div class="justify-center align-center gap-8">
-								<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="circle-alert"></i>
-								<p class="text-neutral font-inter text-regular">
-									Tarefas Pendentes
-								</p>
+							<div class="card-icon">
+								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
 							</div>
-							<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="arrow-up-right"></i>
 						</div>
-						<div>
-							<h1 class="text-primary">50</h1>
-						</div>
-						<div class="align-center gap-8">
-							<i class="icon-small" style="color: var(--color-neutral-700)"  data-lucide="plus"></i>
-							<p class="text-subtitle font-inter text-small">
-								27 tarefas a mais que o mês passado.
-							</p>
-						</div>
-					</div>
-
-					<!-- Card 4: Agenda (ocupa 2 linhas) -->
-					<div class="base-card dashboard-card-agenda">
-						<div class="justify-center align-center between">
-							<div class="justify-center align-center gap-8">
-								<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="calendar"></i>
-								<p class="text-neutral font-inter text-regular">Agenda</p>
+						<div class="dashboard-metric-body">
+							<h1 class="text-primary">34</h1>
+							<div class="progress-bar progress-bar-compact">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
 							</div>
-							<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="arrow-up-right"></i>
 						</div>
-						<div class="dashboard-card-agenda-content">
-							<p class="text-neutral text-small">Hoje</p>
-							<ul class="dashboard-card-agenda-list">
-								<li class="dashboard-card-agenda-item">
-									<div class="align-center gap-8">
-										<i  
-											style="color: var(--color-neutral-700)" 
-											class="icon-small dashboard-card-agenda-item-icon"
-											data-lucide="clock"
-										></i>
-										<div>
-											<p class="text-neutral font-inter text-regular">
-												Reunião com o time
-											</p>
-											<div class="align-center">
-												<p class="text-subtitle text-small">Quinta</p>
-												<i style="color: var(--color-neutral-700)"  class="text-subititle" data-lucide="dot"></i>
-												<p class="text-subtitle text-small">14h00 pm</p>
-											</div>
-										</div>
-									</div>
-									<i class="icon-small" style="color: var(--color-neutral-700)"  data-lucide="ellipsis-vertical"></i>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					<!-- Card 5 -->
-					<div class="base-card">
-						<div class="justify-center align-center between">
-							<div class="justify-center align-center gap-8">
-								<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="loader-circle"></i>
-								<p class="text-neutral font-inter text-regular">
-									Tarefas em revisão
-								</p>
-							</div>
-							<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="arrow-up-right"></i>
-						</div>
-						<div>
-							<h1 class="text-primary">50</h1>
-						</div>
-						<div class="align-center gap-8">
-							<i class="icon-small" style="color: var(--color-neutral-700)"  data-lucide="plus"></i>
-							<p class="text-subtitle font-inter text-small">
-								27 tarefas a mais que o mês passado.
-							</p>
-						</div>
-					</div>
-
-					<!-- Card 6 -->
-					<div class="base-card">
-						<div class="justify-center align-center between">
-							<div class="justify-center align-center gap-8">
-								<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="circle-x"></i>
-								<p class="text-neutral font-inter text-regular">
-									Tarefas Canceladas
-								</p>
-							</div>
-							<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="arrow-up-right"></i>
-						</div>
-						<div>
-							<h1 class="text-primary">50</h1>
-						</div>
-						<div class="align-center gap-8">
-							<i class="icon-small" style="color: var(--color-neutral-700)"  data-lucide="plus"></i>
-							<p class="text-subtitle font-inter text-small">
-								27 tarefas a mais que o mês passado.
-							</p>
-						</div>
-					</div>
-
-					<!-- Card 7 -->
-					<div class="highlight-card">
-						<div class="justify-center align-center between">
-							<div class="justify-center align-center gap-8">
-								<i class="card-icon" style="color: var(--color-accent-100)"  data-lucide="calendar"></i>
-								<p class="font-inter text-regular">
-									Tarefas Concluídas
-								</p>
-							</div>
-							<i class="card-icon"  style="color: var(--color-accent-100)"   data-lucide="arrow-up-right"></i>
-						</div>
-						<div>
-							<h1 class="">50</h1>
-						</div>
-						<div class="align-center gap-8">
-							<i class="icon-small" style="color: var(--color-accent-100)"  data-lucide="plus"></i>
+						<div class="align-center gap-8 text-subtitle">
+							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
 							<p class="font-inter text-small">
 								27 tarefas a mais que o mês passado.
 							</p>
 						</div>
 					</div>
 
-					<!-- Card 8: Tasks (ocupa 3 colunas e 2 linhas) -->
+					<!-- Card 3: Tarefas Pendentes -->
+					<div class="base-card dashboard-metric-card">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i data-lucide="circle-alert" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								</div>
+								<p class="text-neutral font-inter text-regular text-weight-medium">
+									Tarefas Pendentes
+								</p>
+							</div>
+							<div class="card-icon">
+								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							</div>
+						</div>
+						<div class="dashboard-metric-body">
+							<h1 class="text-primary">27</h1>
+							<div class="progress-bar progress-bar-compact">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+						<div class="align-center gap-8 text-subtitle">
+							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<p class="font-inter text-small">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
+
+					<!-- Sidebar (Coluna 4, Linhas 1 a 3): Agenda e Caixa de Entrada -->
+					<aside class="dashboard-sidebar">
+						<!-- Card Agenda -->
+						<div class="base-card dashboard-card-agenda">
+							<div class="between align-center">
+								<div class="align-center gap-8">
+									<div class="card-icon">
+										<i data-lucide="calendar" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									</div>
+									<p class="text-neutral font-inter text-regular text-weight-medium">Agenda</p>
+									<span class="badge-dot badge-indigo"></span>
+								</div>
+								<div class="card-icon">
+									<i data-lucide="ellipsis-vertical" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								</div>
+							</div>
+
+							<div class="dashboard-card-agenda-content">
+								<!-- Seção Hoje -->
+								<div class="dashboard-agenda-section">
+									<p class="text-subtitle font-inter text-small">Hoje</p>
+									<div class="dashboard-agenda-item">
+										<div class="align-center gap-8">
+											<div class="card-icon">
+												<i data-lucide="calendar" class="icon-small" style="color: var(--color-neutral-700)"></i>
+											</div>
+											<div>
+												<p class="text-neutral font-inter text-regular text-weight-medium">
+													Sistema de Cadastro
+												</p>
+												<div class="align-center gap-4 text-subtitle text-tiny">
+													<span>Hoje</span>
+													<i data-lucide="dot" class="icon-tiny"></i>
+													<span>14h00 pm</span>
+												</div>
+											</div>
+										</div>
+										<i data-lucide="ellipsis-vertical" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									</div>
+								</div>
+
+								<!-- Seção Essa Semana -->
+								<div class="dashboard-agenda-section">
+									<p class="text-subtitle font-inter text-small">Essa Semana</p>
+									<div class="dashboard-agenda-list">
+										<div class="dashboard-agenda-item">
+											<div class="align-center gap-8">
+												<div class="card-icon">
+													<i data-lucide="calendar" class="icon-small" style="color: var(--color-neutral-700)"></i>
+												</div>
+												<div>
+													<p class="text-neutral font-inter text-regular text-weight-medium">
+														Dashboard
+													</p>
+													<div class="align-center gap-4 text-subtitle text-tiny">
+														<span>Quinta</span>
+														<i data-lucide="dot" class="icon-tiny"></i>
+														<span>14h00 pm</span>
+													</div>
+												</div>
+											</div>
+											<i data-lucide="ellipsis-vertical" class="icon-small" style="color: var(--color-neutral-700)"></i>
+										</div>
+
+										<div class="dashboard-agenda-item">
+											<div class="align-center gap-8">
+												<div class="card-icon">
+													<i data-lucide="calendar" class="icon-small" style="color: var(--color-neutral-700)"></i>
+												</div>
+												<div>
+													<p class="text-neutral font-inter text-regular text-weight-medium">
+														Relatorio
+													</p>
+													<div class="align-center gap-4 text-subtitle text-tiny">
+														<span>Terça</span>
+														<i data-lucide="dot" class="icon-tiny"></i>
+														<span>14h00 pm</span>
+													</div>
+												</div>
+											</div>
+											<i data-lucide="ellipsis-vertical" class="icon-small" style="color: var(--color-neutral-700)"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Card Caixa de Entrada -->
+						<div class="base-card dashboard-card-inbox">
+							<div class="between align-center">
+								<div class="align-center gap-8">
+									<div class="card-icon">
+										<i data-lucide="inbox" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									</div>
+									<p class="text-neutral font-inter text-regular text-weight-medium">
+										Caixa de Entrada
+									</p>
+									<span class="badge-dot badge-indigo"></span>
+								</div>
+								<div class="card-icon">
+									<i data-lucide="ellipsis-vertical" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								</div>
+							</div>
+
+							<div class="dashboard-card-inbox-content">
+								<p class="text-neutral font-inter text-small text-weight-medium">Todas</p>
+								
+								<div class="dashboard-card-inbox-list">
+									<!-- Item 1: Solicitação de entrada com botões de ação -->
+									<div class="dashboard-inbox-item">
+										<div class="dashboard-inbox-item-header">
+											<p class="text-neutral font-inter text-regular text-weight-medium">
+												Heizo desejar entrar no projeto
+											</p>
+											<div class="align-center gap-4 text-subtitle text-tiny">
+												<span>Projeto Inovador</span>
+												<i data-lucide="dot" class="icon-tiny"></i>
+												<span>14h00 pm</span>
+											</div>
+										</div>
+										<div class="dashboard-inbox-actions">
+											<button type="button" class="btn btn-sm btn-accept">Aceitar</button>
+											<button type="button" class="btn btn-sm btn-reject">Rejeitar</button>
+										</div>
+									</div>
+
+									<!-- Item 2: Notificação de tarefa entregue -->
+									<div class="dashboard-inbox-item dashboard-inbox-item-row">
+										<div>
+											<p class="text-neutral font-inter text-regular text-weight-medium">
+												Matheus entregou uma tarefa
+											</p>
+											<div class="align-center gap-4 text-subtitle text-tiny">
+												<span>Projeto Inovador</span>
+												<i data-lucide="dot" class="icon-tiny"></i>
+												<span>14h00 pm</span>
+											</div>
+										</div>
+										<i data-lucide="ellipsis-vertical" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</aside>
+
+					<!-- Card 4 (Linha 2, Coluna 1): Tarefas Canceladas -->
+					<div class="base-card dashboard-metric-card">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i data-lucide="circle-x" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								</div>
+								<p class="text-neutral font-inter text-regular text-weight-medium">
+									Tarefas Canceladas
+								</p>
+							</div>
+							<div class="card-icon">
+								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							</div>
+						</div>
+						<div class="dashboard-metric-body">
+							<h1 class="text-primary">0</h1>
+							<div class="progress-bar progress-bar-compact">
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+						<div class="align-center gap-8 text-subtitle">
+							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<p class="font-inter text-small">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 5 (Linha 2, Coluna 2): Tarefas em revisão -->
+					<div class="base-card dashboard-metric-card">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i data-lucide="loader-circle" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								</div>
+								<p class="text-neutral font-inter text-regular text-weight-medium">
+									Tarefas em revisão
+								</p>
+							</div>
+							<div class="card-icon">
+								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							</div>
+						</div>
+						<div class="dashboard-metric-body">
+							<h1 class="text-primary">7</h1>
+							<div class="progress-bar progress-bar-compact">
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-filled"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+								<div class="progress-bar-segment progress-bar-empty"></div>
+							</div>
+						</div>
+						<div class="align-center gap-8 text-subtitle">
+							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<p class="font-inter text-small">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 6 (Linha 2, Coluna 3): Concluídas -->
+					<div class="highlight-card dashboard-metric-card">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i data-lucide="calendar" class="icon-small" style="color: var(--color-accent-100)"></i>
+								</div>
+								<p class="font-inter text-regular text-weight-medium" style="color: var(--color-neutral-100)">
+									Concluídas
+								</p>
+							</div>
+							<div class="card-icon">
+								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-accent-100)"></i>
+							</div>
+						</div>
+						<div class="dashboard-metric-body">
+							<h1 style="color: var(--color-neutral-100)">16</h1>
+							<div class="progress-bar progress-bar-compact">
+								<div class="progress-bar-segment progress-bar-accent-filled"></div>
+								<div class="progress-bar-segment progress-bar-accent-filled"></div>
+								<div class="progress-bar-segment progress-bar-accent-filled"></div>
+								<div class="progress-bar-segment progress-bar-accent-filled"></div>
+								<div class="progress-bar-segment progress-bar-accent-filled"></div>
+								<div class="progress-bar-segment progress-bar-accent-filled"></div>
+								<div class="progress-bar-segment progress-bar-accent-filled"></div>
+								<div class="progress-bar-segment progress-bar-accent-filled"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+							</div>
+						</div>
+						<div class="align-center gap-8">
+							<i data-lucide="plus" class="icon-small" style="color: var(--color-accent-400)"></i>
+							<p class="font-inter text-small" style="color: var(--color-accent-400)">
+								27 tarefas a mais que o mês passado.
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 7 (Linha 3, Colunas 1 a 3): Lista de Tarefas -->
 					<div class="base-card dashboard-card-tasks">
-						<div class="justify-center align-center between">
-							<div class="justify-center align-center gap-8">
-								<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="chart-no-axes-combined"></i>
-								<p class="text-neutral font-inter text-regular">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i data-lucide="chart-no-axes-combined" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								</div>
+								<p class="text-neutral font-inter text-regular text-weight-medium">
 									Lista de Tarefas
 								</p>
 							</div>
-							<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="arrow-up-right"></i>
+							<div class="card-icon">
+								<i data-lucide="ellipsis-vertical" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							</div>
 						</div>
+						
 						<div>
 							<ul class="tab-bar">
 								<li class="tab tab-active">Ver Todos</li>
 								<li class="tab">Ordem de Prioridade</li>
-								<li class="tab">Prazo mais Próximo</li>
+								<li class="tab">Prazo mais proximo</li>
 							</ul>
 						</div>
-					</div>
 
-					<!-- Card 9: Inbox (ocupa 1 coluna e 2 linhas) -->
-					<div class="base-card dashboard-card-inbox">
-						<div class="justify-center align-center between">
-							<div class="justify-center align-center gap-8">
-								<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="inbox"></i>
-								<p class="text-neutral font-inter text-regular">
-									Caixa de Entrada
-								</p>
-							</div>
-							<i class="card-icon" style="color: var(--color-neutral-700)"  data-lucide="arrow-up-right"></i>
+						<div class="dashboard-tasks-table-wrapper">
+							<table class="dashboard-tasks-table">
+								<thead>
+									<tr>
+										<th>Nome</th>
+										<th>Tarefa</th>
+										<th>Projeto</th>
+										<th>Prazo</th>
+										<th>Prioridade</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<div class="dashboard-user-cell">
+												<img class="dashboard-user-avatar" src="../../assets/images/user.png" alt="Avatar" />
+												<div>
+													<p class="dashboard-user-name">Matheus Ginebro</p>
+													<p class="dashboard-user-email">fulano@email.com</p>
+												</div>
+											</div>
+										</td>
+										<td><span class="dashboard-task-cell">Tela Detalhes</span></td>
+										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
+										<td><span class="dashboard-task-cell">Set 02</span></td>
+										<td>
+											<div class="align-center gap-8">
+												<span class="badge-dot badge-green"></span>
+												<span class="dashboard-task-cell">Baixa</span>
+											</div>
+										</td>
+										<td><span class="status-badge status-complete">Completa</span></td>
+									</tr>
+									<tr>
+										<td>
+											<div class="dashboard-user-cell">
+												<img class="dashboard-user-avatar" src="../../assets/images/user.png" alt="Avatar" />
+												<div>
+													<p class="dashboard-user-name">Otávio Cipoletta</p>
+													<p class="dashboard-user-email">fulano@email.com</p>
+												</div>
+											</div>
+										</td>
+										<td><span class="dashboard-task-cell">Cadastro de Demanda</span></td>
+										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
+										<td><span class="dashboard-task-cell">Set 02</span></td>
+										<td>
+											<div class="align-center gap-8">
+												<span class="badge-dot badge-blue"></span>
+												<span class="dashboard-task-cell">Média</span>
+											</div>
+										</td>
+										<td><span class="status-badge status-review">Em revisão</span></td>
+									</tr>
+									<tr>
+										<td>
+											<div class="dashboard-user-cell">
+												<img class="dashboard-user-avatar" src="../../assets/images/user.png" alt="Avatar" />
+												<div>
+													<p class="dashboard-user-name">Jonas Paschoalino</p>
+													<p class="dashboard-user-email">fulano@email.com</p>
+												</div>
+											</div>
+										</td>
+										<td><span class="dashboard-task-cell">Cadastro de Demanda</span></td>
+										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
+										<td><span class="dashboard-task-cell">Set 02</span></td>
+										<td>
+											<div class="align-center gap-8">
+												<span class="badge-dot badge-pink"></span>
+												<span class="dashboard-task-cell">Alta</span>
+											</div>
+										</td>
+										<td><span class="status-badge status-late">Atrasada</span></td>
+									</tr>
+									<tr>
+										<td>
+											<div class="dashboard-user-cell">
+												<img class="dashboard-user-avatar" src="../../assets/images/user.png" alt="Avatar" />
+												<div>
+													<p class="dashboard-user-name">Guilherme Caitano</p>
+													<p class="dashboard-user-email">fulano@email.com</p>
+												</div>
+											</div>
+										</td>
+										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
+										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
+										<td><span class="dashboard-task-cell">Set 02</span></td>
+										<td>
+											<div class="align-center gap-8">
+												<span class="badge-dot badge-green"></span>
+												<span class="dashboard-task-cell">Baixa</span>
+											</div>
+										</td>
+										<td><span class="status-badge status-complete">Completa</span></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
-						<ul class="dashboard-card-inbox-list">
-							<li class="dashboard-card-inbox-item">
-								<div class="align-center gap-8">
-									<div>
-										<p class="text-neutral font-inter text-regular">
-											Matheus entregou uma Atividade
-										</p>
-										<div class="align-center">
-											<p class="text-subtitle text-small">Projeto Inovador</p>
-											<i class="text-subititle" data-lucide="dot"></i>
-											<p class="text-subtitle text-small">14h00 pm</p>
-										</div>
-									</div>
-								</div>
-								<i class="icon-small" style="color: var(--color-neutral-700)"  data-lucide="ellipsis-vertical"></i>
-							</li>
-						</ul>
 					</div>
 				</div>
-				<!-- Fechamento correto do .dashboard-grid -->
 			</div>
 		</main>
 

@@ -1,16 +1,24 @@
 @import url(../../assets/styles/global.css);
 
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
+/* =============================================
+   Estilos específicos da página de Dashboard
+   ============================================= */
 
+/* Conteúdo principal */
 .dashboard-content {
     display: flex;
     width: 100%;
     flex-direction: column;
     gap: 38px;
+    padding-top: 16px;
+}
+
+/* Cabeçalho do dashboard (boas-vindas e data) */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .dashboard-header-date {
@@ -19,73 +27,256 @@
     align-items: flex-end;
 }
 
+/* Grid principal do dashboard */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: auto; /* Permite que o Grid ajuste as linhas automaticamente conforme o contéudo */
+    grid-template-columns: repeat(3, 1fr) 350px;
     gap: 8px;
 }
 
-.dashboard-card-agenda {
-    grid-row: span 2;
-    gap: 16px;
+/* Cards de métricas */
+.dashboard-metric-card {
     display: flex;
     flex-direction: column;
-}
-
-.dashboard-card-tasks {
-    grid-column: span 3;
-    grid-row: span 2;
-    gap: 16px;
-    display: flex;
-    flex-direction: column;
-}
-
-.dashboard-card-inbox {
-    grid-row: span 2;
-    display: flex;
-    flex-direction: column; 
-    gap: 16px;
-}
-
-/* Restante dos estilos mantidos */
-.dashboard-card-agenda-list,
-.dashboard-card-inbox-list {
-    display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     gap: 8px;
-    text-decoration: none;
+    min-height: 140px;
 }
 
-.dashboard-card-agenda-item,
-.dashboard-card-inbox-item {
+.dashboard-metric-body {
     display: flex;
-    padding: 8px;
-    border-radius: 8px;
-    background-color: var(--color-neutral-200);
     justify-content: space-between;
     align-items: center;
     gap: 8px;
 }
 
-.dashboard-card-agenda-content {
+/* Coluna lateral (Sidebar: Agenda e Caixa de Entrada) */
+.dashboard-sidebar {
+    grid-column: 4;
+    grid-row: 1 / 4;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.dashboard-card-agenda-item-icon {
-    max-width: 32px;
-    max-height: 32px;
-    padding: 4px;
-    border-radius: 4px;
-    width: fit-content;
-    height: fit-content;
+.dashboard-card-agenda,
+.dashboard-card-inbox {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.dashboard-card-agenda-item:hover,
-.dashboard-card-inbox-item:hover {
+.dashboard-card-agenda-content,
+.dashboard-card-inbox-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Seções e itens da Agenda */
+.dashboard-agenda-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dashboard-agenda-list,
+.dashboard-card-inbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dashboard-agenda-item,
+.dashboard-inbox-item {
+    display: flex;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: var(--color-neutral-200);
+    gap: 8px;
+}
+
+.dashboard-agenda-item {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-agenda-item:hover,
+.dashboard-inbox-item:hover {
     cursor: pointer;
-    color: var(--color-brand-neutral-600);
     background-color: var(--color-neutral-300);
+}
+
+/* Itens e botões da Caixa de Entrada */
+.dashboard-inbox-item {
+    flex-direction: column;
+}
+
+.dashboard-inbox-item-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-inbox-item-header {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dashboard-inbox-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.btn-accept {
+    flex: 1;
+    background-color: var(--color-primary-500);
+    color: var(--color-accent-100);
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+}
+
+.btn-accept:hover {
+    color: var(--color-accent-500);
+}
+
+.btn-reject {
+    flex: 1;
+    background-color: var(--color-neutral-300);
+    color: var(--color-neutral-800);
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+}
+
+.btn-reject:hover {
+    background-color: var(--color-neutral-400);
+}
+
+/* Card Lista de Tarefas (ocupa as primeiras 3 colunas) */
+.dashboard-card-tasks {
+    grid-column: 1 / 4;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Tabela da Lista de Tarefas */
+.dashboard-tasks-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.dashboard-tasks-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.dashboard-tasks-table th {
+    padding: 10px 12px;
+    color: var(--color-neutral-700);
+    font-size: var(--text-small);
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+}
+
+.dashboard-tasks-table td {
+    padding: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: var(--text-small);
+    vertical-align: middle;
+}
+
+.dashboard-tasks-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.dashboard-tasks-table tbody tr:hover {
+    background-color: var(--color-neutral-200);
+}
+
+.dashboard-user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dashboard-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    object-fit: cover;
+}
+
+.dashboard-user-name {
+    color: var(--color-primary-500);
+    font-weight: 500;
+    font-size: var(--text-small);
+    font-family: 'Inter', sans-serif;
+}
+
+.dashboard-user-email {
+    color: var(--color-neutral-600);
+    font-size: var(--text-tiny);
+    font-family: 'Inter', sans-serif;
+}
+
+.dashboard-task-cell {
+    color: var(--color-neutral-800);
+    font-weight: 500;
+    font-size: var(--text-small);
+    font-family: 'Inter', sans-serif;
+}
+
+.status-badge {
+    font-size: var(--text-small);
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.status-complete {
+    color: #34c759;
+}
+
+.status-review {
+    color: #0088ff;
+}
+
+.status-late {
+    color: #ff2d55;
+}
+
+/* Responsividade simples */
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .dashboard-sidebar {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+    .dashboard-card-tasks {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .dashboard-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .dashboard-header-date {
+        align-items: flex-start;
+    }
 }
