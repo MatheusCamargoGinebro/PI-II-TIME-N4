@@ -1,5 +1,9 @@
 @import url(../../../assets/styles/global.css);
 
+[hidden] {
+    display: none !important;
+}
+
 /* =============================================
    Estilos específicos da página de Detalhes do Projeto
    ============================================= */
@@ -88,12 +92,31 @@
     cursor: pointer;
 }
 
+.project-board-toolbar {
+    grid-column: span 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.project-board-toolbar .search-input {
+    flex: 1 1 320px;
+    max-width: 438px;
+}
+
 /* Colunas do quadro de status de tarefas */
 .project-board-column {
     display: flex;
     flex-direction: column;
     gap: 16px;
     min-height: 200px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-board-column.is-drop-target {
+    background-color: var(--color-neutral-200);
+    box-shadow: inset 0 0 0 2px var(--color-primary-300);
 }
 
 .project-board-header {
@@ -118,8 +141,26 @@
     padding: 8px;
     background-color: var(--color-neutral-200);
     border-radius: 8px;
-    cursor: pointer;
+    cursor: grab;
     transition: background-color 0.2s;
+}
+
+.project-task-item:active {
+    cursor: grabbing;
+}
+
+.project-task-item.is-dragging {
+    opacity: 0.45;
+}
+
+.project-task-list:empty::after {
+    content: "Arraste uma tarefa para cá";
+    padding: 12px 8px;
+    border: 1px dashed var(--color-neutral-400);
+    border-radius: 8px;
+    color: var(--color-neutral-600);
+    font: 400 var(--text-small) 'Inter', sans-serif;
+    text-align: center;
 }
 
 .project-task-item:hover {
@@ -139,4 +180,31 @@
     height: 4px;
     background-color: var(--color-neutral-700);
     border-radius: 9999px;
+}
+
+@media (max-width: 900px) {
+    .project-details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .project-date-filter,
+    .project-board-toolbar {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .project-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-date-filter,
+    .project-board-toolbar {
+        grid-column: span 1;
+    }
+
+    .project-board-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
 }

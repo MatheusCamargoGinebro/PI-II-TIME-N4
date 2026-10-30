@@ -49,7 +49,7 @@
 					</div>
 					<button type="button" class="btn btn-lg primary-btn">
 						<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
-						Adicionar Tarefa
+						Adicionar Membro
 					</button>
 				</div>
 
@@ -61,8 +61,24 @@
 					</ul>
 				</div>
 
+				<div class="members-filters">
+					<label class="search-input">
+						<i data-lucide="search" class="icon-medium" style="color: var(--color-neutral-600)"></i>
+						<input id="member-search" type="search" placeholder="Buscar membros" aria-label="Buscar membros" />
+					</label>
+					<label class="member-activity-filter">
+						<span>Atividade</span>
+						<select id="member-activity">
+							<option value="">Todos os membros</option>
+							<option value="pendentes">Com tarefas pendentes</option>
+							<option value="concluidas">Concluíram todas as tarefas</option>
+						</select>
+					</label>
+					<p id="member-count" class="text-subtitle text-small" aria-live="polite"></p>
+				</div>
+
 				<!-- Grid de Membros -->
-				<div class="project-members-grid">
+				<div class="project-members-grid" id="project-members-grid">
 					<!-- Membro 1: Sophia Bennet -->
 					<div class="base-card member-card">
 						<div class="member-card-image-wrapper">
@@ -83,7 +99,7 @@
 							<div class="between align-center">
 								<div class="align-center gap-8">
 									<i data-lucide="check-circle-2" class="icon-small" style="color: var(--color-neutral-700)"></i>
-									<span class="text-subtitle font-inter text-tiny">Tarefas Concluidas</span>
+									<span class="text-subtitle font-inter text-tiny">Tarefas Concluídas</span>
 								</div>
 								<div class="member-card-counter font-inter text-regular">
 									<span class="text-primary">12</span><span class="text-primary-light">/22</span>
@@ -245,5 +261,6 @@
 		<script>
 			lucide.createIcons();
 		</script>
+		<script src="./project_members.js" defer></script>
 	</body>
 </html>

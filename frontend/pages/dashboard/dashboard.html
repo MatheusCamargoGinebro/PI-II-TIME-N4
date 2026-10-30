@@ -22,10 +22,10 @@
 			</nav>
 
 			<div class="align-center gap-16">
-				<button type="button" class="btn btn-lg primary-btn">
+				<a href="../demand/register_demand/register_demand.html" class="btn btn-lg primary-btn">
 					<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
 					Adicionar Tarefa
-				</button>
+				</a>
 
 				<div class="user-profile">
 					<div class="align-center gap-16">
@@ -67,9 +67,9 @@
 									Total de Tarefas
 								</p>
 							</div>
-							<div class="card-icon">
+							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
 								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="dashboard-metric-body">
 							<h1 class="text-primary">50</h1>
@@ -89,13 +89,13 @@
 								<div class="card-icon">
 									<i data-lucide="loader-circle" class="icon-small" style="color: var(--color-neutral-700)"></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">
+								<a href="../demand/demand_status/tarefas_abertas.html" class="text-neutral font-inter text-regular text-weight-medium">
 									Tarefas Abertas
-								</p>
+								</a>
 							</div>
-							<div class="card-icon">
+							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
 								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="dashboard-metric-body">
 							<h1 class="text-primary">34</h1>
@@ -136,13 +136,13 @@
 								<div class="card-icon">
 									<i data-lucide="circle-alert" class="icon-small" style="color: var(--color-neutral-700)"></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">
+								<a href="../demand/demand_status/tarefas_pendentes.html" class="text-neutral font-inter text-regular text-weight-medium">
 									Tarefas Pendentes
-								</p>
+								</a>
 							</div>
-							<div class="card-icon">
+							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
 								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="dashboard-metric-body">
 							<h1 class="text-primary">27</h1>
@@ -332,9 +332,9 @@
 									Tarefas Canceladas
 								</p>
 							</div>
-							<div class="card-icon">
+							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
 								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="dashboard-metric-body">
 							<h1 class="text-primary">0</h1>
@@ -379,9 +379,9 @@
 									Tarefas em revisão
 								</p>
 							</div>
-							<div class="card-icon">
+							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
 								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="dashboard-metric-body">
 							<h1 class="text-primary">7</h1>
@@ -426,9 +426,9 @@
 									Concluídas
 								</p>
 							</div>
-							<div class="card-icon">
+							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
 								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-accent-100)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="dashboard-metric-body">
 							<h1 style="color: var(--color-neutral-100)">16</h1>
@@ -479,11 +479,28 @@
 						</div>
 						
 						<div>
-							<ul class="tab-bar">
-								<li class="tab tab-active">Ver Todos</li>
-								<li class="tab">Ordem de Prioridade</li>
-								<li class="tab">Prazo mais proximo</li>
+							<ul class="tab-bar dashboard-task-tabs" aria-label="Ordenar tarefas">
+								<li><button type="button" class="tab tab-active" data-sort="default">Ver Todas</button></li>
+								<li><button type="button" class="tab" data-sort="priority">Ordem de Prioridade</button></li>
+								<li><button type="button" class="tab" data-sort="deadline">Prazo mais próximo</button></li>
 							</ul>
+						</div>
+
+						<div class="dashboard-task-filters">
+							<label class="search-input">
+								<i data-lucide="search" class="icon-medium" style="color: var(--color-neutral-600)"></i>
+								<input id="dashboard-task-search" type="search" placeholder="Buscar por pessoa, tarefa ou projeto" aria-label="Buscar tarefas" />
+							</label>
+							<label class="dashboard-task-status-filter">
+								<span>Status</span>
+								<select id="dashboard-task-status">
+									<option value="">Todos os status</option>
+									<option value="completa">Completa</option>
+									<option value="em revisão">Em revisão</option>
+									<option value="atrasada">Atrasada</option>
+								</select>
+							</label>
+							<p id="dashboard-task-count" class="text-subtitle text-small" aria-live="polite"></p>
 						</div>
 
 						<div class="dashboard-tasks-table-wrapper">
@@ -509,7 +526,7 @@
 												</div>
 											</div>
 										</td>
-										<td><span class="dashboard-task-cell">Tela Detalhes</span></td>
+										<td><a href="../demand/demand_details/demand_details.html" class="dashboard-task-cell">Tela Detalhes</a></td>
 										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
 										<td><span class="dashboard-task-cell">Set 02</span></td>
 										<td>
@@ -530,7 +547,7 @@
 												</div>
 											</div>
 										</td>
-										<td><span class="dashboard-task-cell">Cadastro de Demanda</span></td>
+										<td><a href="../demand/demand_details/demand_details.html" class="dashboard-task-cell">Cadastro de Demanda</a></td>
 										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
 										<td><span class="dashboard-task-cell">Set 02</span></td>
 										<td>
@@ -551,7 +568,7 @@
 												</div>
 											</div>
 										</td>
-										<td><span class="dashboard-task-cell">Cadastro de Demanda</span></td>
+										<td><a href="../demand/demand_details/demand_details.html" class="dashboard-task-cell">Cadastro de Demanda</a></td>
 										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
 										<td><span class="dashboard-task-cell">Set 02</span></td>
 										<td>
@@ -572,7 +589,7 @@
 												</div>
 											</div>
 										</td>
-										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
+										<td><a href="../demand/demand_details/demand_details.html" class="dashboard-task-cell">Projeto Inovador</a></td>
 										<td><span class="dashboard-task-cell">Projeto Inovador</span></td>
 										<td><span class="dashboard-task-cell">Set 02</span></td>
 										<td>
@@ -585,6 +602,7 @@
 									</tr>
 								</tbody>
 							</table>
+							<p id="dashboard-task-empty" class="dashboard-task-empty" hidden>Nenhuma tarefa encontrada.</p>
 						</div>
 					</div>
 				</div>
@@ -594,5 +612,6 @@
 		<script>
 			lucide.createIcons();
 		</script>
+		<script src="./dashboard.js" defer></script>
 	</body>
 </html>

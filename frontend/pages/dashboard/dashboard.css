@@ -1,5 +1,9 @@
 @import url(../../assets/styles/global.css);
 
+[hidden] {
+    display: none !important;
+}
+
 /* =============================================
    Estilos específicos da página de Dashboard
    ============================================= */
@@ -172,6 +176,49 @@
 .dashboard-tasks-table-wrapper {
     width: 100%;
     overflow-x: auto;
+}
+
+.dashboard-task-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 12px 0;
+}
+
+.dashboard-task-filters .search-input {
+    flex: 1 1 280px;
+    max-width: 438px;
+}
+
+.dashboard-task-status-filter,
+.member-activity-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-neutral-700);
+    font: 400 var(--text-small) 'Inter', sans-serif;
+}
+
+.dashboard-task-status-filter select,
+.member-activity-filter select {
+    min-height: 40px;
+    padding: 8px 32px 8px 12px;
+    border: 1px solid var(--color-neutral-400);
+    border-radius: 8px;
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-800);
+}
+
+.dashboard-task-tabs button {
+    border: 0;
+    font: inherit;
+}
+
+.dashboard-task-empty {
+    padding: 16px 12px;
+    color: var(--color-neutral-700);
+    font-family: 'Inter', sans-serif;
 }
 
 .dashboard-tasks-table {

@@ -1,5 +1,9 @@
 @import url(../../../assets/styles/global.css);
 
+[hidden] {
+    display: none !important;
+}
+
 /* =============================================
    Estilos específicos da página de Membros do Projeto
    ============================================= */
@@ -32,6 +36,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.members-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.members-filters .search-input {
+    flex: 1 1 280px;
+    max-width: 438px;
 }
 
 /* Grid com 4 colunas para os membros */

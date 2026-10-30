@@ -23,10 +23,10 @@
 			</nav>
 
 			<div class="align-center gap-16">
-				<button type="button" class="btn btn-lg primary-btn">
+				<a href="../../demand/register_demand/register_demand.html" class="btn btn-lg primary-btn">
 					<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
 					Adicionar Tarefa
-				</button>
+				</a>
 
 				<div class="user-profile">
 					<div class="align-center gap-16">
@@ -59,23 +59,23 @@
 
 				<!-- Filtros e busca -->
 				<div class="projects-toolbar">
-					<ul class="tab-bar">
-						<li class="tab tab-active">Todos</li>
-						<li class="tab">Vizualizados recentemente</li>
-						<li class="tab">Meus Projetos</li>
-						<li class="tab">Compartilhados comigo</li>
+					<ul class="tab-bar project-filter-tabs" aria-label="Filtrar projetos">
+						<li><button type="button" class="tab tab-active" data-filter="todos">Todos</button></li>
+						<li><button type="button" class="tab" data-filter="recentes">Visualizados recentemente</button></li>
+						<li><button type="button" class="tab" data-filter="meus">Meus projetos</button></li>
+						<li><button type="button" class="tab" data-filter="compartilhados">Compartilhados comigo</button></li>
 					</ul>
 
-					<div class="search-input">
+					<label class="search-input">
 						<i data-lucide="search" class="icon-medium" style="color: var(--color-neutral-600)"></i>
-						<input type="text" placeholder="Search" />
-					</div>
+						<input id="project-search" type="search" placeholder="Buscar projetos" aria-label="Buscar projetos" />
+					</label>
 				</div>
 
 				<!-- Lista de projetos -->
-				<div class="projects-list">
+				<div class="projects-list" id="projects-list">
 					<!-- Projeto 1 -->
-					<div class="project-card base-card">
+					<div class="project-card base-card" data-owner="meus" data-recent="true">
 						<div class="project-card-header">
 							<a href="../project_details/project_details.html" class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</a>
 							<div class="project-card-menu">
@@ -129,7 +129,7 @@
 					</div>
 
 					<!-- Projeto 2 (com indicador de novo) -->
-					<div class="project-card base-card">
+					<div class="project-card base-card" data-owner="meus" data-recent="true">
 						<div class="project-card-header">
 							<div class="align-center gap-8">
 								<a href="../project_details/project_details.html" class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</a>
@@ -186,7 +186,7 @@
 					</div>
 
 					<!-- Projeto 3 (0%) -->
-					<div class="project-card base-card">
+					<div class="project-card base-card" data-owner="meus" data-recent="false">
 						<div class="project-card-header">
 							<a href="../project_details/project_details.html" class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</a>
 							<div class="project-card-menu">
@@ -240,7 +240,7 @@
 					</div>
 
 					<!-- Projeto 4 -->
-					<div class="project-card base-card">
+					<div class="project-card base-card" data-owner="compartilhados" data-recent="false">
 						<div class="project-card-header">
 							<a href="../project_details/project_details.html" class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</a>
 							<div class="project-card-menu">
@@ -294,7 +294,7 @@
 					</div>
 
 					<!-- Projeto 5 -->
-					<div class="project-card base-card">
+					<div class="project-card base-card" data-owner="compartilhados" data-recent="false">
 						<div class="project-card-header">
 							<a href="../project_details/project_details.html" class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</a>
 							<div class="project-card-menu">
@@ -348,7 +348,7 @@
 					</div>
 
 					<!-- Projeto 6 -->
-					<div class="project-card base-card">
+					<div class="project-card base-card" data-owner="compartilhados" data-recent="false">
 						<div class="project-card-header">
 							<a href="../project_details/project_details.html" class="text-neutral text-medium text-weight-medium font-inter">Projeto Inovador</a>
 							<div class="project-card-menu">
@@ -401,9 +401,11 @@
 						</div>
 					</div>
 				</div>
+				<p id="projects-empty-state" class="projects-empty-state" hidden>Nenhum projeto encontrado.</p>
 			</div>
 		</main>
 
+		<script src="./projects_list.js" defer></script>
 		<script>
 			lucide.createIcons();
 		</script>

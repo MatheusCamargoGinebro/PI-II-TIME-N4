@@ -1,5 +1,9 @@
 @import url(../../../assets/styles/global.css);
 
+[hidden] {
+    display: none !important;
+}
+
 /* =============================================
    Estilos específicos da página de Projetos
    ============================================= */
@@ -34,6 +38,27 @@
     align-items: center;
     padding-top: 16px;
     padding-bottom: 16px;
+}
+
+.project-filter-tabs button {
+    border: 0;
+    font: inherit;
+}
+
+.project-filter-tabs .tab-active {
+    background-color: var(--color-neutral-200);
+}
+
+.projects-toolbar .search-input {
+    flex: 0 1 320px;
+    max-width: 100%;
+}
+
+.projects-empty-state {
+    padding: 24px;
+    color: var(--color-neutral-700);
+    font-family: 'Inter', sans-serif;
+    text-align: center;
 }
 
 /* Lista de cards de projetos */
@@ -97,4 +122,3 @@
 .project-card-badge-indigo {
     background-color: #6155F5;
 }
-

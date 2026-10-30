@@ -45,10 +45,10 @@
 						</div>
 						<h2 class="text-primary">Projeto Inovador</h2>
 					</div>
-					<button type="button" class="btn btn-lg primary-btn">
+					<a href="../../demand/register_demand/register_demand.html" class="btn btn-lg primary-btn">
 						<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
 						Adicionar Tarefa
-					</button>
+					</a>
 				</div>
 
 				<!-- Abas (Painel / Membros) -->
@@ -70,9 +70,9 @@
 								</div>
 								<p class="text-neutral font-inter text-regular text-weight-medium">Total de Tarefas</p>
 							</div>
-							<div class="card-icon">
+							<a href="../../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
 								<i data-lucide="settings" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="project-metric-body">
 							<h1 class="text-primary">50</h1>
@@ -90,11 +90,11 @@
 								<div class="card-icon">
 									<i data-lucide="loader-circle" class="icon-small" style="color: var(--color-neutral-700)"></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">Tarefas Abertas</p>
+								<a href="../../demand/demand_status/tarefas_abertas.html" class="text-neutral font-inter text-regular text-weight-medium">Tarefas Abertas</a>
 							</div>
-							<div class="card-icon">
+							<a href="../../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver tarefas abertas">
 								<i data-lucide="settings" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="project-metric-body">
 							<h1 class="text-primary">34</h1>
@@ -133,11 +133,11 @@
 								<div class="card-icon">
 									<i data-lucide="circle-alert" class="icon-small" style="color: var(--color-neutral-700)"></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">Tarefas Pendentes</p>
+								<a href="../../demand/demand_status/tarefas_pendentes.html" class="text-neutral font-inter text-regular text-weight-medium">Tarefas Pendentes</a>
 							</div>
-							<div class="card-icon">
+							<a href="../../demand/demand_status/tarefas_pendentes.html" class="card-icon" aria-label="Ver tarefas pendentes">
 								<i data-lucide="settings" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="project-metric-body">
 							<h1 class="text-primary">27</h1>
@@ -176,11 +176,11 @@
 								<div class="card-icon">
 									<i data-lucide="circle-check" class="icon-small" style="color: var(--color-accent-400)"></i>
 								</div>
-								<p class="text-weight-medium font-inter text-regular" style="color: var(--color-neutral-100)">Tarefas Concluídas</p>
+								<a href="../../demand/demand_status/tarefas_concluidas.html" class="text-weight-medium font-inter text-regular" style="color: var(--color-neutral-100)">Tarefas Concluídas</a>
 							</div>
-							<div class="card-icon">
+							<a href="../../demand/demand_status/tarefas_concluidas.html" class="card-icon" aria-label="Ver tarefas concluídas">
 								<i data-lucide="settings" class="icon-small" style="color: var(--color-accent-400)"></i>
-							</div>
+							</a>
 						</div>
 						<div class="project-metric-body">
 							<h1 style="color: var(--color-neutral-100)">16</h1>
@@ -227,8 +227,16 @@
 						</div>
 					</div>
 
+					<div class="project-board-toolbar">
+						<label class="search-input">
+							<i data-lucide="search" class="icon-medium" style="color: var(--color-neutral-600)"></i>
+							<input id="task-board-search" type="search" placeholder="Buscar tarefas ou responsáveis" aria-label="Buscar tarefas ou responsáveis" />
+						</label>
+						<p class="text-subtitle text-small">Arraste uma tarefa para mudar o status.</p>
+					</div>
+
 					<!-- Card 6: Coluna Em Andamento -->
-					<div class="base-card project-board-column">
+					<div class="base-card project-board-column" data-task-status="andamento">
 						<div class="project-board-header">
 							<div class="align-center gap-8">
 								<div class="card-icon">
@@ -243,10 +251,10 @@
 						</div>
 
 						<div class="project-task-list">
-							<div class="project-task-item">
+							<div class="project-task-item" data-task-id="dashboard" draggable="true" tabindex="0" aria-label="Tarefa Dashboard. Arraste para mudar o status.">
 								<div class="between align-center">
 									<div>
-										<p class="text-neutral font-inter text-regular text-weight-medium">Dashboard</p>
+										<a href="../../demand/demand_details/demand_details.html" class="text-neutral font-inter text-regular text-weight-medium">Dashboard</a>
 										<div class="align-center gap-4 text-subtitle text-tiny">
 											<span>Terça</span>
 											<span class="dot-separator"></span>
@@ -268,7 +276,7 @@
 					</div>
 
 					<!-- Card 7: Coluna Em Revisão -->
-					<div class="base-card project-board-column">
+					<div class="base-card project-board-column" data-task-status="revisao">
 						<div class="project-board-header">
 							<div class="align-center gap-8">
 								<div class="card-icon">
@@ -288,7 +296,7 @@
 					</div>
 
 					<!-- Card 8: Coluna Canceladas -->
-					<div class="base-card project-board-column">
+					<div class="base-card project-board-column" data-task-status="cancelada">
 						<div class="project-board-header">
 							<div class="align-center gap-8">
 								<div class="card-icon">
@@ -303,10 +311,10 @@
 						</div>
 
 						<div class="project-task-list">
-							<div class="project-task-item">
+							<div class="project-task-item" data-task-id="relatorio" draggable="true" tabindex="0" aria-label="Tarefa Relatório. Arraste para mudar o status.">
 								<div class="between align-center">
 									<div>
-										<p class="text-neutral font-inter text-regular text-weight-medium">Relatorio</p>
+										<a href="../../demand/demand_details/demand_details.html" class="text-neutral font-inter text-regular text-weight-medium">Relatório</a>
 										<div class="align-center gap-4 text-subtitle text-tiny">
 											<span>Terça</span>
 											<span class="dot-separator"></span>
@@ -328,13 +336,13 @@
 					</div>
 
 					<!-- Card 9: Coluna Tarefas Concluidas -->
-					<div class="base-card project-board-column">
+					<div class="base-card project-board-column" data-task-status="concluida">
 						<div class="project-board-header">
 							<div class="align-center gap-8">
 								<div class="card-icon">
 									<i data-lucide="circle-check" class="icon-small" style="color: var(--color-neutral-700)"></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">Tarefas Concluidas</p>
+								<a href="../../demand/demand_status/tarefas_concluidas.html" class="text-neutral font-inter text-regular text-weight-medium">Tarefas Concluídas</a>
 								<span class="badge-dot badge-green"></span>
 							</div>
 							<div class="card-icon">
@@ -353,5 +361,6 @@
 		<script>
 			lucide.createIcons();
 		</script>
+		<script src="./project_details.js" defer></script>
 	</body>
 </html>
