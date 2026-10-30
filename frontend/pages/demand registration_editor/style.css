@@ -711,3 +711,40 @@ select option {
         width: 100%;
     }
 }
+
+/* Mensagens e destaques da validação do formulário */
+.mensagem-erro {
+    display: block;
+    min-height: 0;
+    margin-top: 6px;
+    color: #b42318;
+    font-size: 13px;
+}
+
+.mensagem-erro:empty {
+    display: none;
+}
+
+.campo-invalido {
+    border-color: #b42318 !important;
+    outline-color: #b42318;
+}
+
+.mensagem-geral {
+    text-align: center;
+    width: 100%;
+    margin: 15px auto;
+    box-sizing: border-box;
+}
+
+.mensagem-geral:empty {
+    display: none;
+}
+
+.mensagem-geral.erro {
+    color: #b42318;
+}
+
+.mensagem-geral.sucesso {
+    color: #18794e;
+}

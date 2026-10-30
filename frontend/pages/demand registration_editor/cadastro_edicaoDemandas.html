@@ -48,11 +48,9 @@
             </a>
 
 
-            <a href="#" class="nav-link">
-                Dashboard
-            </a>
+            <a href="..\dashboard\dashboard.html">Dashboard</a>
 
-            <a href="#" class="nav-link active">
+            <a href="..\project\project_details\project_details.html" class="nav-link active">
                 Projetos
             </a>
 
@@ -113,7 +111,7 @@
             </h1>
 
 
-            <form>
+            <form id="demanda-form" novalidate>
 
                 <!-- nome -->
 
@@ -127,7 +125,12 @@
                         type="text"
                         id="nome"
                         name="nome"
-                        placeholder="Placeholder">
+                        placeholder="Placeholder"
+                        minlength="3"
+                        maxlength="100"
+                        required>
+
+                    <small class="mensagem-erro" id="erro-nome"></small>
 
                 </div>
 
@@ -143,7 +146,12 @@
                     <textarea
                         id="descricao"
                         name="descricao"
-                        placeholder="Type your message..."></textarea>
+                        placeholder="Type your message..."
+                        minlength="10"
+                        maxlength="500"
+                        required></textarea>
+
+                    <small class="mensagem-erro" id="erro-descricao"></small>
 
                 </div>
 
@@ -162,7 +170,8 @@
 
                             <select
                                 id="prioridade"
-                                name="prioridade">
+                                name="prioridade"
+                                required>
 
                                 <option value="" selected disabled>
                                     Select one...
@@ -201,6 +210,8 @@
 
                         </div>
 
+                        <small class="mensagem-erro" id="erro-prioridade"></small>
+
                     </div>
 
 
@@ -214,7 +225,8 @@
 
                             <select
                                 id="status"
-                                name="status">
+                                name="status"
+                                required>
 
                                 <option value="" selected disabled>
                                     Select one...
@@ -253,6 +265,8 @@
 
                         </div>
 
+                        <small class="mensagem-erro" id="erro-status"></small>
+
                     </div>
 
                 </div>
@@ -272,7 +286,8 @@
 
                             <select
                                 id="responsavel"
-                                name="responsavel">
+                                name="responsavel"
+                                required>
 
                                 <option value="" selected disabled>
                                     Select one...
@@ -311,10 +326,14 @@
 
                         </div>
 
+                        <small class="mensagem-erro" id="erro-responsavel"></small>
+
                     </div>
 
                 </div>
 
+
+                <p id="mensagem-formulario" class="mensagem-geral" role="status" aria-live="polite"></p>
 
                 <!-- botões -->
 
@@ -322,7 +341,8 @@
 
                     <button
                         type="button"
-                        class="button button-cancel">
+                        class="button button-cancel"
+                        id="botao-cancelar">
 
                         <svg viewBox="0 0 24 24">
 
@@ -384,6 +404,8 @@
         </section>
 
     </main>
+
+    <script src="validacao.js" defer></script>
 
 </body>
 
