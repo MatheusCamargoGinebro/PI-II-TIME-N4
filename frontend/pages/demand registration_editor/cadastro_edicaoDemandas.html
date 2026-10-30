@@ -7,94 +7,36 @@
 
     <title>TaskOps - Cadastro/Edição de Demanda</title>
 
+    <link rel="stylesheet" href="../../assets/styles/global.css">
     <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
 
     <!-- barra superior -->
 
-    <header class="topbar">
+    <header class="header">
+        <nav class="nav">
+            <img src="../../assets/images/logo.png" alt="TaskOps" />
 
-        <nav class="navbar">
-
-            <a href="#" class="brand">
-
-                <span class="brand-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 6.5h9.5M4 11.5h5.5M4 16.5h8"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"/>
-
-                        <path d="M15 14l2 2 4-5"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"/>
-
-                        <path d="M3 3h14v4"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="1.8"
-                              stroke-linecap="round"/>
-                    </svg>
-                </span>
-
-                <span>TaskOps</span>
-
-            </a>
-
-
-            <a href="..\dashboard\dashboard.html">Dashboard</a>
-
-            <a href="..\project\project_details\project_details.html" class="nav-link active">
-                Projetos
-            </a>
-
+            <ul class="nav-list">
+                <li><a href="../dashboard/dashboard.html" class="btn btn-lg ghost-btn">Dashboard</a></li>
+                <li><a href="../project/projects_list/projects_list.html" class="btn btn-lg primary-btn">Projetos</a></li>
+            </ul>
         </nav>
 
-
-        <!-- usuário -->
-
-        <div class="user-menu">
-
-            <div class="avatar">
-                <span>👩🏻‍💼</span>
+        <div class="user-profile">
+            <div class="align-center gap-16">
+                <img class="user-profile-avatar" src="../../assets/images/user.png" alt="Avatar" />
+                <div class="user-profile-info">
+                    <p class="user-profile-name text-large">Fulano da S.</p>
+                    <p class="user-profile-email font-inter text-tiny text-subtitle">fulano@email.com</p>
+                </div>
             </div>
-
-            <div class="user-info">
-
-                <strong>
-                    Fulano da S.
-                </strong>
-
-                <span>
-                    fulano@email.com
-                </span>
-
-            </div>
-
-            <button
-                type="button"
-                class="dropdown-button"
-                aria-label="Abrir menu">
-
-                <svg viewBox="0 0 24 24">
-                    <path d="m7 9 5 5 5-5"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                </svg>
-
-            </button>
-
+            <i data-lucide="chevron-down" class="icon-medium" style="color: var(--color-primary-500)"></i>
         </div>
-
     </header>
 
 
@@ -406,7 +348,9 @@
     </main>
 
     <script src="validacao.js" defer></script>
-
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

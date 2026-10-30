@@ -1,1 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>TaskOps - Cadastro de Demanda</title>
 
+		<link rel="stylesheet" href="./register_demand.css" />
+		<!-- Lucide Icons -->
+		<script src="https://unpkg.com/lucide@latest"></script>
+	</head>
+
+	<body>
+		<header class="header">
+			<nav class="nav">
+				<img src="../../../assets/images/logo.png" alt="TaskOps" />
+
+				<ul class="nav-list">
+					<li><a href="../../dashboard/dashboard.html" class="btn btn-lg ghost-btn">Dashboard</a></li>
+					<li><a href="../../project/projects_list/projects_list.html" class="btn btn-lg primary-btn">Projetos</a></li>
+				</ul>
+			</nav>
+
+			<div class="user-profile">
+				<div class="align-center gap-16">
+					<img class="user-profile-avatar" src="../../../assets/images/user.png" alt="Avatar" />
+					<div class="user-profile-info">
+						<p class="user-profile-name text-large">Fulano da S.</p>
+						<p class="user-profile-email font-inter text-tiny text-subtitle">fulano@email.com</p>
+					</div>
+				</div>
+				<i data-lucide="chevron-down" class="icon-medium" style="color: var(--color-primary-500)"></i>
+			</div>
+		</header>
+
+		<main class="page">
+			<section class="form-card">
+				<h1>Cadastro de Demanda</h1>
+
+				<form id="demanda-form" novalidate>
+					<!-- Nome -->
+					<div class="form-group name-group">
+						<label for="nome">Nome</label>
+						<input
+							type="text"
+							id="nome"
+							name="nome"
+							class="form-control"
+							placeholder="Título da demanda"
+							minlength="3"
+							maxlength="100"
+							required
+						/>
+						<small class="mensagem-erro" id="erro-nome"></small>
+					</div>
+
+					<!-- Descrição -->
+					<div class="form-group description-group">
+						<label for="descricao">Descrição</label>
+						<textarea
+							id="descricao"
+							name="descricao"
+							class="form-control"
+							placeholder="Descreva a demanda em detalhes..."
+							minlength="10"
+							maxlength="500"
+							required
+						></textarea>
+						<small class="mensagem-erro" id="erro-descricao"></small>
+					</div>
+
+					<!-- Prioridade e Status -->
+					<div class="fields-row">
+						<div class="form-group">
+							<label for="prioridade">Prioridade</label>
+							<div class="select-wrapper">
+								<select id="prioridade" name="prioridade" class="form-control" required>
+									<option value="" selected disabled>Selecione uma opção...</option>
+									<option value="baixa">Baixa</option>
+									<option value="media">Média</option>
+									<option value="alta">Alta</option>
+								</select>
+								<span class="select-arrow">
+									<i data-lucide="chevron-down" class="icon-small"></i>
+								</span>
+							</div>
+							<small class="mensagem-erro" id="erro-prioridade"></small>
+						</div>
+
+						<div class="form-group">
+							<label for="status">Status</label>
+							<div class="select-wrapper">
+								<select id="status" name="status" class="form-control" required>
+									<option value="" selected disabled>Selecione uma opção...</option>
+									<option value="pendente">Pendente</option>
+									<option value="andamento">Em andamento</option>
+									<option value="concluido">Concluído</option>
+								</select>
+								<span class="select-arrow">
+									<i data-lucide="chevron-down" class="icon-small"></i>
+								</span>
+							</div>
+							<small class="mensagem-erro" id="erro-status"></small>
+						</div>
+					</div>
+
+					<!-- Responsável -->
+					<div class="responsible-group">
+						<div class="form-group">
+							<label for="responsavel">Responsável</label>
+							<div class="select-wrapper">
+								<select id="responsavel" name="responsavel" class="form-control" required>
+									<option value="" selected disabled>Selecione uma opção...</option>
+									<option value="fulano">Fulano da S.</option>
+									<option value="ciclano">Ciclano</option>
+									<option value="beltrano">Beltrano</option>
+								</select>
+								<span class="select-arrow">
+									<i data-lucide="chevron-down" class="icon-small"></i>
+								</span>
+							</div>
+							<small class="mensagem-erro" id="erro-responsavel"></small>
+						</div>
+					</div>
+
+					<p id="mensagem-formulario" class="mensagem-geral" role="status" aria-live="polite"></p>
+
+					<!-- Botões -->
+					<div class="actions">
+						<button type="button" class="btn-cancel" id="botao-cancelar">
+							<i data-lucide="x" class="icon-small"></i>
+							<span>Cancelar</span>
+						</button>
+
+						<button type="submit" class="btn-save">
+							<i data-lucide="save" class="icon-small"></i>
+							<span>Salvar</span>
+						</button>
+					</div>
+				</form>
+			</section>
+		</main>
+
+		<script src="./register_demand.js" defer></script>
+		<script>
+			lucide.createIcons();
+		</script>
+	</body>
+</html>
