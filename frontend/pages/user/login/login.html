@@ -13,23 +13,24 @@
   <main >
 
     <section class="lado-form">
-      <form class="form">
+      <form class="form" novalidate>
         <img src="img/logo.png" alt="Logo" class="logo">
         <p class="text-large text-weight-semibold text-subtitle">Entre na sua conta abaixo.</p>
         <h1 class="h1 text-primary">Bem-vindo de volta!</h1>
         
 
         <label class="text-label text-regular font-inter" for="email">Digite seu endereço de e-mail:</label>
-        <input class="input" type="email" id="email" required placeholder="fulano@gmail.com" autocomplete="email">
-        <div id="erroEmail" class="invalid-feedback"></div>
+        <input class="input" type="email" id="email" required placeholder="fulano@gmail.com" autocomplete="email" aria-describedby="erroEmail">
+        <div id="erroEmail" class="invalid-feedback" aria-live="polite"></div>
 
 
         <label class="text-label text-regular font-inter" for="senha">Digite sua senha:</label>
-        <input class="input" type="password" id="senha" placeholder="••••••••" required>
-        <div class="form-text">Mínimo de 8 caracteres, 1 Letra maiúscula, minúscula e 1 Caractere especial</div>
-        <div id="erroSenha" class="invalid-feedback"></div>        
+        <input class="input" type="password" id="senha" placeholder="••••••••" required autocomplete="current-password" aria-describedby="ajudaSenha erroSenha">
+       
+        <div id="erroSenha" class="invalid-feedback" ></div>
 
         <button class="btn btn-full btn-lg primary-btn h6" type="submit">Entrar</button>
+        <p id="mensagemFormulario" class="mensagem-formulario" role="status" aria-live="polite"></p>
 
         <a class="link" href="../register/register.html" >Ainda não tem uma conta? Crie uma clicando aqui.</a>
       </form>
@@ -40,5 +41,6 @@
     </section>
 
   </main>
+  <script src="login.js"></script>
 </body>
 </html>

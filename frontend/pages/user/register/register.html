@@ -15,7 +15,7 @@
   <main>
 
     <section class="lado-form">
-      <form class="form">
+      <form class="form" novalidate>
         <div class=" align-center  gap-8">
         
         <a href="../login/login.html" class="voltar"><i size="24" data-lucide="arrow-left" ></i></a>
@@ -26,15 +26,20 @@
         <h1 class="h1 text-primary">Cadastre-se</h1>
 
         <label class="text-label text-regular font-inter" for="nome">Digite seu nome:</label>
-        <input class="input" type="text" id="nome" placeholder="Fulano da Silva" required>
+        <input class="input" type="text" id="nome" placeholder="Fulano da Silva" autocomplete="name" maxlength="100" required aria-describedby="erroNome">
+        <div id="erroNome" class="invalid-feedback" aria-live="polite"></div>
 
         <label class="text-label text-regular font-inter" for="email">Digite seu endereço de e-mail:</label>
-        <input class="input" type="email" id="email" placeholder="fulano@gmail.com" required>
+        <input class="input" type="email" id="email" placeholder="fulano@gmail.com" autocomplete="email" required aria-describedby="erroEmail">
+        <div id="erroEmail" class="invalid-feedback" aria-live="polite"></div>
 
         <label class="text-label text-regular font-inter" for="senha">Crie sua senha:</label>
-        <input class="input" type="password" id="senha" placeholder="••••••••" required>
+        <input class="input" type="password" id="senha" placeholder="••••••••" autocomplete="new-password" required aria-describedby="ajudaSenha erroSenha">
+      
+        <div id="erroSenha" class="invalid-feedback" ></div>
 
         <button class="btn btn-full btn-lg primary-btn h6" type="submit">Criar conta</button>
+        <p id="mensagemFormulario" class="mensagem-formulario" role="status" aria-live="polite"></p>
       </form>
     </section>
 
@@ -46,5 +51,6 @@
   <script >
 			lucide.createIcons();
 		</script>
+  <script src="register.js"></script>
 </body>
 </html>

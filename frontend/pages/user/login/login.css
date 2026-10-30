@@ -24,6 +24,30 @@ main{
   flex-direction: column;
 }
 
+.invalid-feedback {
+  color: #b42318;
+  font-size: 12px;
+  margin: -12px 0 12px;
+}
+
+.invalid-feedback:empty {
+  display: none;
+}
+
+.input.is-invalid {
+  border-color: #b42318;
+}
+
+.mensagem-formulario {
+  color: #006b6b;
+  font-size: 14px;
+  text-align: center;
+}
+
+.mensagem-formulario:empty {
+  display: none;
+}
+
 .logo {
   width: 90px;
   margin-bottom: 24px;
