@@ -1,38 +1,12 @@
-/* 
-INSERT automático do banco de dados para testes.
-ARQUIVO GERADO POR IA, APENAS PARA VALIDAÇÕES!!!!
- */
--- =====================================================================
--- TABELA AUXILIAR DE NÚMEROS (temporária, some ao fechar a conexão)
--- =====================================================================
-CREATE TEMPORARY TABLE
-    numbers (n INT PRIMARY KEY);
+USE TaskOps;
 
+-- ==========================================
+-- 1. USUÁRIOS (12 registros)
+-- Senha: 60 caracteres A
+-- ==========================================
 INSERT INTO
-    numbers (n)
-WITH RECURSIVE
-    seq AS (
-        SELECT
-            1 AS n
-        UNION ALL
-        SELECT
-            n + 1
-        FROM
-            seq
-        WHERE
-            n < 100
-    )
-SELECT
-    n
-FROM
-    seq;
-
--- =====================================================================
--- USUÁRIOS
--- =====================================================================
--- 8 usuários fixos (IDs 1 a 8), fáceis de usar em testes manuais
-INSERT INTO
-    user(
+    `user` (
+        user_id,
         name,
         email,
         password,
@@ -41,208 +15,162 @@ INSERT INTO
     )
 VALUES
     (
-        'Ana Souza',
-        'ana.souza@taskops.com',
+        1,
+        'Carlos Henrique',
+        'carlos@taskops.com',
         REPEAT ('A', 60),
         NULL,
         'Administrador'
     ),
     (
-        'Bruno Lima',
-        'bruno.lima@taskops.com',
+        2,
+        'Mariana Oliveira',
+        'mariana@taskops.com',
         REPEAT ('A', 60),
         NULL,
         'Lider de projeto'
     ),
     (
-        'Carla Mendes',
-        'carla.mendes@taskops.com',
+        3,
+        'Rafael Santos',
+        'rafael@taskops.com',
         REPEAT ('A', 60),
         NULL,
         'Lider de projeto'
     ),
     (
-        'Diego Ferreira',
-        'diego.ferreira@taskops.com',
+        4,
+        'Ana Beatriz',
+        'ana@taskops.com',
+        REPEAT ('A', 60),
+        NULL,
+        'Lider de projeto'
+    ),
+    (
+        5,
+        'Lucas Ferreira',
+        'lucas@taskops.com',
+        REPEAT ('A', 60),
+        NULL,
+        'Lider de projeto'
+    ),
+    (
+        6,
+        'Juliana Costa',
+        'juliana@taskops.com',
+        REPEAT ('A', 60),
+        NULL,
+        'Lider de projeto'
+    ),
+    (
+        7,
+        'Pedro Almeida',
+        'pedro@taskops.com',
         REPEAT ('A', 60),
         NULL,
         'Membro de projeto'
     ),
     (
-        'Elisa Rocha',
-        'elisa.rocha@taskops.com',
+        8,
+        'Gabriela Souza',
+        'gabriela@taskops.com',
         REPEAT ('A', 60),
         NULL,
         'Membro de projeto'
     ),
     (
-        'Felipe Alves',
-        'felipe.alves@taskops.com',
+        9,
+        'Felipe Rodrigues',
+        'felipe@taskops.com',
         REPEAT ('A', 60),
         NULL,
         'Membro de projeto'
     ),
     (
-        'Gabriela Costa',
-        'gabriela.costa@taskops.com',
+        10,
+        'Beatriz Lima',
+        'beatriz@taskops.com',
         REPEAT ('A', 60),
         NULL,
         'Membro de projeto'
     ),
     (
-        'Henrique Martins',
-        'henrique.martins@taskops.com',
+        11,
+        'Thiago Martins',
+        'thiago@taskops.com',
+        REPEAT ('A', 60),
+        NULL,
+        'Membro de projeto'
+    ),
+    (
+        12,
+        'Camila Ribeiro',
+        'camila@taskops.com',
         REPEAT ('A', 60),
         NULL,
         'Membro de projeto'
     );
 
--- +42 usuários gerados (IDs 9 a 50): 4 líderes e 38 membros
+-- ==========================================
+-- 2. PROJETOS (5 registros)
+-- ==========================================
 INSERT INTO
-    user(
-        name,
-        email,
-        password,
-        profile_pic,
-        authority_level
-    )
-SELECT
-    CONCAT(
-        ELT(
-            1 + MOD(n * 7, 20),
-            'Ana',
-            'Bruno',
-            'Carla',
-            'Diego',
-            'Elisa',
-            'Felipe',
-            'Gabriela',
-            'Henrique',
-            'Isabela',
-            'João',
-            'Karina',
-            'Lucas',
-            'Mariana',
-            'Nicolas',
-            'Olívia',
-            'Pedro',
-            'Quésia',
-            'Rafael',
-            'Sofia',
-            'Thiago'
-        ),
-        ' ',
-        ELT(
-            1 + MOD(n * 11 + FLOOR(n / 20) * 3, 20),
-            'Silva',
-            'Santos',
-            'Oliveira',
-            'Pereira',
-            'Rodrigues',
-            'Almeida',
-            'Nascimento',
-            'Carvalho',
-            'Gomes',
-            'Ribeiro',
-            'Barbosa',
-            'Moreira',
-            'Cardoso',
-            'Teixeira',
-            'Araújo',
-            'Dias',
-            'Castro',
-            'Pinto',
-            'Correia',
-            'Batista'
-        )
-    ),
-    CONCAT('usuario', LPAD(n + 8, 3, '0'), '@taskops.com'),
-REPEAT ('A', 60),
-NULL,
-IF(n <= 4, 'Lider de projeto', 'Membro de projeto')
-FROM
-    numbers
-WHERE
-    n <= 42;
-
--- =====================================================================
--- PROJETOS
--- =====================================================================
-INSERT INTO
-    project (TITLE)
+    project (project_id, TITLE)
 VALUES
-    ('Redesign do Website Institucional'),
-    ('Aplicativo Mobile de Vendas'),
-    ('Migração para Nuvem'),
-    ('Sistema de Recursos Humanos');
+    (1, 'TaskOps - Sistema de Gerenciamento'),
+    (2, 'Desenvolvimento de Aplicativo Mobile'),
+    (3, 'Portal Institucional'),
+    (4, 'Sistema de Controle de Estoque'),
+    (5, 'Infraestrutura e Segurança');
 
--- +11 projetos gerados (IDs 5 a 15)
+-- ==========================================
+-- 3. USUÁRIOS DOS PROJETOS (25 registros)
+-- fk_creator_id = usuário responsável por adicionar
+-- ==========================================
 INSERT INTO
-    project (TITLE)
-SELECT
-    ELT(
-        n,
-        'Portal do Cliente',
-        'Sistema de Estoque',
-        'Plataforma de E-learning',
-        'Dashboard de BI',
-        'API de Integração com Parceiros',
-        'Automação de Marketing',
-        'Sistema de Help Desk',
-        'Reestruturação do ERP',
-        'Aplicativo de Entregas',
-        'Segurança e Compliance (LGPD)',
-        'Chatbot de Atendimento'
-    )
-FROM
-    numbers
-WHERE
-    n <= 11;
-
--- =====================================================================
--- MEMBROS DOS PROJETOS
--- =====================================================================
--- Projetos 1 a 4: membros fixos
-INSERT INTO
-    project_user (fk_project_id, fk_user_id)
+    project_user (fk_project_id, fk_user_id, fk_creator_id)
 VALUES
-    (1, 2),
-    (1, 4),
-    (1, 5),
-    (1, 6),
-    (2, 3),
-    (2, 5),
-    (2, 7),
-    (2, 8),
-    (3, 2),
-    (3, 3),
-    (3, 6),
-    (3, 8),
-    (4, 3),
-    (4, 4),
-    (4, 7);
+    -- Projeto 1
+    (1, 2, 1),
+    (1, 7, 2),
+    (1, 8, 2),
+    (1, 9, 2),
+    (1, 10, 2),
+    -- Projeto 2
+    (2, 3, 1),
+    (2, 7, 3),
+    (2, 8, 3),
+    (2, 11, 3),
+    (2, 12, 3),
+    -- Projeto 3
+    (3, 4, 1),
+    (3, 9, 4),
+    (3, 10, 4),
+    (3, 11, 4),
+    (3, 12, 4),
+    -- Projeto 4
+    (4, 5, 1),
+    (4, 7, 5),
+    (4, 8, 5),
+    (4, 10, 5),
+    (4, 12, 5),
+    -- Projeto 5
+    (5, 6, 1),
+    (5, 8, 6),
+    (5, 9, 6),
+    (5, 11, 6),
+    (5, 12, 6);
 
--- Projetos 5 a 15: ~10 membros cada, distribuídos por regra determinística
-INSERT IGNORE INTO
-    project_user (fk_project_id, fk_user_id)
-SELECT
-    p.project_id,
-    u.user_id
-FROM
-    project p
-    JOIN user u ON MOD(u.user_id + p.project_id * 3, 5) = 0
-WHERE
-    p.project_id > 4;
-
--- =====================================================================
--- TAREFAS
--- =====================================================================
--- 17 tarefas fixas (IDs 1 a 17)
+-- ==========================================
+-- 4. TAREFAS (25 registros)
+-- ==========================================
 INSERT INTO
     task (
+        task_id,
         title,
         description,
         priority,
+        status,
         creation_date,
         due_date,
         fk_project_id,
@@ -251,617 +179,920 @@ INSERT INTO
 VALUES
     -- Projeto 1
     (
-        'Definir paleta de cores',
-        'Escolher paleta alinhada à identidade visual da empresa.',
-        'MEDIA',
-        '2026-09-01 09:00:00',
-        '2026-09-15 18:00:00',
         1,
-        4
-    ),
-    (
-        'Criar wireframes da home',
-        'Desenvolver wireframes de média fidelidade da página inicial.',
+        'Criar estrutura do banco de dados',
+        'Desenvolver o modelo relacional e implementar as tabelas principais.',
         'ALTA',
-        '2026-09-02 10:30:00',
-        '2026-09-20 18:00:00',
+        'CONCLUIDA',
+        DATE_SUB(NOW(), INTERVAL 20 DAY),
+        DATE_SUB(NOW(), INTERVAL 10 DAY),
         1,
-        5
+        7
     ),
     (
-        'Implementar menu responsivo',
-        'Codificar o menu de navegação com suporte a mobile.',
+        2,
+        'Implementar autenticação',
+        'Criar sistema de login, registro e validação de usuários.',
+        'CRITICA',
+        'EM ANDAMENTO',
+        DATE_SUB(NOW(), INTERVAL 12 DAY),
+        DATE_ADD(NOW(), INTERVAL 3 DAY),
+        1,
+        8
+    ),
+    (
+        3,
+        'Desenvolver gerenciamento de projetos',
+        'Implementar operações de criação, edição e exclusão de projetos.',
+        'ALTA',
+        'EM REVISAO',
+        DATE_SUB(NOW(), INTERVAL 8 DAY),
+        DATE_ADD(NOW(), INTERVAL 2 DAY),
+        1,
+        9
+    ),
+    (
+        4,
+        'Criar sistema de notificações',
+        'Implementar notificações para eventos importantes do sistema.',
         'MEDIA',
-        '2026-09-10 14:00:00',
-        '2026-10-05 18:00:00',
+        'ABERTA',
+        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        DATE_ADD(NOW(), INTERVAL 12 DAY),
         1,
-        6
+        10
     ),
     (
-        'Revisar textos institucionais',
-        'Revisão ortográfica e de tom de voz de todas as páginas.',
-        'BAIXA',
-        '2026-09-12 08:45:00',
-        '2026-10-20 18:00:00',
+        5,
+        'Corrigir falha no cadastro',
+        'Investigar e corrigir erro encontrado durante o cadastro de usuários.',
+        'CRITICA',
+        'CANCELADA',
+        DATE_SUB(NOW(), INTERVAL 15 DAY),
+        DATE_SUB(NOW(), INTERVAL 5 DAY),
         1,
-        2
-    ),
-    (
-        'Otimizar imagens do site',
-        'Comprimir e converter imagens para WebP.',
-        'BAIXA',
-        '2026-10-01 11:00:00',
-        '2026-11-10 18:00:00',
-        1,
-        4
+        7
     ),
     -- Projeto 2
     (
-        'Tela de login do app',
-        'Implementar autenticação com e-mail e senha.',
+        6,
+        'Criar telas de autenticação',
+        'Desenvolver as telas de login e registro do aplicativo.',
         'ALTA',
-        '2026-08-20 09:15:00',
-        '2026-09-10 18:00:00',
-        2,
-        5
-    ),
-    (
-        'Catálogo de produtos',
-        'Listagem com filtros e busca de produtos.',
-        'ALTA',
-        '2026-08-25 13:00:00',
-        '2026-10-01 18:00:00',
+        'CONCLUIDA',
+        DATE_SUB(NOW(), INTERVAL 25 DAY),
+        DATE_SUB(NOW(), INTERVAL 15 DAY),
         2,
         7
     ),
     (
-        'Integração com gateway de pagamento',
-        'Integrar API de pagamento com cartão e Pix.',
-        'CRITICA',
-        '2026-09-05 10:00:00',
-        '2026-10-30 18:00:00',
+        7,
+        'Implementar navegação',
+        'Configurar navegação entre as telas principais.',
+        'MEDIA',
+        'EM ANDAMENTO',
+        DATE_SUB(NOW(), INTERVAL 10 DAY),
+        DATE_ADD(NOW(), INTERVAL 5 DAY),
         2,
         8
     ),
     (
-        'Planejar sprint de lançamento',
-        'Definir escopo e cronograma da sprint final.',
-        'MEDIA',
-        '2026-10-10 15:30:00',
-        '2026-11-05 18:00:00',
+        8,
+        'Integrar API',
+        'Conectar o aplicativo mobile aos endpoints do backend.',
+        'CRITICA',
+        'ABERTA',
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        DATE_ADD(NOW(), INTERVAL 15 DAY),
         2,
-        3
+        11
     ),
     (
-        'Notificações push',
-        'Configurar envio de notificações push para pedidos.',
+        9,
+        'Implementar armazenamento local',
+        'Configurar armazenamento de informações no dispositivo.',
         'MEDIA',
-        '2026-10-15 09:00:00',
-        '2026-11-25 18:00:00',
+        'EM REVISAO',
+        DATE_SUB(NOW(), INTERVAL 7 DAY),
+        DATE_ADD(NOW(), INTERVAL 1 DAY),
         2,
-        7
+        12
+    ),
+    (
+        10,
+        'Realizar testes de interface',
+        'Executar testes de usabilidade e corrigir inconsistências visuais.',
+        'BAIXA',
+        'ABERTA',
+        NOW(),
+        DATE_ADD(NOW(), INTERVAL 20 DAY),
+        2,
+        8
     ),
     -- Projeto 3
     (
-        'Mapear infraestrutura atual',
-        'Levantar servidores, bancos e dependências on-premise.',
+        11,
+        'Criar layout da página inicial',
+        'Desenvolver a estrutura visual da página inicial do portal.',
         'ALTA',
-        '2026-07-15 08:00:00',
-        '2026-08-15 18:00:00',
+        'CONCLUIDA',
+        DATE_SUB(NOW(), INTERVAL 30 DAY),
+        DATE_SUB(NOW(), INTERVAL 20 DAY),
         3,
-        6
+        9
     ),
     (
-        'Configurar rede e VPC',
-        'Criar VPC, sub-redes e regras de segurança na nuvem.',
+        12,
+        'Desenvolver painel administrativo',
+        'Criar painel para gerenciamento de conteúdo institucional.',
         'CRITICA',
-        '2026-08-18 09:30:00',
-        '2026-09-30 18:00:00',
+        'EM ANDAMENTO',
+        DATE_SUB(NOW(), INTERVAL 9 DAY),
+        DATE_ADD(NOW(), INTERVAL 8 DAY),
         3,
-        8
+        10
     ),
     (
-        'Migrar banco de dados',
-        'Migrar o banco principal com mínimo de downtime.',
-        'CRITICA',
-        '2026-09-20 10:00:00',
-        '2026-11-15 18:00:00',
+        13,
+        'Otimizar responsividade',
+        'Adaptar as páginas para dispositivos móveis e tablets.',
+        'MEDIA',
+        'EM REVISAO',
+        DATE_SUB(NOW(), INTERVAL 5 DAY),
+        DATE_ADD(NOW(), INTERVAL 2 DAY),
         3,
-        2
+        11
     ),
     (
-        'Documentar processo de migração',
-        'Criar documentação técnica e runbook de rollback.',
+        14,
+        'Configurar domínio',
+        'Realizar configuração do domínio e hospedagem do portal.',
         'BAIXA',
-        '2026-10-05 14:20:00',
-        '2026-12-01 18:00:00',
+        'ABERTA',
+        DATE_SUB(NOW(), INTERVAL 1 DAY),
+        DATE_ADD(NOW(), INTERVAL 25 DAY),
         3,
-        3
+        12
+    ),
+    (
+        15,
+        'Implementar formulário de contato',
+        'Criar formulário com validação e envio de mensagens.',
+        'MEDIA',
+        'CANCELADA',
+        DATE_SUB(NOW(), INTERVAL 18 DAY),
+        DATE_SUB(NOW(), INTERVAL 8 DAY),
+        3,
+        9
     ),
     -- Projeto 4
     (
-        'Modelagem do cadastro de funcionários',
-        'Definir entidades e relacionamentos do módulo de cadastro.',
+        16,
+        'Modelar produtos e categorias',
+        'Definir estrutura de produtos, categorias e relacionamentos.',
         'ALTA',
-        '2026-09-08 09:00:00',
-        '2026-09-30 18:00:00',
-        4,
-        4
-    ),
-    (
-        'Tela de folha de ponto',
-        'Interface para registro e consulta de ponto.',
-        'MEDIA',
-        '2026-10-02 11:30:00',
-        '2026-11-20 18:00:00',
+        'CONCLUIDA',
+        DATE_SUB(NOW(), INTERVAL 22 DAY),
+        DATE_SUB(NOW(), INTERVAL 12 DAY),
         4,
         7
     ),
     (
-        'Relatório de férias',
-        'Gerar relatório de férias vencidas e programadas.',
-        'BAIXA',
-        '2026-10-20 16:00:00',
-        '2026-12-10 18:00:00',
+        17,
+        'Implementar entrada de produtos',
+        'Criar funcionalidade para registrar novas entradas no estoque.',
+        'CRITICA',
+        'EM ANDAMENTO',
+        DATE_SUB(NOW(), INTERVAL 11 DAY),
+        DATE_ADD(NOW(), INTERVAL 4 DAY),
         4,
-        3
-    );
-
--- Tarefas geradas: 4 por membro de projeto (~500), sempre atribuídas a um membro do projeto.
--- Criadas entre jun e out/2026, com prazo de 7 a 66 dias após a criação.
--- O hint NO_MERGE garante que cada RAND() seja avaliado uma única vez por linha.
-INSERT INTO
-    task (
-        title,
-        description,
-        priority,
-        creation_date,
-        due_date,
-        fk_project_id,
-        fk_user_id
-    )
-SELECT
-    /*+ NO_MERGE(src) */
-    CONCAT(src.verb, ' ', src.obj),
-    CONCAT(
-        src.verb,
-        ' ',
-        src.obj,
-        ' conforme o escopo definido para o projeto.'
-    ),
-    src.priority,
-    src.created,
-    src.created + INTERVAL src.days_to_due DAY,
-    src.fk_project_id,
-    src.fk_user_id
-FROM
-    (
-        SELECT
-            ELT(
-                1 + FLOOR(RAND() * 10),
-                'Implementar',
-                'Revisar',
-                'Testar',
-                'Documentar',
-                'Refatorar',
-                'Planejar',
-                'Corrigir',
-                'Otimizar',
-                'Validar',
-                'Configurar'
-            ) AS verb,
-            ELT(
-                1 + FLOOR(RAND() * 10),
-                'módulo de autenticação',
-                'tela de relatórios',
-                'integração com API externa',
-                'rotina de backup',
-                'fluxo de cadastro',
-                'painel de métricas',
-                'validação de formulários',
-                'pipeline de deploy',
-                'cache de consultas',
-                'controle de permissões'
-            ) AS obj,
-            ELT(
-                1 + FLOOR(RAND() * 4),
-                'BAIXA',
-                'MEDIA',
-                'ALTA',
-                'CRITICA'
-            ) AS priority,
-            TIMESTAMP('2026-06-01 08:00:00') + INTERVAL FLOOR(RAND() * 150) DAY + INTERVAL FLOOR(RAND() * 36000) SECOND AS created,
-            7 + FLOOR(RAND() * 60) AS days_to_due,
-            pu.fk_project_id,
-            pu.fk_user_id
-        FROM
-            project_user pu
-            JOIN numbers n ON n.n <= 4
-    ) AS src;
-
--- =====================================================================
--- COMENTÁRIOS
--- =====================================================================
--- 15 comentários fixos
-INSERT INTO
-    comment (content, creation_date, fk_task_id, fk_user_id)
-VALUES
-    (
-        'Sugiro usar tons de azul e cinza, combina com a logo.',
-        '2026-09-03 10:00:00',
-        1,
-        2
-    ),
-    (
-        'Paleta aprovada pelo marketing.',
-        '2026-09-05 16:20:00',
-        1,
-        4
-    ),
-    (
-        'Wireframes enviados para revisão no Figma.',
-        '2026-09-15 17:45:00',
-        2,
-        5
-    ),
-    (
-        'Precisamos testar o menu no Safari também.',
-        '2026-09-25 09:30:00',
-        3,
-        2
-    ),
-    (
-        'Tela de login finalizada, falta apenas o fluxo de recuperar senha.',
-        '2026-09-01 15:00:00',
-        6,
-        5
-    ),
-    (
-        'Ótimo! Pode abrir uma nova tarefa para a recuperação de senha.',
-        '2026-09-02 08:50:00',
-        6,
-        3
-    ),
-    (
-        'A API do gateway está retornando timeout em homologação.',
-        '2026-10-02 11:10:00',
-        8,
         8
     ),
     (
-        'Já abri chamado com o suporte do gateway.',
-        '2026-10-02 14:00:00',
-        8,
-        3
+        18,
+        'Implementar saída de produtos',
+        'Desenvolver funcionalidade para registrar retiradas de produtos.',
+        'ALTA',
+        'ABERTA',
+        DATE_SUB(NOW(), INTERVAL 4 DAY),
+        DATE_ADD(NOW(), INTERVAL 10 DAY),
+        4,
+        10
     ),
     (
-        'Catálogo com 80% concluído, falta a paginação.',
-        '2026-09-20 18:00:00',
-        7,
+        19,
+        'Criar relatório de estoque',
+        'Desenvolver relatórios com quantidades e movimentações.',
+        'MEDIA',
+        'EM REVISAO',
+        DATE_SUB(NOW(), INTERVAL 6 DAY),
+        DATE_ADD(NOW(), INTERVAL 3 DAY),
+        4,
+        12
+    ),
+    (
+        20,
+        'Corrigir cálculo de quantidade',
+        'Corrigir inconsistência no cálculo de produtos disponíveis.',
+        'CRITICA',
+        'CONCLUIDA',
+        DATE_SUB(NOW(), INTERVAL 14 DAY),
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        4,
+        7
+    ),
+    -- Projeto 5
+    (
+        21,
+        'Atualizar servidores',
+        'Atualizar os sistemas operacionais dos servidores.',
+        'ALTA',
+        'EM ANDAMENTO',
+        DATE_SUB(NOW(), INTERVAL 13 DAY),
+        DATE_ADD(NOW(), INTERVAL 7 DAY),
+        5,
+        8
+    ),
+    (
+        22,
+        'Configurar firewall',
+        'Implementar regras de segurança para o ambiente de rede.',
+        'CRITICA',
+        'EM REVISAO',
+        DATE_SUB(NOW(), INTERVAL 8 DAY),
+        DATE_ADD(NOW(), INTERVAL 2 DAY),
+        5,
+        9
+    ),
+    (
+        23,
+        'Realizar auditoria de acessos',
+        'Verificar permissões e acessos dos usuários aos sistemas.',
+        'MEDIA',
+        'ABERTA',
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        DATE_ADD(NOW(), INTERVAL 18 DAY),
+        5,
+        11
+    ),
+    (
+        24,
+        'Implementar backup automático',
+        'Configurar rotinas automatizadas de backup dos servidores.',
+        'ALTA',
+        'CONCLUIDA',
+        DATE_SUB(NOW(), INTERVAL 28 DAY),
+        DATE_SUB(NOW(), INTERVAL 14 DAY),
+        5,
+        12
+    ),
+    (
+        25,
+        'Documentar infraestrutura',
+        'Documentar equipamentos, servidores e configurações de rede.',
+        'BAIXA',
+        'ABERTA',
+        NOW(),
+        DATE_ADD(NOW(), INTERVAL 30 DAY),
+        5,
+        11
+    );
+
+-- ==========================================
+-- 5. COMENTÁRIOS (20 registros)
+-- ==========================================
+INSERT INTO
+    `comment` (
+        comment_id,
+        content,
+        creation_date,
+        fk_task_id,
+        fk_user_id
+    )
+VALUES
+    (
+        1,
+        'A estrutura inicial do banco foi implementada com sucesso.',
+        DATE_SUB(NOW(), INTERVAL 19 DAY),
+        1,
+        2
+    ),
+    (
+        2,
+        'Precisamos revisar os relacionamentos antes de finalizar.',
+        DATE_SUB(NOW(), INTERVAL 18 DAY),
+        1,
         7
     ),
     (
-        'Inventário concluído, 42 servidores mapeados.',
-        '2026-08-10 17:00:00',
+        3,
+        'O sistema de autenticação já está com a primeira versão funcional.',
+        DATE_SUB(NOW(), INTERVAL 5 DAY),
+        2,
+        8
+    ),
+    (
+        4,
+        'Encontrei um problema na validação de e-mail.',
+        DATE_SUB(NOW(), INTERVAL 4 DAY),
+        2,
+        2
+    ),
+    (
+        5,
+        'Implementação enviada para revisão.',
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        3,
+        9
+    ),
+    (
+        6,
+        'A navegação principal está funcionando corretamente.',
+        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        7,
+        8
+    ),
+    (
+        7,
+        'A integração depende da finalização de alguns endpoints.',
+        DATE_SUB(NOW(), INTERVAL 1 DAY),
+        8,
+        11
+    ),
+    (
+        8,
+        'As telas de autenticação foram aprovadas.',
+        DATE_SUB(NOW(), INTERVAL 14 DAY),
+        6,
+        3
+    ),
+    (
+        9,
+        'Precisamos ajustar o espaçamento em dispositivos menores.',
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        13,
+        4
+    ),
+    (
+        10,
+        'O painel administrativo já possui estrutura inicial.',
+        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        12,
+        10
+    ),
+    (
         11,
+        'Layout aprovado pela equipe.',
+        DATE_SUB(NOW(), INTERVAL 20 DAY),
+        11,
+        4
+    ),
+    (
+        12,
+        'A modelagem das categorias está concluída.',
+        DATE_SUB(NOW(), INTERVAL 15 DAY),
+        16,
+        5
+    ),
+    (
+        13,
+        'A entrada de produtos precisa validar quantidades negativas.',
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        17,
+        7
+    ),
+    (
+        14,
+        'O relatório está aguardando validação dos dados.',
+        DATE_SUB(NOW(), INTERVAL 1 DAY),
+        19,
+        12
+    ),
+    (
+        15,
+        'Correção aplicada e testada.',
+        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        20,
+        5
+    ),
+    (
+        16,
+        'A atualização dos servidores começou.',
+        DATE_SUB(NOW(), INTERVAL 4 DAY),
+        21,
         6
     ),
     (
-        'VPC criada, aguardando revisão de segurança.',
-        '2026-09-12 10:15:00',
-        12,
-        8
+        17,
+        'As regras de firewall estão sendo revisadas.',
+        DATE_SUB(NOW(), INTERVAL 1 DAY),
+        22,
+        9
     ),
     (
-        'Janela de migração agendada para o fim de semana de 07/11.',
-        '2026-10-28 09:00:00',
-        13,
-        2
+        18,
+        'Identificamos algumas permissões desnecessárias.',
+        NOW(),
+        23,
+        11
     ),
     (
-        'Vamos precisar de backup completo antes da migração.',
-        '2026-10-28 09:40:00',
-        13,
-        3
+        19,
+        'O backup automático está funcionando.',
+        DATE_SUB(NOW(), INTERVAL 12 DAY),
+        24,
+        12
     ),
     (
-        'Diagrama ER anexado na wiki do projeto.',
-        '2026-09-18 13:00:00',
-        15,
-        4
-    ),
-    (
-        'Falta definir regras de banco de horas.',
-        '2026-10-10 10:30:00',
-        16,
-        7
+        20,
+        'Vou iniciar a documentação da infraestrutura.',
+        NOW(),
+        25,
+        6
     );
 
--- Comentários gerados: ~1,35 por tarefa, escritos por um membro aleatório do projeto,
--- sempre depois da criação da tarefa e nunca depois de 03/11/2026.
+-- ==========================================
+-- 6. SOLICITAÇÕES DE ACESSO (8 registros)
+-- ==========================================
 INSERT INTO
-    comment (content, creation_date, fk_task_id, fk_user_id)
-SELECT
-    /*+ NO_MERGE(src) */
-    src.content,
-    src.created,
-    src.task_id,
-    (
-        SELECT
-            pu.fk_user_id
-        FROM
-            project_user pu
-        WHERE
-            pu.fk_project_id = src.fk_project_id
-        ORDER BY
-            RAND()
-        LIMIT
-            1
-    )
-FROM
-    (
-        SELECT
-            ELT(
-                1 + FLOOR(RAND() * 10),
-                'Iniciei o trabalho nesta tarefa.',
-                'Preciso de mais detalhes sobre o escopo.',
-                'Alteração enviada para revisão.',
-                'Encontrei um bloqueio, vou alinhar com a liderança.',
-                'Testes realizados com sucesso em homologação.',
-                'Podemos priorizar esta tarefa na próxima sprint?',
-                'Documentação atualizada na wiki.',
-                'Aguardando retorno do cliente.',
-                'Concluído, pode validar quando possível.',
-                'Ajustei o prazo conforme combinado na reunião.'
-            ) AS content,
-            LEAST(
-                t.creation_date + INTERVAL(1 + FLOOR(RAND() * 20)) DAY,
-                TIMESTAMP('2026-11-03 18:00:00')
-            ) AS created,
-            t.task_id,
-            t.fk_project_id
-        FROM
-            task t
-            JOIN numbers n ON n.n <= 3
-        WHERE
-            RAND() < 0.45
-    ) AS src;
-
--- =====================================================================
--- SOLICITAÇÕES DE ACESSO
--- =====================================================================
--- 5 solicitações fixas
-INSERT INTO
-    access_request (creation_date, fk_project_id, fk_user_id)
-VALUES
-    ('2026-10-25 09:00:00', 1, 7),
-    ('2026-10-26 14:30:00', 2, 4),
-    ('2026-10-28 11:15:00', 3, 5),
-    ('2026-10-30 16:45:00', 4, 6),
-    ('2026-11-01 08:20:00', 1, 8);
-
--- Solicitações geradas: apenas de usuários que ainda NÃO são membros do projeto
--- e que ainda não têm solicitação para ele.
-INSERT INTO
-    access_request (creation_date, fk_project_id, fk_user_id)
-SELECT
-    TIMESTAMP('2026-10-01 08:00:00') + INTERVAL MOD(p.project_id * u.user_id * 37, 33) DAY + INTERVAL MOD(u.user_id * 1013, 36000) SECOND,
-    p.project_id,
-    u.user_id
-FROM
-    project p
-    JOIN user u ON MOD(u.user_id * 7 + p.project_id * 13, 23) = 0
-WHERE
-    NOT EXISTS (
-        SELECT
-            1
-        FROM
-            project_user pu
-        WHERE
-            pu.fk_project_id = p.project_id
-            AND pu.fk_user_id = u.user_id
-    )
-    AND NOT EXISTS (
-        SELECT
-            1
-        FROM
-            access_request ar
-        WHERE
-            ar.fk_project_id = p.project_id
-            AND ar.fk_user_id = u.user_id
-    );
-
--- =====================================================================
--- HISTÓRICO DE ALTERAÇÕES
--- =====================================================================
--- 11 registros fixos
-INSERT INTO
-    history (
-        date,
-        old_value,
-        new_value,
-        field_name,
-        fk_task_id,
+    access_request (
+        request_id,
+        creation_date,
+        status,
+        fk_project_id,
         fk_user_id
     )
 VALUES
     (
-        '2026-09-04 10:00:00',
-        'BAIXA',
-        'MEDIA',
-        'priority',
+        1,
+        DATE_SUB(NOW(), INTERVAL 10 DAY),
+        'APPROVED',
+        1,
+        11
+    ),
+    (
+        2,
+        DATE_SUB(NOW(), INTERVAL 8 DAY),
+        'PENDING',
+        1,
+        12
+    ),
+    (
+        3,
+        DATE_SUB(NOW(), INTERVAL 7 DAY),
+        'REJECTED',
+        2,
+        9
+    ),
+    (
+        4,
+        DATE_SUB(NOW(), INTERVAL 5 DAY),
+        'APPROVED',
+        3,
+        7
+    ),
+    (
+        5,
+        DATE_SUB(NOW(), INTERVAL 4 DAY),
+        'PENDING',
+        3,
+        8
+    ),
+    (
+        6,
+        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        'REJECTED',
+        4,
+        11
+    ),
+    (
+        7,
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        'PENDING',
+        5,
+        7
+    ),
+    (8, NOW(), 'APPROVED', 5, 10);
+
+-- ==========================================
+-- 7. NOTIFICAÇÕES (20 registros)
+-- ==========================================
+INSERT INTO
+    notification (
+        notification_id,
+        type,
+        message,
+        is_read,
+        creation_date,
+        fk_user_id,
+        fk_project_id,
+        fk_task_id
+    )
+VALUES
+    (
+        1,
+        'PROJECT_INVITE',
+        'Você foi adicionado ao projeto TaskOps.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 10 DAY),
+        7,
+        1,
+        NULL
+    ),
+    (
+        2,
+        'TASK_ASSIGNED',
+        'Uma nova tarefa foi atribuída a você: Implementar autenticação.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 12 DAY),
+        8,
         1,
         2
     ),
     (
-        '2026-09-16 09:00:00',
-        '2026-09-15 18:00:00',
-        '2026-09-20 18:00:00',
-        'due_date',
+        3,
+        'TASK_UPDATED',
+        'A tarefa Criar estrutura do banco de dados foi concluída.',
+        TRUE,
+        DATE_SUB(NOW(), INTERVAL 10 DAY),
         2,
-        5
+        1,
+        1
     ),
     (
-        '2026-09-08 12:00:00',
+        4,
+        'GENERIC',
+        'Bem-vindo ao TaskOps! Seu cadastro foi realizado.',
+        TRUE,
+        DATE_SUB(NOW(), INTERVAL 15 DAY),
+        7,
+        NULL,
+        NULL
+    ),
+    (
+        5,
+        'TASK_ASSIGNED',
+        'Você recebeu uma nova tarefa: Integrar API.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        11,
+        2,
+        8
+    ),
+    (
+        6,
+        'PROJECT_INVITE',
+        'Você foi adicionado ao projeto Desenvolvimento de Aplicativo Mobile.',
+        TRUE,
+        DATE_SUB(NOW(), INTERVAL 9 DAY),
+        8,
+        2,
+        NULL
+    ),
+    (
+        7,
+        'TASK_UPDATED',
+        'A tarefa Implementar navegação foi atualizada.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 1 DAY),
+        3,
+        2,
+        7
+    ),
+    (
+        8,
+        'TASK_ASSIGNED',
+        'Uma tarefa foi atribuída a você: Desenvolver painel administrativo.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 9 DAY),
+        10,
+        3,
+        12
+    ),
+    (
+        9,
+        'TASK_UPDATED',
+        'A tarefa Criar layout da página inicial foi concluída.',
+        TRUE,
+        DATE_SUB(NOW(), INTERVAL 20 DAY),
+        4,
+        3,
+        11
+    ),
+    (
+        10,
+        'GENERIC',
+        'Sua solicitação de acesso ao Portal Institucional foi aprovada.',
+        TRUE,
+        DATE_SUB(NOW(), INTERVAL 5 DAY),
+        7,
+        3,
+        NULL
+    ),
+    (
+        11,
+        'TASK_ASSIGNED',
+        'Nova tarefa atribuída: Implementar entrada de produtos.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 11 DAY),
+        8,
+        4,
+        17
+    ),
+    (
+        12,
+        'TASK_UPDATED',
+        'A tarefa Corrigir cálculo de quantidade foi concluída.',
+        TRUE,
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        5,
+        4,
+        20
+    ),
+    (
+        13,
+        'PROJECT_INVITE',
+        'Você foi adicionado ao projeto Sistema de Controle de Estoque.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 6 DAY),
+        12,
+        4,
+        NULL
+    ),
+    (
+        14,
+        'GENERIC',
+        'Sua solicitação de acesso ao projeto foi rejeitada.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        11,
+        4,
+        NULL
+    ),
+    (
+        15,
+        'TASK_ASSIGNED',
+        'Você recebeu a tarefa Configurar firewall.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 8 DAY),
+        9,
+        5,
+        22
+    ),
+    (
+        16,
+        'TASK_UPDATED',
+        'A tarefa Implementar backup automático foi concluída.',
+        TRUE,
+        DATE_SUB(NOW(), INTERVAL 14 DAY),
+        6,
+        5,
+        24
+    ),
+    (
+        17,
+        'PROJECT_INVITE',
+        'Você foi adicionado ao projeto Infraestrutura e Segurança.',
+        TRUE,
+        DATE_SUB(NOW(), INTERVAL 7 DAY),
+        8,
+        5,
+        NULL
+    ),
+    (
+        18,
+        'TASK_ASSIGNED',
+        'Nova tarefa atribuída: Documentar infraestrutura.',
+        FALSE,
+        NOW(),
+        11,
+        5,
+        25
+    ),
+    (
+        19,
+        'GENERIC',
+        'Você possui solicitações de acesso aguardando aprovação.',
+        FALSE,
+        DATE_SUB(NOW(), INTERVAL 1 DAY),
+        2,
+        1,
+        NULL
+    ),
+    (
+        20,
+        'TASK_UPDATED',
+        'A tarefa Configurar firewall foi enviada para revisão.',
+        FALSE,
+        NOW(),
+        6,
+        5,
+        22
+    );
+
+-- ==========================================
+-- 8. HISTÓRICO DE ALTERAÇÕES (20 registros)
+-- ==========================================
+INSERT INTO
+    history (
+        history_id,
+        date,
+        old_value,
+        new_value,
+        field_name,
+        fk_task_id,
+        fk_user_id
+    )
+VALUES
+    (
+        1,
+        DATE_SUB(NOW(), INTERVAL 10 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        1,
+        7
+    ),
+    (
+        2,
+        DATE_SUB(NOW(), INTERVAL 8 DAY),
+        'EM ANDAMENTO',
+        'CONCLUIDA',
+        'status',
+        1,
+        2
+    ),
+    (
+        3,
+        DATE_SUB(NOW(), INTERVAL 5 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        2,
+        8
+    ),
+    (
+        4,
+        DATE_SUB(NOW(), INTERVAL 4 DAY),
         'MEDIA',
-        'ALTA',
+        'CRITICA',
         'priority',
+        2,
+        2
+    ),
+    (
+        5,
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        'ABERTA',
+        'EM REVISAO',
+        'status',
+        3,
+        9
+    ),
+    (
+        6,
+        DATE_SUB(NOW(), INTERVAL 14 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        6,
+        7
+    ),
+    (
+        7,
+        DATE_SUB(NOW(), INTERVAL 12 DAY),
+        'EM ANDAMENTO',
+        'CONCLUIDA',
+        'status',
         6,
         3
     ),
     (
-        '2026-09-30 15:00:00',
+        8,
+        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        7,
+        8
+    ),
+    (
+        9,
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        'MEDIA',
         'ALTA',
-        'CRITICA',
         'priority',
         8,
         3
     ),
     (
-        '2026-10-10 10:00:00',
-        '2026-10-15 18:00:00',
-        '2026-10-30 18:00:00',
-        'due_date',
-        8,
-        3
+        10,
+        DATE_SUB(NOW(), INTERVAL 20 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        11,
+        9
     ),
     (
-        '2026-10-12 11:30:00',
-        'Catálogo',
-        'Catálogo de produtos',
-        'title',
-        7,
+        11,
+        DATE_SUB(NOW(), INTERVAL 18 DAY),
+        'EM ANDAMENTO',
+        'CONCLUIDA',
+        'status',
+        11,
+        4
+    ),
+    (
+        12,
+        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        12,
+        10
+    ),
+    (
+        13,
+        DATE_SUB(NOW(), INTERVAL 15 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        16,
         7
     ),
     (
-        '2026-08-20 09:00:00',
-        'ALTA',
+        14,
+        DATE_SUB(NOW(), INTERVAL 13 DAY),
+        'EM ANDAMENTO',
+        'CONCLUIDA',
+        'status',
+        16,
+        5
+    ),
+    (
+        15,
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        'MEDIA',
         'CRITICA',
         'priority',
-        12,
-        3
-    ),
-    (
-        '2026-10-01 14:00:00',
-        '2026-10-31 18:00:00',
-        '2026-11-15 18:00:00',
-        'due_date',
-        13,
-        2
-    ),
-    (
-        '2026-10-06 10:00:00',
-        '2',
-        '3',
-        'fk_user_id',
-        14,
-        3
-    ),
-    (
-        '2026-09-25 17:00:00',
-        'ALTA',
-        'MEDIA',
-        'priority',
-        16,
-        3
-    ),
-    (
-        '2026-10-22 09:30:00',
-        '2026-11-30 18:00:00',
-        '2026-12-10 18:00:00',
-        'due_date',
         17,
-        3
+        5
+    ),
+    (
+        16,
+        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        20,
+        7
+    ),
+    (
+        17,
+        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        'EM ANDAMENTO',
+        'CONCLUIDA',
+        'status',
+        20,
+        5
+    ),
+    (
+        18,
+        DATE_SUB(NOW(), INTERVAL 4 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        21,
+        8
+    ),
+    (
+        19,
+        DATE_SUB(NOW(), INTERVAL 1 DAY),
+        'EM ANDAMENTO',
+        'EM REVISAO',
+        'status',
+        22,
+        9
+    ),
+    (
+        20,
+        DATE_SUB(NOW(), INTERVAL 14 DAY),
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        24,
+        12
     );
 
--- Histórico gerado a partir das tarefas geradas (IDs > 17).
--- Mudança de prioridade (1 a cada 3 tarefas): o valor antigo é sempre diferente do atual.
-INSERT INTO
-    history (
-        date,
-        old_value,
-        new_value,
-        field_name,
-        fk_task_id,
-        fk_user_id
-    )
-SELECT
-    t.creation_date + INTERVAL(1 + MOD(t.task_id, 5)) DAY,
-    ELT(
-        MOD(
-            FIELD(t.priority, 'BAIXA', 'MEDIA', 'ALTA', 'CRITICA'),
-            4
-        ) + 1,
-        'BAIXA',
-        'MEDIA',
-        'ALTA',
-        'CRITICA'
-    ),
-    t.priority,
-    'priority',
-    t.task_id,
-    t.fk_user_id
-FROM
-    task t
-WHERE
-    t.task_id > 17
-    AND t.priority IS NOT NULL
-    AND MOD(t.task_id, 3) = 0;
-
--- Mudança de prazo (1 a cada 4 tarefas): o prazo antigo era 7 dias antes do atual.
-INSERT INTO
-    history (
-        date,
-        old_value,
-        new_value,
-        field_name,
-        fk_task_id,
-        fk_user_id
-    )
-SELECT
-    t.creation_date + INTERVAL 2 DAY,
-    DATE_FORMAT(t.due_date - INTERVAL 7 DAY, '%Y-%m-%d %H:%i:%s'),
-    DATE_FORMAT(t.due_date, '%Y-%m-%d %H:%i:%s'),
-    'due_date',
-    t.task_id,
-    t.fk_user_id
-FROM
-    task t
-WHERE
-    t.task_id > 17
-    AND MOD(t.task_id, 4) = 0;
-
--- Mudança de título (1 a cada 11 tarefas).
-INSERT INTO
-    history (
-        date,
-        old_value,
-        new_value,
-        field_name,
-        fk_task_id,
-        fk_user_id
-    )
-SELECT
-    t.creation_date + INTERVAL 1 DAY,
-    CONCAT('[Rascunho] ', t.title),
-    t.title,
-    'title',
-    t.task_id,
-    t.fk_user_id
-FROM
-    task t
-WHERE
-    t.task_id > 17
-    AND MOD(t.task_id, 11) = 0;
-
--- =====================================================================
--- CONFERÊNCIA RÁPIDA
--- =====================================================================
+-- ==========================================
+-- 9. VERIFICAÇÃO DA MASSA DE DADOS
+-- ==========================================
 SELECT
     'user' AS tabela,
-    COUNT(*) AS total
+    COUNT(*) AS registros
 FROM
-    user
+    `user`
 UNION ALL
 SELECT
     'project',
@@ -885,7 +1116,7 @@ SELECT
     'comment',
     COUNT(*)
 FROM
-    comment
+    `comment`
 UNION ALL
 SELECT
     'access_request',
@@ -894,9 +1125,13 @@ FROM
     access_request
 UNION ALL
 SELECT
+    'notification',
+    COUNT(*)
+FROM
+    notification
+UNION ALL
+SELECT
     'history',
     COUNT(*)
 FROM
     history;
-
-DROP TEMPORARY TABLE IF EXISTS numbers;
