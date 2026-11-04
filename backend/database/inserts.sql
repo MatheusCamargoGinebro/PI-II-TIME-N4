@@ -1,12 +1,12 @@
-USE TaskOps;
-
+-- ==========================================
+-- ARQUIVO GERADO POR IA PARA TESTES.
+/* 
+Hash da senha 'PassW0rd@123' = '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy'
+ */
 -- ==========================================
 -- 1. USUÁRIOS (12 registros)
 -- Senha: 60 caracteres A
 -- ==========================================
-/* 
-Hash da senha 'PassW0rd@123' = '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy'
- */
 INSERT INTO
     `user` (
         user_id,
@@ -114,58 +114,87 @@ VALUES
         'Membro de projeto'
     );
 
--- ==========================================
--- 2. PROJETOS (5 registros)
--- ==========================================
-INSERT INTO
-    project (project_id, TITLE)
-VALUES
-    (1, 'TaskOps - Sistema de Gerenciamento'),
-    (2, 'Desenvolvimento de Aplicativo Mobile'),
-    (3, 'Portal Institucional'),
-    (4, 'Sistema de Controle de Estoque'),
-    (5, 'Infraestrutura e Segurança');
+USE TaskOps;
 
 -- ==========================================
--- 3. USUÁRIOS DOS PROJETOS (25 registros)
--- fk_creator_id = usuário responsável por adicionar
+-- 2. PROJETOS (8 registros)
 -- ==========================================
 INSERT INTO
-    project_user (fk_project_id, fk_user_id, fk_creator_id)
+    project (project_id, title)
 VALUES
-    -- Projeto 1
-    (1, 2, 1),
-    (1, 7, 2),
-    (1, 8, 2),
-    (1, 9, 2),
-    (1, 10, 2),
-    -- Projeto 2
-    (2, 3, 1),
-    (2, 7, 3),
-    (2, 8, 3),
-    (2, 11, 3),
-    (2, 12, 3),
-    -- Projeto 3
-    (3, 4, 1),
-    (3, 9, 4),
-    (3, 10, 4),
-    (3, 11, 4),
-    (3, 12, 4),
-    -- Projeto 4
-    (4, 5, 1),
-    (4, 7, 5),
-    (4, 8, 5),
-    (4, 10, 5),
-    (4, 12, 5),
-    -- Projeto 5
-    (5, 6, 1),
-    (5, 8, 6),
-    (5, 9, 6),
-    (5, 11, 6),
-    (5, 12, 6);
+    (1, 'TaskOps - Plataforma de Gestão'),
+    (2, 'Sistema de Controle Financeiro'),
+    (3, 'Aplicativo Mobile Corporativo'),
+    (4, 'Portal Institucional'),
+    (5, 'Infraestrutura e Segurança'),
+    (6, 'Sistema de Atendimento ao Cliente'),
+    (7, 'Dashboard de Indicadores'),
+    (8, 'Automação de Processos');
 
 -- ==========================================
--- 4. TAREFAS (25 registros)
+-- 3. USUÁRIOS DOS PROJETOS
+-- ==========================================
+INSERT INTO
+    project_user (fk_project_id, fk_user_id)
+VALUES
+    -- TaskOps
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (1, 4),
+    (1, 5),
+    (1, 6),
+    (1, 7),
+    -- Financeiro
+    (2, 1),
+    (2, 2),
+    (2, 4),
+    (2, 5),
+    (2, 8),
+    (2, 9),
+    -- Mobile
+    (3, 1),
+    (3, 3),
+    (3, 4),
+    (3, 6),
+    (3, 7),
+    (3, 10),
+    -- Portal
+    (4, 1),
+    (4, 2),
+    (4, 5),
+    (4, 8),
+    (4, 11),
+    -- Infraestrutura
+    (5, 1),
+    (5, 2),
+    (5, 6),
+    (5, 9),
+    (5, 12),
+    -- Atendimento
+    (6, 1),
+    (6, 3),
+    (6, 4),
+    (6, 7),
+    (6, 10),
+    (6, 11),
+    -- Dashboard
+    (7, 1),
+    (7, 2),
+    (7, 5),
+    (7, 8),
+    (7, 12),
+    -- Automação
+    (8, 1),
+    (8, 3),
+    (8, 6),
+    (8, 9),
+    (8, 10),
+    (8, 11),
+    (8, 12);
+
+-- ==========================================
+-- 4. TAREFAS (40 registros)
 -- ==========================================
 INSERT INTO
     task (
@@ -177,445 +206,736 @@ INSERT INTO
         creation_date,
         due_date,
         fk_project_id,
-        fk_user_id
+        fk_user_id,
+        fk_creator_id
     )
 VALUES
-    -- Projeto 1
+    -- PROJETO 1: TaskOps
     (
         1,
-        'Criar estrutura do banco de dados',
-        'Desenvolver o modelo relacional e implementar as tabelas principais.',
-        'ALTA',
+        'Implementar autenticação',
+        'Desenvolver sistema de login com validação de credenciais e controle de sessão.',
+        'CRITICA',
         'CONCLUIDA',
-        DATE_SUB(NOW(), INTERVAL 20 DAY),
-        DATE_SUB(NOW(), INTERVAL 10 DAY),
+        '2026-10-01 09:00:00',
+        '2026-10-10 18:00:00',
         1,
-        7
+        3,
+        2
     ),
     (
         2,
-        'Implementar autenticação',
-        'Criar sistema de login, registro e validação de usuários.',
-        'CRITICA',
-        'EM ANDAMENTO',
-        DATE_SUB(NOW(), INTERVAL 12 DAY),
-        DATE_ADD(NOW(), INTERVAL 3 DAY),
+        'Criar cadastro de usuários',
+        'Implementar cadastro, edição e exclusão de usuários.',
+        'ALTA',
+        'CONCLUIDA',
+        '2026-10-02 10:00:00',
+        '2026-10-12 18:00:00',
         1,
-        8
+        4,
+        2
     ),
     (
         3,
         'Desenvolver gerenciamento de projetos',
-        'Implementar operações de criação, edição e exclusão de projetos.',
+        'Criar funcionalidades para cadastrar e gerenciar projetos.',
         'ALTA',
-        'EM REVISAO',
-        DATE_SUB(NOW(), INTERVAL 8 DAY),
-        DATE_ADD(NOW(), INTERVAL 2 DAY),
+        'EM ANDAMENTO',
+        '2026-10-05 08:30:00',
+        '2026-11-10 18:00:00',
         1,
-        9
+        5,
+        2
     ),
     (
         4,
-        'Criar sistema de notificações',
-        'Implementar notificações para eventos importantes do sistema.',
+        'Implementar notificações',
+        'Criar sistema de notificações para os usuários.',
         'MEDIA',
-        'ABERTA',
-        DATE_SUB(NOW(), INTERVAL 3 DAY),
-        DATE_ADD(NOW(), INTERVAL 12 DAY),
+        'EM REVISAO',
+        '2026-10-07 09:00:00',
+        '2026-11-08 18:00:00',
         1,
-        10
+        6,
+        2
     ),
     (
         5,
-        'Corrigir falha no cadastro',
-        'Investigar e corrigir erro encontrado durante o cadastro de usuários.',
+        'Corrigir erro de permissões',
+        'Corrigir acesso indevido a funcionalidades administrativas.',
         'CRITICA',
-        'CANCELADA',
-        DATE_SUB(NOW(), INTERVAL 15 DAY),
-        DATE_SUB(NOW(), INTERVAL 5 DAY),
+        'ABERTA',
+        '2026-10-15 11:00:00',
+        '2026-11-06 18:00:00',
         1,
-        7
+        3,
+        2
     ),
-    -- Projeto 2
     (
         6,
-        'Criar telas de autenticação',
-        'Desenvolver as telas de login e registro do aplicativo.',
-        'ALTA',
-        'CONCLUIDA',
-        DATE_SUB(NOW(), INTERVAL 25 DAY),
-        DATE_SUB(NOW(), INTERVAL 15 DAY),
-        2,
-        7
+        'Criar documentação da API',
+        'Documentar endpoints, parâmetros e respostas da API.',
+        'BAIXA',
+        'ABERTA',
+        '2026-10-20 14:00:00',
+        '2026-11-20 18:00:00',
+        1,
+        7,
+        2
     ),
+    -- PROJETO 2: Financeiro
     (
         7,
-        'Implementar navegação',
-        'Configurar navegação entre as telas principais.',
-        'MEDIA',
-        'EM ANDAMENTO',
-        DATE_SUB(NOW(), INTERVAL 10 DAY),
-        DATE_ADD(NOW(), INTERVAL 5 DAY),
+        'Criar módulo de despesas',
+        'Implementar cadastro e gerenciamento de despesas.',
+        'ALTA',
+        'CONCLUIDA',
+        '2026-09-20 08:00:00',
+        '2026-10-05 18:00:00',
         2,
-        8
+        4,
+        2
     ),
     (
         8,
-        'Integrar API',
-        'Conectar o aplicativo mobile aos endpoints do backend.',
+        'Implementar cálculo de saldo',
+        'Desenvolver cálculo automático do saldo financeiro.',
         'CRITICA',
-        'ABERTA',
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        DATE_ADD(NOW(), INTERVAL 15 DAY),
+        'EM ANDAMENTO',
+        '2026-10-01 09:00:00',
+        '2026-11-12 18:00:00',
         2,
-        11
+        5,
+        2
     ),
     (
         9,
-        'Implementar armazenamento local',
-        'Configurar armazenamento de informações no dispositivo.',
+        'Criar relatórios financeiros',
+        'Disponibilizar relatórios mensais de receitas e despesas.',
         'MEDIA',
-        'EM REVISAO',
-        DATE_SUB(NOW(), INTERVAL 7 DAY),
-        DATE_ADD(NOW(), INTERVAL 1 DAY),
+        'ABERTA',
+        '2026-10-12 10:00:00',
+        '2026-11-18 18:00:00',
         2,
-        12
+        8,
+        2
     ),
     (
         10,
-        'Realizar testes de interface',
-        'Executar testes de usabilidade e corrigir inconsistências visuais.',
-        'BAIXA',
-        'ABERTA',
-        NOW(),
-        DATE_ADD(NOW(), INTERVAL 20 DAY),
+        'Corrigir arredondamento de valores',
+        'Resolver divergências de arredondamento nos cálculos.',
+        'ALTA',
+        'EM REVISAO',
+        '2026-10-18 13:00:00',
+        '2026-11-07 18:00:00',
         2,
-        8
+        9,
+        4
     ),
-    -- Projeto 3
     (
         11,
-        'Criar layout da página inicial',
-        'Desenvolver a estrutura visual da página inicial do portal.',
-        'ALTA',
-        'CONCLUIDA',
-        DATE_SUB(NOW(), INTERVAL 30 DAY),
-        DATE_SUB(NOW(), INTERVAL 20 DAY),
-        3,
-        9
+        'Adicionar exportação PDF',
+        'Permitir exportação dos relatórios financeiros em PDF.',
+        'BAIXA',
+        'CANCELADA',
+        '2026-10-20 15:00:00',
+        '2026-11-25 18:00:00',
+        2,
+        5,
+        2
     ),
+    -- PROJETO 3: Mobile
     (
         12,
-        'Desenvolver painel administrativo',
-        'Criar painel para gerenciamento de conteúdo institucional.',
-        'CRITICA',
-        'EM ANDAMENTO',
-        DATE_SUB(NOW(), INTERVAL 9 DAY),
-        DATE_ADD(NOW(), INTERVAL 8 DAY),
+        'Criar tela inicial',
+        'Desenvolver a interface inicial do aplicativo.',
+        'ALTA',
+        'CONCLUIDA',
+        '2026-09-25 09:00:00',
+        '2026-10-08 18:00:00',
         3,
-        10
+        4,
+        3
     ),
     (
         13,
-        'Otimizar responsividade',
-        'Adaptar as páginas para dispositivos móveis e tablets.',
-        'MEDIA',
-        'EM REVISAO',
-        DATE_SUB(NOW(), INTERVAL 5 DAY),
-        DATE_ADD(NOW(), INTERVAL 2 DAY),
-        3,
-        11
-    ),
-    (
-        14,
-        'Configurar domínio',
-        'Realizar configuração do domínio e hospedagem do portal.',
-        'BAIXA',
-        'ABERTA',
-        DATE_SUB(NOW(), INTERVAL 1 DAY),
-        DATE_ADD(NOW(), INTERVAL 25 DAY),
-        3,
-        12
-    ),
-    (
-        15,
-        'Implementar formulário de contato',
-        'Criar formulário com validação e envio de mensagens.',
-        'MEDIA',
-        'CANCELADA',
-        DATE_SUB(NOW(), INTERVAL 18 DAY),
-        DATE_SUB(NOW(), INTERVAL 8 DAY),
-        3,
-        9
-    ),
-    -- Projeto 4
-    (
-        16,
-        'Modelar produtos e categorias',
-        'Definir estrutura de produtos, categorias e relacionamentos.',
-        'ALTA',
-        'CONCLUIDA',
-        DATE_SUB(NOW(), INTERVAL 22 DAY),
-        DATE_SUB(NOW(), INTERVAL 12 DAY),
-        4,
-        7
-    ),
-    (
-        17,
-        'Implementar entrada de produtos',
-        'Criar funcionalidade para registrar novas entradas no estoque.',
-        'CRITICA',
-        'EM ANDAMENTO',
-        DATE_SUB(NOW(), INTERVAL 11 DAY),
-        DATE_ADD(NOW(), INTERVAL 4 DAY),
-        4,
-        8
-    ),
-    (
-        18,
-        'Implementar saída de produtos',
-        'Desenvolver funcionalidade para registrar retiradas de produtos.',
-        'ALTA',
-        'ABERTA',
-        DATE_SUB(NOW(), INTERVAL 4 DAY),
-        DATE_ADD(NOW(), INTERVAL 10 DAY),
-        4,
-        10
-    ),
-    (
-        19,
-        'Criar relatório de estoque',
-        'Desenvolver relatórios com quantidades e movimentações.',
-        'MEDIA',
-        'EM REVISAO',
-        DATE_SUB(NOW(), INTERVAL 6 DAY),
-        DATE_ADD(NOW(), INTERVAL 3 DAY),
-        4,
-        12
-    ),
-    (
-        20,
-        'Corrigir cálculo de quantidade',
-        'Corrigir inconsistência no cálculo de produtos disponíveis.',
-        'CRITICA',
-        'CONCLUIDA',
-        DATE_SUB(NOW(), INTERVAL 14 DAY),
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        4,
-        7
-    ),
-    -- Projeto 5
-    (
-        21,
-        'Atualizar servidores',
-        'Atualizar os sistemas operacionais dos servidores.',
+        'Implementar navegação',
+        'Criar navegação entre as telas do aplicativo.',
         'ALTA',
         'EM ANDAMENTO',
-        DATE_SUB(NOW(), INTERVAL 13 DAY),
-        DATE_ADD(NOW(), INTERVAL 7 DAY),
-        5,
-        8
-    ),
-    (
-        22,
-        'Configurar firewall',
-        'Implementar regras de segurança para o ambiente de rede.',
-        'CRITICA',
-        'EM REVISAO',
-        DATE_SUB(NOW(), INTERVAL 8 DAY),
-        DATE_ADD(NOW(), INTERVAL 2 DAY),
-        5,
-        9
-    ),
-    (
-        23,
-        'Realizar auditoria de acessos',
-        'Verificar permissões e acessos dos usuários aos sistemas.',
-        'MEDIA',
-        'ABERTA',
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        DATE_ADD(NOW(), INTERVAL 18 DAY),
-        5,
-        11
-    ),
-    (
-        24,
-        'Implementar backup automático',
-        'Configurar rotinas automatizadas de backup dos servidores.',
-        'ALTA',
-        'CONCLUIDA',
-        DATE_SUB(NOW(), INTERVAL 28 DAY),
-        DATE_SUB(NOW(), INTERVAL 14 DAY),
-        5,
-        12
-    ),
-    (
-        25,
-        'Documentar infraestrutura',
-        'Documentar equipamentos, servidores e configurações de rede.',
-        'BAIXA',
-        'ABERTA',
-        NOW(),
-        DATE_ADD(NOW(), INTERVAL 30 DAY),
-        5,
-        11
-    );
-
--- ==========================================
--- 5. COMENTÁRIOS (20 registros)
--- ==========================================
-INSERT INTO
-    `comment` (
-        comment_id,
-        content,
-        creation_date,
-        fk_task_id,
-        fk_user_id
-    )
-VALUES
-    (
-        1,
-        'A estrutura inicial do banco foi implementada com sucesso.',
-        DATE_SUB(NOW(), INTERVAL 19 DAY),
-        1,
-        2
-    ),
-    (
-        2,
-        'Precisamos revisar os relacionamentos antes de finalizar.',
-        DATE_SUB(NOW(), INTERVAL 18 DAY),
-        1,
-        7
-    ),
-    (
+        '2026-10-03 10:00:00',
+        '2026-11-15 18:00:00',
         3,
-        'O sistema de autenticação já está com a primeira versão funcional.',
-        DATE_SUB(NOW(), INTERVAL 5 DAY),
-        2,
-        8
-    ),
-    (
-        4,
-        'Encontrei um problema na validação de e-mail.',
-        DATE_SUB(NOW(), INTERVAL 4 DAY),
-        2,
-        2
-    ),
-    (
-        5,
-        'Implementação enviada para revisão.',
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        3,
-        9
-    ),
-    (
-        6,
-        'A navegação principal está funcionando corretamente.',
-        DATE_SUB(NOW(), INTERVAL 3 DAY),
-        7,
-        8
-    ),
-    (
-        7,
-        'A integração depende da finalização de alguns endpoints.',
-        DATE_SUB(NOW(), INTERVAL 1 DAY),
-        8,
-        11
-    ),
-    (
-        8,
-        'As telas de autenticação foram aprovadas.',
-        DATE_SUB(NOW(), INTERVAL 14 DAY),
         6,
         3
     ),
     (
-        9,
-        'Precisamos ajustar o espaçamento em dispositivos menores.',
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        13,
-        4
-    ),
-    (
-        10,
-        'O painel administrativo já possui estrutura inicial.',
-        DATE_SUB(NOW(), INTERVAL 3 DAY),
-        12,
-        10
-    ),
-    (
-        11,
-        'Layout aprovado pela equipe.',
-        DATE_SUB(NOW(), INTERVAL 20 DAY),
-        11,
-        4
-    ),
-    (
-        12,
-        'A modelagem das categorias está concluída.',
-        DATE_SUB(NOW(), INTERVAL 15 DAY),
-        16,
-        5
-    ),
-    (
-        13,
-        'A entrada de produtos precisa validar quantidades negativas.',
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        17,
-        7
-    ),
-    (
         14,
-        'O relatório está aguardando validação dos dados.',
-        DATE_SUB(NOW(), INTERVAL 1 DAY),
-        19,
-        12
+        'Integrar API de usuários',
+        'Conectar aplicativo aos endpoints de usuários.',
+        'CRITICA',
+        'EM REVISAO',
+        '2026-10-08 11:00:00',
+        '2026-11-09 18:00:00',
+        3,
+        7,
+        3
     ),
     (
         15,
-        'Correção aplicada e testada.',
-        DATE_SUB(NOW(), INTERVAL 3 DAY),
-        20,
-        5
+        'Implementar armazenamento local',
+        'Salvar preferências e informações de sessão localmente.',
+        'MEDIA',
+        'ABERTA',
+        '2026-10-15 09:00:00',
+        '2026-11-17 18:00:00',
+        3,
+        10,
+        3
     ),
     (
         16,
-        'A atualização dos servidores começou.',
-        DATE_SUB(NOW(), INTERVAL 4 DAY),
+        'Corrigir layout em dispositivos menores',
+        'Ajustar responsividade para diferentes resoluções.',
+        'ALTA',
+        'ABERTA',
+        '2026-10-25 14:00:00',
+        '2026-11-08 18:00:00',
+        3,
+        4,
+        3
+    ),
+    -- PROJETO 4: Portal
+    (
+        17,
+        'Criar página institucional',
+        'Desenvolver a página principal do portal.',
+        'MEDIA',
+        'CONCLUIDA',
+        '2026-09-18 09:00:00',
+        '2026-10-01 18:00:00',
+        4,
+        5,
+        2
+    ),
+    (
+        18,
+        'Implementar formulário de contato',
+        'Criar formulário com validação e envio de mensagens.',
+        'ALTA',
+        'EM ANDAMENTO',
+        '2026-10-02 10:00:00',
+        '2026-11-11 18:00:00',
+        4,
+        8,
+        2
+    ),
+    (
+        19,
+        'Otimizar carregamento de imagens',
+        'Reduzir o tamanho das imagens utilizadas no portal.',
+        'BAIXA',
+        'ABERTA',
+        '2026-10-15 13:00:00',
+        '2026-11-22 18:00:00',
+        4,
+        11,
+        2
+    ),
+    (
+        20,
+        'Corrigir problemas de acessibilidade',
+        'Ajustar elementos para melhorar acessibilidade.',
+        'ALTA',
+        'EM REVISAO',
+        '2026-10-20 09:00:00',
+        '2026-11-10 18:00:00',
+        4,
+        5,
+        2
+    ),
+    -- PROJETO 5: Infraestrutura
+    (
+        21,
+        'Realizar auditoria de segurança',
+        'Verificar vulnerabilidades nos serviços internos.',
+        'CRITICA',
+        'EM ANDAMENTO',
+        '2026-10-01 08:00:00',
+        '2026-11-12 18:00:00',
+        5,
+        6,
+        2
+    ),
+    (
+        22,
+        'Atualizar servidores',
+        'Atualizar sistemas operacionais dos servidores.',
+        'ALTA',
+        'ABERTA',
+        '2026-10-10 09:00:00',
+        '2026-11-16 18:00:00',
+        5,
+        9,
+        2
+    ),
+    (
+        23,
+        'Configurar backups automáticos',
+        'Implementar rotina de backup dos dados.',
+        'ALTA',
+        'CONCLUIDA',
+        '2026-09-15 10:00:00',
+        '2026-10-05 18:00:00',
+        5,
+        12,
+        2
+    ),
+    (
+        24,
+        'Documentar infraestrutura',
+        'Registrar configurações e serviços da infraestrutura.',
+        'BAIXA',
+        'ABERTA',
+        '2026-10-22 11:00:00',
+        '2026-11-28 18:00:00',
+        5,
+        9,
+        2
+    ),
+    (
+        25,
+        'Investigar falhas de conexão',
+        'Analisar instabilidades na rede interna.',
+        'CRITICA',
+        'EM REVISAO',
+        '2026-10-24 14:00:00',
+        '2026-11-05 18:00:00',
+        5,
+        6,
+        2
+    ),
+    -- PROJETO 6: Atendimento
+    (
+        26,
+        'Criar cadastro de chamados',
+        'Desenvolver cadastro de solicitações de atendimento.',
+        'ALTA',
+        'CONCLUIDA',
+        '2026-09-20 09:00:00',
+        '2026-10-05 18:00:00',
+        6,
+        4,
+        3
+    ),
+    (
+        27,
+        'Implementar fila de atendimento',
+        'Criar sistema de distribuição de chamados.',
+        'CRITICA',
+        'EM ANDAMENTO',
+        '2026-10-05 10:00:00',
+        '2026-11-14 18:00:00',
+        6,
+        7,
+        3
+    ),
+    (
+        28,
+        'Adicionar classificação de chamados',
+        'Classificar solicitações por categoria e prioridade.',
+        'MEDIA',
+        'ABERTA',
+        '2026-10-12 13:00:00',
+        '2026-11-19 18:00:00',
+        6,
+        10,
+        3
+    ),
+    (
+        29,
+        'Criar painel de atendimento',
+        'Exibir indicadores de chamados e atendimentos.',
+        'ALTA',
+        'EM REVISAO',
+        '2026-10-17 09:00:00',
+        '2026-11-09 18:00:00',
+        6,
+        11,
+        3
+    ),
+    (
+        30,
+        'Corrigir duplicidade de chamados',
+        'Resolver criação duplicada de solicitações.',
+        'CRITICA',
+        'CANCELADA',
+        '2026-10-20 15:00:00',
+        '2026-11-10 18:00:00',
+        6,
+        4,
+        3
+    ),
+    -- PROJETO 7: Dashboard
+    (
+        31,
+        'Criar gráficos de desempenho',
+        'Desenvolver gráficos para indicadores de desempenho.',
+        'ALTA',
+        'CONCLUIDA',
+        '2026-09-25 08:00:00',
+        '2026-10-10 18:00:00',
+        7,
+        5,
+        2
+    ),
+    (
+        32,
+        'Integrar dados de projetos',
+        'Consumir dados dos projetos para alimentar o dashboard.',
+        'CRITICA',
+        'EM ANDAMENTO',
+        '2026-10-04 09:00:00',
+        '2026-11-13 18:00:00',
+        7,
+        8,
+        2
+    ),
+    (
+        33,
+        'Adicionar filtros por período',
+        'Permitir filtragem de indicadores por data.',
+        'MEDIA',
+        'ABERTA',
+        '2026-10-13 10:00:00',
+        '2026-11-20 18:00:00',
+        7,
+        12,
+        2
+    ),
+    (
+        34,
+        'Otimizar consultas SQL',
+        'Melhorar desempenho das consultas utilizadas no dashboard.',
+        'ALTA',
+        'EM REVISAO',
+        '2026-10-18 11:00:00',
+        '2026-11-07 18:00:00',
+        7,
+        5,
+        2
+    ),
+    -- PROJETO 8: Automação
+    (
+        35,
+        'Mapear processos manuais',
+        'Identificar processos que podem ser automatizados.',
+        'BAIXA',
+        'CONCLUIDA',
+        '2026-09-15 08:00:00',
+        '2026-10-01 18:00:00',
+        8,
+        9,
+        3
+    ),
+    (
+        36,
+        'Desenvolver rotina de integração',
+        'Criar rotina para sincronização automática de dados.',
+        'ALTA',
+        'EM ANDAMENTO',
+        '2026-10-03 09:00:00',
+        '2026-11-15 18:00:00',
+        8,
+        10,
+        3
+    ),
+    (
+        37,
+        'Criar agendamento de tarefas',
+        'Implementar execução de processos em horários definidos.',
+        'CRITICA',
+        'ABERTA',
+        '2026-10-11 10:00:00',
+        '2026-11-12 18:00:00',
+        8,
+        11,
+        3
+    ),
+    (
+        38,
+        'Implementar logs de execução',
+        'Registrar resultados e erros das automações.',
+        'MEDIA',
+        'EM REVISAO',
+        '2026-10-18 13:00:00',
+        '2026-11-09 18:00:00',
+        8,
+        12,
+        3
+    ),
+    (
+        39,
+        'Criar documentação técnica',
+        'Documentar fluxos e configurações das automações.',
+        'BAIXA',
+        'ABERTA',
+        '2026-10-22 14:00:00',
+        '2026-11-25 18:00:00',
+        8,
+        9,
+        3
+    ),
+    (
+        40,
+        'Corrigir falha na sincronização',
+        'Investigar inconsistências na sincronização de dados.',
+        'CRITICA',
+        'CANCELADA',
+        '2026-10-25 15:00:00',
+        '2026-11-05 18:00:00',
+        8,
+        10,
+        3
+    );
+
+-- ==========================================
+-- 5. COMENTÁRIOS (40 registros)
+-- ==========================================
+INSERT INTO
+    comment (content, creation_date, fk_task_id, fk_user_id)
+VALUES
+    (
+        'A implementação inicial foi concluída.',
+        '2026-10-03 10:00:00',
+        1,
+        2
+    ),
+    (
+        'Os testes de autenticação passaram.',
+        '2026-10-05 14:00:00',
+        1,
+        3
+    ),
+    (
+        'Precisamos validar também os casos de erro.',
+        '2026-10-06 09:30:00',
+        1,
+        4
+    ),
+    (
+        'Cadastro funcionando corretamente.',
+        '2026-10-08 11:00:00',
+        2,
+        5
+    ),
+    (
+        'Validação dos campos concluída.',
+        '2026-10-09 15:00:00',
+        2,
+        4
+    ),
+    (
+        'A estrutura principal já está pronta.',
+        '2026-10-15 10:00:00',
+        3,
+        2
+    ),
+    (
+        'Falta finalizar a integração com o banco.',
+        '2026-10-18 13:00:00',
+        3,
+        5
+    ),
+    (
+        'Aguardando revisão do código.',
+        '2026-10-20 16:00:00',
+        3,
+        6
+    ),
+    (
+        'Notificações funcionando em ambiente de teste.',
+        '2026-10-22 09:00:00',
+        4,
+        6
+    ),
+    (
+        'Encontrei um problema na atualização de leitura.',
+        '2026-10-23 11:00:00',
+        4,
+        3
+    ),
+    (
+        'O problema de permissões ainda ocorre.',
+        '2026-10-26 10:00:00',
+        5,
+        2
+    ),
+    (
+        'Vou revisar as regras de autorização.',
+        '2026-10-27 14:00:00',
+        5,
+        3
+    ),
+    (
+        'Relatório mensal disponível para validação.',
+        '2026-10-20 09:00:00',
+        9,
+        8
+    ),
+    (
+        'Precisamos adicionar o filtro por categoria.',
+        '2026-10-21 11:00:00',
+        9,
+        4
+    ),
+    (
+        'Foi identificado um erro no cálculo.',
+        '2026-10-24 10:00:00',
+        10,
+        9
+    ),
+    (
+        'Correção enviada para revisão.',
+        '2026-10-25 15:00:00',
+        10,
+        5
+    ),
+    (
+        'A tela inicial foi aprovada.',
+        '2026-10-05 09:00:00',
+        12,
+        3
+    ),
+    (
+        'Layout validado em Android.',
+        '2026-10-07 14:00:00',
+        12,
+        4
+    ),
+    (
+        'A navegação está parcialmente implementada.',
+        '2026-10-15 10:00:00',
+        13,
+        6
+    ),
+    (
+        'Precisamos testar a navegação entre módulos.',
+        '2026-10-18 13:00:00',
+        13,
+        7
+    ),
+    (
+        'A API já está respondendo corretamente.',
+        '2026-10-20 10:00:00',
+        14,
+        4
+    ),
+    (
+        'Falta tratar os erros de conexão.',
+        '2026-10-22 15:00:00',
+        14,
+        7
+    ),
+    (
+        'O formulário está funcionando.',
+        '2026-10-19 09:00:00',
+        18,
+        8
+    ),
+    (
+        'Adicionar validação de e-mail.',
+        '2026-10-20 11:00:00',
+        18,
+        5
+    ),
+    (
+        'Auditoria iniciada.',
+        '2026-10-05 09:00:00',
+        21,
+        2
+    ),
+    (
+        'Encontradas vulnerabilidades que precisam de correção.',
+        '2026-10-08 14:00:00',
         21,
         6
     ),
     (
-        17,
-        'As regras de firewall estão sendo revisadas.',
-        DATE_SUB(NOW(), INTERVAL 1 DAY),
-        22,
+        'Backup executado com sucesso.',
+        '2026-09-25 10:00:00',
+        23,
         9
     ),
     (
-        18,
-        'Identificamos algumas permissões desnecessárias.',
-        NOW(),
+        'Restauração também foi testada.',
+        '2026-09-27 13:00:00',
         23,
-        11
-    ),
-    (
-        19,
-        'O backup automático está funcionando.',
-        DATE_SUB(NOW(), INTERVAL 12 DAY),
-        24,
         12
     ),
     (
-        20,
-        'Vou iniciar a documentação da infraestrutura.',
-        NOW(),
-        25,
-        6
+        'A fila de atendimento está funcionando.',
+        '2026-10-20 09:00:00',
+        27,
+        3
+    ),
+    (
+        'Precisamos melhorar a distribuição automática.',
+        '2026-10-22 11:00:00',
+        27,
+        7
+    ),
+    (
+        'Os gráficos principais estão disponíveis.',
+        '2026-10-05 10:00:00',
+        31,
+        2
+    ),
+    (
+        'Solicito ajuste nas legendas.',
+        '2026-10-07 14:00:00',
+        31,
+        5
+    ),
+    (
+        'A integração está em desenvolvimento.',
+        '2026-10-18 10:00:00',
+        32,
+        8
+    ),
+    (
+        'Foi encontrada uma inconsistência nos dados.',
+        '2026-10-21 15:00:00',
+        32,
+        5
+    ),
+    (
+        'Mapeamento concluído.',
+        '2026-09-25 09:00:00',
+        35,
+        3
+    ),
+    (
+        'Processos prioritários identificados.',
+        '2026-09-28 13:00:00',
+        35,
+        9
+    ),
+    (
+        'A sincronização apresentou falhas.',
+        '2026-10-26 09:00:00',
+        40,
+        10
+    ),
+    (
+        'Vamos investigar a origem do problema.',
+        '2026-10-27 11:00:00',
+        40,
+        3
     );
 
 -- ==========================================
--- 6. SOLICITAÇÕES DE ACESSO (8 registros)
+-- 6. SOLICITAÇÕES DE ACESSO (12 registros)
 -- ==========================================
 INSERT INTO
     access_request (
@@ -626,59 +946,21 @@ INSERT INTO
         fk_user_id
     )
 VALUES
-    (
-        1,
-        DATE_SUB(NOW(), INTERVAL 10 DAY),
-        'APPROVED',
-        1,
-        11
-    ),
-    (
-        2,
-        DATE_SUB(NOW(), INTERVAL 8 DAY),
-        'PENDING',
-        1,
-        12
-    ),
-    (
-        3,
-        DATE_SUB(NOW(), INTERVAL 7 DAY),
-        'REJECTED',
-        2,
-        9
-    ),
-    (
-        4,
-        DATE_SUB(NOW(), INTERVAL 5 DAY),
-        'APPROVED',
-        3,
-        7
-    ),
-    (
-        5,
-        DATE_SUB(NOW(), INTERVAL 4 DAY),
-        'PENDING',
-        3,
-        8
-    ),
-    (
-        6,
-        DATE_SUB(NOW(), INTERVAL 3 DAY),
-        'REJECTED',
-        4,
-        11
-    ),
-    (
-        7,
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        'PENDING',
-        5,
-        7
-    ),
-    (8, NOW(), 'APPROVED', 5, 10);
+    (1, '2026-10-20 09:00:00', 'PENDING', 1, 8),
+    (2, '2026-10-20 10:00:00', 'APPROVED', 1, 9),
+    (3, '2026-10-21 11:00:00', 'REJECTED', 1, 10),
+    (4, '2026-10-21 14:00:00', 'PENDING', 2, 3),
+    (5, '2026-10-22 08:30:00', 'APPROVED', 2, 6),
+    (6, '2026-10-22 13:00:00', 'PENDING', 3, 8),
+    (7, '2026-10-23 09:00:00', 'REJECTED', 3, 12),
+    (8, '2026-10-23 15:00:00', 'PENDING', 4, 7),
+    (9, '2026-10-24 10:00:00', 'APPROVED', 5, 4),
+    (10, '2026-10-25 11:00:00', 'PENDING', 6, 9),
+    (11, '2026-10-26 14:00:00', 'APPROVED', 7, 11),
+    (12, '2026-10-27 16:00:00', 'REJECTED', 8, 5);
 
 -- ==========================================
--- 7. NOTIFICAÇÕES (20 registros)
+-- 7. NOTIFICAÇÕES (35 registros)
 -- ==========================================
 INSERT INTO
     notification (
@@ -695,206 +977,356 @@ VALUES
     (
         1,
         'PROJECT_INVITE',
-        'Você foi adicionado ao projeto TaskOps.',
-        FALSE,
-        DATE_SUB(NOW(), INTERVAL 10 DAY),
-        7,
+        'Você foi convidado para participar do projeto TaskOps.',
+        TRUE,
+        '2026-10-01 09:00:00',
+        3,
         1,
         NULL
     ),
     (
         2,
+        'PROJECT_INVITE',
+        'Você foi convidado para participar do projeto TaskOps.',
+        FALSE,
+        '2026-10-01 09:05:00',
+        4,
+        1,
+        NULL
+    ),
+    (
+        3,
+        'PROJECT_INVITE',
+        'Você foi convidado para participar do projeto financeiro.',
+        TRUE,
+        '2026-10-02 10:00:00',
+        8,
+        2,
+        NULL
+    ),
+    (
+        4,
+        'PROJECT_INVITE',
+        'Solicitação de participação aprovada.',
+        FALSE,
+        '2026-10-22 09:00:00',
+        6,
+        2,
+        NULL
+    ),
+    (
+        5,
+        'PROJECT_INVITE',
+        'Sua solicitação de acesso foi rejeitada.',
+        FALSE,
+        '2026-10-23 09:00:00',
+        12,
+        3,
+        NULL
+    ),
+    (
+        6,
         'TASK_ASSIGNED',
         'Uma nova tarefa foi atribuída a você: Implementar autenticação.',
-        FALSE,
-        DATE_SUB(NOW(), INTERVAL 12 DAY),
-        8,
+        TRUE,
+        '2026-10-01 09:10:00',
+        3,
+        1,
+        1
+    ),
+    (
+        7,
+        'TASK_ASSIGNED',
+        'Uma nova tarefa foi atribuída a você: Criar cadastro de usuários.',
+        TRUE,
+        '2026-10-02 10:00:00',
+        4,
         1,
         2
     ),
     (
+        8,
+        'TASK_ASSIGNED',
+        'Você recebeu uma nova tarefa: Gerenciamento de projetos.',
+        FALSE,
+        '2026-10-05 08:30:00',
+        5,
+        1,
+        3
+    ),
+    (
+        9,
+        'TASK_ASSIGNED',
+        'Você recebeu uma nova tarefa: Implementar notificações.',
+        FALSE,
+        '2026-10-07 09:00:00',
+        6,
+        1,
+        4
+    ),
+    (
+        10,
+        'TASK_ASSIGNED',
+        'Nova tarefa atribuída: Corrigir erro de permissões.',
+        FALSE,
+        '2026-10-15 11:00:00',
         3,
+        1,
+        5
+    ),
+    (
+        11,
         'TASK_UPDATED',
-        'A tarefa Criar estrutura do banco de dados foi concluída.',
+        'A tarefa Implementar autenticação foi concluída.',
         TRUE,
-        DATE_SUB(NOW(), INTERVAL 10 DAY),
+        '2026-10-10 17:00:00',
         2,
         1,
         1
     ),
     (
-        4,
-        'GENERIC',
-        'Bem-vindo ao TaskOps! Seu cadastro foi realizado.',
+        12,
+        'TASK_UPDATED',
+        'A tarefa Criar cadastro de usuários foi concluída.',
         TRUE,
-        DATE_SUB(NOW(), INTERVAL 15 DAY),
+        '2026-10-12 17:00:00',
+        2,
+        1,
+        2
+    ),
+    (
+        13,
+        'TASK_UPDATED',
+        'A tarefa Gerenciamento de projetos foi atualizada.',
+        FALSE,
+        '2026-10-18 15:00:00',
+        2,
+        1,
+        3
+    ),
+    (
+        14,
+        'TASK_UPDATED',
+        'A tarefa Implementar notificações está em revisão.',
+        FALSE,
+        '2026-10-25 11:00:00',
+        6,
+        1,
+        4
+    ),
+    (
+        15,
+        'TASK_ASSIGNED',
+        'Nova tarefa: Implementar cálculo de saldo.',
+        FALSE,
+        '2026-10-01 09:00:00',
+        5,
+        2,
+        8
+    ),
+    (
+        16,
+        'TASK_ASSIGNED',
+        'Nova tarefa: Criar relatórios financeiros.',
+        FALSE,
+        '2026-10-12 10:00:00',
+        8,
+        2,
+        9
+    ),
+    (
+        17,
+        'TASK_UPDATED',
+        'A tarefa Corrigir arredondamento de valores está em revisão.',
+        TRUE,
+        '2026-10-25 15:00:00',
+        4,
+        2,
+        10
+    ),
+    (
+        18,
+        'TASK_ASSIGNED',
+        'Nova tarefa: Implementar navegação.',
+        FALSE,
+        '2026-10-03 10:00:00',
+        6,
+        3,
+        13
+    ),
+    (
+        19,
+        'TASK_ASSIGNED',
+        'Nova tarefa: Integrar API de usuários.',
+        TRUE,
+        '2026-10-08 11:00:00',
+        7,
+        3,
+        14
+    ),
+    (
+        20,
+        'TASK_UPDATED',
+        'A tarefa Integrar API de usuários foi enviada para revisão.',
+        FALSE,
+        '2026-10-22 15:00:00',
+        4,
+        3,
+        14
+    ),
+    (
+        21,
+        'TASK_ASSIGNED',
+        'Nova tarefa: Implementar formulário de contato.',
+        FALSE,
+        '2026-10-02 10:00:00',
+        8,
+        4,
+        18
+    ),
+    (
+        22,
+        'TASK_UPDATED',
+        'O formulário de contato está em desenvolvimento.',
+        TRUE,
+        '2026-10-19 09:00:00',
+        2,
+        4,
+        18
+    ),
+    (
+        23,
+        'TASK_ASSIGNED',
+        'Nova tarefa: Realizar auditoria de segurança.',
+        FALSE,
+        '2026-10-01 08:00:00',
+        6,
+        5,
+        21
+    ),
+    (
+        24,
+        'TASK_UPDATED',
+        'A auditoria de segurança foi iniciada.',
+        FALSE,
+        '2026-10-05 09:00:00',
+        2,
+        5,
+        21
+    ),
+    (
+        25,
+        'TASK_ASSIGNED',
+        'Nova tarefa: Implementar fila de atendimento.',
+        FALSE,
+        '2026-10-05 10:00:00',
+        7,
+        6,
+        27
+    ),
+    (
+        26,
+        'TASK_UPDATED',
+        'A fila de atendimento está em desenvolvimento.',
+        TRUE,
+        '2026-10-20 09:00:00',
+        3,
+        6,
+        27
+    ),
+    (
+        27,
+        'TASK_ASSIGNED',
+        'Nova tarefa: Integrar dados de projetos.',
+        FALSE,
+        '2026-10-04 09:00:00',
+        8,
+        7,
+        32
+    ),
+    (
+        28,
+        'TASK_UPDATED',
+        'Foram identificadas inconsistências nos dados.',
+        FALSE,
+        '2026-10-21 15:00:00',
+        2,
+        7,
+        32
+    ),
+    (
+        29,
+        'TASK_ASSIGNED',
+        'Nova tarefa: Desenvolver rotina de integração.',
+        TRUE,
+        '2026-10-03 09:00:00',
+        10,
+        8,
+        36
+    ),
+    (
+        30,
+        'TASK_UPDATED',
+        'A sincronização de dados precisa de ajustes.',
+        FALSE,
+        '2026-10-26 09:00:00',
+        3,
+        8,
+        40
+    ),
+    (
+        31,
+        'GENERIC',
+        'Bem-vindo ao TaskOps! Confira seus projetos.',
+        TRUE,
+        '2026-10-01 08:00:00',
+        1,
+        NULL,
+        NULL
+    ),
+    (
+        32,
+        'GENERIC',
+        'Você possui tarefas próximas do vencimento.',
+        FALSE,
+        '2026-11-01 08:00:00',
+        3,
+        NULL,
+        NULL
+    ),
+    (
+        33,
+        'GENERIC',
+        'Existem solicitações de acesso aguardando aprovação.',
+        FALSE,
+        '2026-11-02 09:00:00',
+        1,
+        NULL,
+        NULL
+    ),
+    (
+        34,
+        'GENERIC',
+        'Não se esqueça de atualizar suas tarefas.',
+        TRUE,
+        '2026-11-02 10:00:00',
         7,
         NULL,
         NULL
     ),
     (
-        5,
-        'TASK_ASSIGNED',
-        'Você recebeu uma nova tarefa: Integrar API.',
-        FALSE,
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        11,
-        2,
-        8
-    ),
-    (
-        6,
-        'PROJECT_INVITE',
-        'Você foi adicionado ao projeto Desenvolvimento de Aplicativo Mobile.',
-        TRUE,
-        DATE_SUB(NOW(), INTERVAL 9 DAY),
-        8,
-        2,
-        NULL
-    ),
-    (
-        7,
-        'TASK_UPDATED',
-        'A tarefa Implementar navegação foi atualizada.',
-        FALSE,
-        DATE_SUB(NOW(), INTERVAL 1 DAY),
-        3,
-        2,
-        7
-    ),
-    (
-        8,
-        'TASK_ASSIGNED',
-        'Uma tarefa foi atribuída a você: Desenvolver painel administrativo.',
-        FALSE,
-        DATE_SUB(NOW(), INTERVAL 9 DAY),
-        10,
-        3,
-        12
-    ),
-    (
-        9,
-        'TASK_UPDATED',
-        'A tarefa Criar layout da página inicial foi concluída.',
-        TRUE,
-        DATE_SUB(NOW(), INTERVAL 20 DAY),
-        4,
-        3,
-        11
-    ),
-    (
-        10,
+        35,
         'GENERIC',
-        'Sua solicitação de acesso ao Portal Institucional foi aprovada.',
-        TRUE,
-        DATE_SUB(NOW(), INTERVAL 5 DAY),
-        7,
-        3,
-        NULL
-    ),
-    (
-        11,
-        'TASK_ASSIGNED',
-        'Nova tarefa atribuída: Implementar entrada de produtos.',
+        'Seu resumo semanal de atividades está disponível.',
         FALSE,
-        DATE_SUB(NOW(), INTERVAL 11 DAY),
-        8,
-        4,
-        17
-    ),
-    (
-        12,
-        'TASK_UPDATED',
-        'A tarefa Corrigir cálculo de quantidade foi concluída.',
-        TRUE,
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        5,
-        4,
-        20
-    ),
-    (
-        13,
-        'PROJECT_INVITE',
-        'Você foi adicionado ao projeto Sistema de Controle de Estoque.',
-        FALSE,
-        DATE_SUB(NOW(), INTERVAL 6 DAY),
-        12,
-        4,
-        NULL
-    ),
-    (
-        14,
-        'GENERIC',
-        'Sua solicitação de acesso ao projeto foi rejeitada.',
-        FALSE,
-        DATE_SUB(NOW(), INTERVAL 3 DAY),
-        11,
-        4,
-        NULL
-    ),
-    (
-        15,
-        'TASK_ASSIGNED',
-        'Você recebeu a tarefa Configurar firewall.',
-        FALSE,
-        DATE_SUB(NOW(), INTERVAL 8 DAY),
-        9,
-        5,
-        22
-    ),
-    (
-        16,
-        'TASK_UPDATED',
-        'A tarefa Implementar backup automático foi concluída.',
-        TRUE,
-        DATE_SUB(NOW(), INTERVAL 14 DAY),
-        6,
-        5,
-        24
-    ),
-    (
-        17,
-        'PROJECT_INVITE',
-        'Você foi adicionado ao projeto Infraestrutura e Segurança.',
-        TRUE,
-        DATE_SUB(NOW(), INTERVAL 7 DAY),
-        8,
-        5,
-        NULL
-    ),
-    (
-        18,
-        'TASK_ASSIGNED',
-        'Nova tarefa atribuída: Documentar infraestrutura.',
-        FALSE,
-        NOW(),
-        11,
-        5,
-        25
-    ),
-    (
-        19,
-        'GENERIC',
-        'Você possui solicitações de acesso aguardando aprovação.',
-        FALSE,
-        DATE_SUB(NOW(), INTERVAL 1 DAY),
+        '2026-11-03 08:00:00',
         2,
-        1,
+        NULL,
         NULL
-    ),
-    (
-        20,
-        'TASK_UPDATED',
-        'A tarefa Configurar firewall foi enviada para revisão.',
-        FALSE,
-        NOW(),
-        6,
-        5,
-        22
     );
 
 -- ==========================================
--- 8. HISTÓRICO DE ALTERAÇÕES (20 registros)
+-- 8. HISTÓRICO DE ALTERAÇÕES (40 registros)
 -- ==========================================
 INSERT INTO
     history (
@@ -909,197 +1341,368 @@ INSERT INTO
 VALUES
     (
         1,
-        DATE_SUB(NOW(), INTERVAL 10 DAY),
+        '2026-10-02 09:00:00',
         'ABERTA',
         'EM ANDAMENTO',
         'status',
         1,
-        7
+        3
     ),
     (
         2,
-        DATE_SUB(NOW(), INTERVAL 8 DAY),
+        '2026-10-05 11:00:00',
         'EM ANDAMENTO',
+        'EM REVISAO',
+        'status',
+        1,
+        3
+    ),
+    (
+        3,
+        '2026-10-08 15:00:00',
+        'EM REVISAO',
         'CONCLUIDA',
         'status',
         1,
         2
     ),
     (
-        3,
-        DATE_SUB(NOW(), INTERVAL 5 DAY),
-        'ABERTA',
-        'EM ANDAMENTO',
-        'status',
-        2,
-        8
-    ),
-    (
         4,
-        DATE_SUB(NOW(), INTERVAL 4 DAY),
-        'MEDIA',
+        '2026-10-03 10:00:00',
+        'ALTA',
         'CRITICA',
         'priority',
-        2,
+        1,
         2
     ),
     (
         5,
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        'ABERTA',
-        'EM REVISAO',
-        'status',
-        3,
-        9
-    ),
-    (
-        6,
-        DATE_SUB(NOW(), INTERVAL 14 DAY),
+        '2026-10-04 09:00:00',
         'ABERTA',
         'EM ANDAMENTO',
         'status',
-        6,
-        7
-    ),
-    (
-        7,
-        DATE_SUB(NOW(), INTERVAL 12 DAY),
-        'EM ANDAMENTO',
-        'CONCLUIDA',
-        'status',
-        6,
-        3
-    ),
-    (
-        8,
-        DATE_SUB(NOW(), INTERVAL 3 DAY),
-        'ABERTA',
-        'EM ANDAMENTO',
-        'status',
-        7,
-        8
-    ),
-    (
-        9,
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
-        'MEDIA',
-        'ALTA',
-        'priority',
-        8,
-        3
-    ),
-    (
-        10,
-        DATE_SUB(NOW(), INTERVAL 20 DAY),
-        'ABERTA',
-        'EM ANDAMENTO',
-        'status',
-        11,
-        9
-    ),
-    (
-        11,
-        DATE_SUB(NOW(), INTERVAL 18 DAY),
-        'EM ANDAMENTO',
-        'CONCLUIDA',
-        'status',
-        11,
+        2,
         4
     ),
     (
-        12,
-        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        6,
+        '2026-10-09 14:00:00',
+        'EM ANDAMENTO',
+        'EM REVISAO',
+        'status',
+        2,
+        4
+    ),
+    (
+        7,
+        '2026-10-12 17:00:00',
+        'EM REVISAO',
+        'CONCLUIDA',
+        'status',
+        2,
+        2
+    ),
+    (
+        8,
+        '2026-10-10 09:00:00',
         'ABERTA',
         'EM ANDAMENTO',
         'status',
+        3,
+        5
+    ),
+    (
+        9,
+        '2026-10-18 13:00:00',
+        'MEDIA',
+        'ALTA',
+        'priority',
+        3,
+        2
+    ),
+    (
+        10,
+        '2026-10-20 16:00:00',
+        '5',
+        '6',
+        'fk_user_id',
+        3,
+        2
+    ),
+    (
+        11,
+        '2026-10-12 10:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        4,
+        6
+    ),
+    (
         12,
-        10
+        '2026-10-25 11:00:00',
+        'EM ANDAMENTO',
+        'EM REVISAO',
+        'status',
+        4,
+        2
     ),
     (
         13,
-        DATE_SUB(NOW(), INTERVAL 15 DAY),
-        'ABERTA',
-        'EM ANDAMENTO',
-        'status',
-        16,
-        7
-    ),
-    (
-        14,
-        DATE_SUB(NOW(), INTERVAL 13 DAY),
-        'EM ANDAMENTO',
-        'CONCLUIDA',
-        'status',
-        16,
-        5
-    ),
-    (
-        15,
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        '2026-10-16 10:00:00',
         'MEDIA',
         'CRITICA',
         'priority',
-        17,
-        5
+        5,
+        2
     ),
     (
-        16,
-        DATE_SUB(NOW(), INTERVAL 3 DAY),
+        14,
+        '2026-10-18 14:00:00',
         'ABERTA',
         'EM ANDAMENTO',
         'status',
-        20,
-        7
+        5,
+        3
     ),
     (
-        17,
-        DATE_SUB(NOW(), INTERVAL 2 DAY),
+        15,
+        '2026-10-02 09:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        7,
+        4
+    ),
+    (
+        16,
+        '2026-10-05 17:00:00',
         'EM ANDAMENTO',
         'CONCLUIDA',
         'status',
-        20,
-        5
+        7,
+        2
+    ),
+    (
+        17,
+        '2026-10-05 09:00:00',
+        'MEDIA',
+        'CRITICA',
+        'priority',
+        8,
+        2
     ),
     (
         18,
-        DATE_SUB(NOW(), INTERVAL 4 DAY),
+        '2026-10-10 11:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        8,
+        5
+    ),
+    (
+        19,
+        '2026-10-15 10:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        9,
+        8
+    ),
+    (
+        20,
+        '2026-10-20 09:00:00',
+        'MEDIA',
+        'ALTA',
+        'priority',
+        9,
+        2
+    ),
+    (
+        21,
+        '2026-10-22 10:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        10,
+        9
+    ),
+    (
+        22,
+        '2026-10-25 15:00:00',
+        'EM ANDAMENTO',
+        'EM REVISAO',
+        'status',
+        10,
+        4
+    ),
+    (
+        23,
+        '2026-10-01 10:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        12,
+        4
+    ),
+    (
+        24,
+        '2026-10-08 17:00:00',
+        'EM ANDAMENTO',
+        'CONCLUIDA',
+        'status',
+        12,
+        3
+    ),
+    (
+        25,
+        '2026-10-08 09:00:00',
+        'MEDIA',
+        'ALTA',
+        'priority',
+        13,
+        3
+    ),
+    (
+        26,
+        '2026-10-12 14:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        13,
+        6
+    ),
+    (
+        27,
+        '2026-10-15 10:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        14,
+        7
+    ),
+    (
+        28,
+        '2026-10-22 15:00:00',
+        'EM ANDAMENTO',
+        'EM REVISAO',
+        'status',
+        14,
+        4
+    ),
+    (
+        29,
+        '2026-10-01 10:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        17,
+        5
+    ),
+    (
+        30,
+        '2026-10-10 16:00:00',
+        'EM ANDAMENTO',
+        'CONCLUIDA',
+        'status',
+        17,
+        2
+    ),
+    (
+        31,
+        '2026-10-12 09:00:00',
+        'BAIXA',
+        'ALTA',
+        'priority',
+        18,
+        2
+    ),
+    (
+        32,
+        '2026-10-19 09:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        18,
+        8
+    ),
+    (
+        33,
+        '2026-10-05 09:00:00',
         'ABERTA',
         'EM ANDAMENTO',
         'status',
         21,
-        8
+        6
     ),
     (
-        19,
-        DATE_SUB(NOW(), INTERVAL 1 DAY),
-        'EM ANDAMENTO',
-        'EM REVISAO',
-        'status',
-        22,
-        9
+        34,
+        '2026-10-08 14:00:00',
+        'ALTA',
+        'CRITICA',
+        'priority',
+        21,
+        2
     ),
     (
-        20,
-        DATE_SUB(NOW(), INTERVAL 14 DAY),
+        35,
+        '2026-09-20 10:00:00',
         'ABERTA',
         'EM ANDAMENTO',
         'status',
-        24,
+        23,
         12
+    ),
+    (
+        36,
+        '2026-10-05 17:00:00',
+        'EM ANDAMENTO',
+        'CONCLUIDA',
+        'status',
+        23,
+        2
+    ),
+    (
+        37,
+        '2026-10-10 09:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        27,
+        7
+    ),
+    (
+        38,
+        '2026-10-20 09:00:00',
+        'ALTA',
+        'CRITICA',
+        'priority',
+        27,
+        3
+    ),
+    (
+        39,
+        '2026-10-15 10:00:00',
+        'ABERTA',
+        'EM ANDAMENTO',
+        'status',
+        32,
+        8
+    ),
+    (
+        40,
+        '2026-10-21 15:00:00',
+        'EM ANDAMENTO',
+        'EM REVISAO',
+        'status',
+        32,
+        2
     );
 
--- ==========================================
--- 9. VERIFICAÇÃO DA MASSA DE DADOS
--- ==========================================
 SELECT
-    'user' AS tabela,
-    COUNT(*) AS registros
-FROM
-    `user`
-UNION ALL
-SELECT
-    'project',
-    COUNT(*)
+    'project' AS tabela,
+    COUNT(*) AS total
 FROM
     project
 UNION ALL
@@ -1119,7 +1722,7 @@ SELECT
     'comment',
     COUNT(*)
 FROM
-    `comment`
+    comment
 UNION ALL
 SELECT
     'access_request',

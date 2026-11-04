@@ -8,7 +8,7 @@
 // O============================================================================================O
 
 import { Request, Response } from "express";
-import user_models from "./models";
+import models from "./models";
 import bcrypt from "bcrypt";
 import JWT from "jsonwebtoken";
 
@@ -21,7 +21,7 @@ const login_user = async (req: Request, res: Response) => {
 
 	/* -------------------------------------------------- */
 
-	const user = await user_models.get_user_by_email(user_email);
+	const user = await models.get_user_by_email(user_email);
 
 	if (!user) {
 		return res.status(404).json({
@@ -60,6 +60,8 @@ const login_user = async (req: Request, res: Response) => {
 	});
 };
 
+// O============================================================================================O
+
 const register_user = async (req: Request, res: Response) => {
 	/* -------------------------------------------------- */
 
@@ -67,7 +69,7 @@ const register_user = async (req: Request, res: Response) => {
 
 	/* -------------------------------------------------- */
 
-	const test_email = await user_models.get_user_by_email(user_email);
+	const test_email = await models.get_user_by_email(user_email);
 
 	if (test_email) {
 		return res.status(409).json({
@@ -78,7 +80,7 @@ const register_user = async (req: Request, res: Response) => {
 
 	/* -------------------------------------------------- */
 
-	const test_name = await user_models.get_user_by_name(user_name);
+	const test_name = await models.get_user_by_name(user_name);
 
 	if (test_name) {
 		return res.status(409).json({
@@ -129,7 +131,7 @@ const register_user = async (req: Request, res: Response) => {
 
 	const hashed_password = await bcrypt.hash(user_password, 12);
 
-	const new_user = await user_models.register_user(
+	const new_user = await models.register_user(
 		user_name,
 		user_email,
 		hashed_password,
@@ -141,20 +143,12 @@ const register_user = async (req: Request, res: Response) => {
 	});
 };
 
+// O============================================================================================O
+
 const get_user = async (__req: Request, res: Response) => {
 	/* -------------------------------------------------- */
 
-	const user_id = await res.locals.user.id;
-
-	/* -------------------------------------------------- */
-
-	const user = await user_models.get_user_by_id(user_id);
-
-	if (!user) {
-		return res.status(404).json({
-			message: "Usuário não encontrado.",
-		});
-	}
+	const user = await res.locals.user;
 
 	/* -------------------------------------------------- */
 

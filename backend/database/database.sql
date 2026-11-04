@@ -28,11 +28,9 @@ CREATE TABLE IF NOT EXISTS
     project_user (
         fk_project_id INT NOT NULL,
         fk_user_id INT NOT NULL,
-        fk_creator_id INT NOT NULL,
         PRIMARY KEY (fk_project_id, fk_user_id),
         FOREIGN KEY (fk_project_id) REFERENCES project (project_id) ON DELETE CASCADE,
-        FOREIGN KEY (fk_user_id) REFERENCES user(user_id) ON DELETE CASCADE,
-        FOREIGN KEY (fk_creator_id) REFERENCES user(user_id) ON DELETE CASCADE
+        FOREIGN KEY (fk_user_id) REFERENCES user(user_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS
@@ -52,8 +50,10 @@ CREATE TABLE IF NOT EXISTS
         due_date TIMESTAMP NOT NULL,
         fk_project_id INT NOT NULL,
         fk_user_id INT NOT NULL,
+        fk_creator_id INT NOT NULL,
         FOREIGN KEY (fk_project_id) REFERENCES project (project_id) ON DELETE CASCADE,
-        FOREIGN KEY (fk_user_id) REFERENCES user(user_id) ON DELETE CASCADE
+        FOREIGN KEY (fk_user_id) REFERENCES user(user_id) ON DELETE CASCADE,
+        FOREIGN KEY (fk_creator_id) REFERENCES user(user_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS

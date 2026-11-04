@@ -11,6 +11,8 @@ import { Request, Response, NextFunction } from "express";
 
 import JWT from "jsonwebtoken";
 
+import user_models from "./models";
+
 // O============================================================================================O
 
 const user_email = (req: Request, res: Response, next: NextFunction) => {
@@ -131,10 +133,17 @@ const user_token = (req: Request, res: Response, next: NextFunction) => {
 			user_email: string;
 		};
 
-		res.locals.user = {
-			id: decoded.user_id,
-			email: decoded.user_email,
-		};
+		const user = user_models.get_user_by_id(decoded.user_id);
+
+		if (!user) {
+			return res.status(404).json({
+				message: "Usuário não encontrado.",
+				errorAt: "x-access-token",
+			});
+		}
+
+		res.locals.user = user;
+		res.locals.user_id = decoded.user_id;
 
 		return next();
 	} catch (error) {
