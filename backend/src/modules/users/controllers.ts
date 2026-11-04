@@ -141,6 +141,29 @@ const register_user = async (req: Request, res: Response) => {
 	});
 };
 
+const get_user = async (__req: Request, res: Response) => {
+	/* -------------------------------------------------- */
+
+	const user_id = await res.locals.user.id;
+
+	/* -------------------------------------------------- */
+
+	const user = await user_models.get_user_by_id(user_id);
+
+	if (!user) {
+		return res.status(404).json({
+			message: "Usuário não encontrado.",
+		});
+	}
+
+	/* -------------------------------------------------- */
+
+	return res.status(200).json({
+		message: "Usuário encontrado com sucesso.",
+		user: user,
+	});
+};
+
 // O============================================================================================O
 
-export default { login_user, register_user };
+export default { login_user, register_user, get_user };

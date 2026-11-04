@@ -9,7 +9,7 @@
 
 import { Request, Response, NextFunction } from "express";
 
-/* import JWT from "jsonwebtoken"; */
+import JWT from "jsonwebtoken";
 
 // O============================================================================================O
 
@@ -86,6 +86,68 @@ const user_name = (req: Request, res: Response, next: NextFunction) => {
 
 // O============================================================================================O
 
-export default { user_email, user_password, user_name };
+const user_id = (req: Request, res: Response, next: NextFunction) => {
+	const { user_id } = req.body;
+
+	if (!user_id) {
+		return res.status(400).json({
+			message: "ID de usuário não fornecido no corpo da requisição.",
+			errorAt: "user_id",
+		});
+	}
+
+	if (typeof user_id !== "number") {
+		return res.status(400).json({
+			message: "ID de usuário fornecido não é um número.",
+			errorAt: "user_id",
+		});
+	}
+
+	return next();
+};
+
+// O============================================================================================O
+
+const user_token = (req: Request, res: Response, next: NextFunction) => {
+	const token = req.headers["x-access-token"] as string;
+
+	if (!token) {
+		return res.status(401).json({
+			message: "Token não fornecido no cabeçalho da requisição.",
+			errorAt: "x-access-token",
+		});
+	}
+
+	if (token.trim().length === 0) {
+		return res.status(401).json({
+			message: "Token fornecido não é válido.",
+			errorAt: "x-access-token",
+		});
+	}
+
+	try {
+		const decoded = JWT.verify(token, process.env.JWT_SECRET as string) as {
+			user_id: number;
+			user_email: string;
+		};
+
+		res.locals.user = {
+			id: decoded.user_id,
+			email: decoded.user_email,
+		};
+
+		return next();
+	} catch (error) {
+		return res.status(401).json({
+			message: "Token fornecido é inválido ou expirou.",
+			errorAt: "x-access-token",
+			error,
+		});
+	}
+};
+
+// O============================================================================================O
+
+export default { user_email, user_password, user_name, user_id, user_token };
 
 // O============================================================================================O
