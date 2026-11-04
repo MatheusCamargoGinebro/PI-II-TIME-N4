@@ -16,4 +16,12 @@ router.post(
 	controllers.login_user,
 );
 
+router.post(
+	"/register",
+	middlewares.user_email,
+	middlewares.user_password,
+	middlewares.user_name,
+	controllers.register_user,
+);
+
 export default router;

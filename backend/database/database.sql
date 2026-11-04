@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS
             'Administrador',
             'Lider de projeto',
             'Membro de projeto'
-        ) NOT NULL
+        ) NOT NULL DEFAULT 'Membro de projeto'
     );
 
 CREATE TABLE IF NOT EXISTS
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS
             'EM REVISAO',
             'EM ANDAMENTO',
             'ABERTA'
-        ) NOT NULL,
+        ) NOT NULL DEFAULT 'ABERTA',
         creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         due_date TIMESTAMP NOT NULL,
         fk_project_id INT NOT NULL,

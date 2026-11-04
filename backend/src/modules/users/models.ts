@@ -20,4 +20,32 @@ const get_user_by_email = async (user_email: string) => {
 	}
 };
 
-export default { get_user_by_email };
+const get_user_by_name = async (user_name: string) => {
+	const query = "SELECT * FROM user WHERE name = ?";
+	const [result] = await connection.execute(query, [user_name]);
+
+	if (Array.isArray(result) && result.length > 0) {
+		return result[0];
+	} else {
+		return null;
+	}
+};
+
+const register_user = async (
+	user_name: string,
+	user_email: string,
+	user_password: string,
+) => {
+	const query = "INSERT INTO user (name, email, password) VALUES (?, ?, ?)";
+	const [result] = await connection.execute(query, [
+		user_name,
+		user_email,
+		user_password,
+	]);
+
+	if (Array.isArray(result) && result.length > 0) {
+		return result[0];
+	}
+};
+
+export default { get_user_by_email, get_user_by_name, register_user };
