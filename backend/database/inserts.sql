@@ -4,6 +4,9 @@ USE TaskOps;
 -- 1. USUÁRIOS (12 registros)
 -- Senha: 60 caracteres A
 -- ==========================================
+/* 
+Hash da senha "PassW0rd@123" -> "$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy"
+ */
 INSERT INTO
     `user` (
         user_id,
@@ -18,7 +21,7 @@ VALUES
         1,
         'Carlos Henrique',
         'carlos@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Administrador'
     ),
@@ -26,7 +29,7 @@ VALUES
         2,
         'Mariana Oliveira',
         'mariana@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Lider de projeto'
     ),
@@ -34,7 +37,7 @@ VALUES
         3,
         'Rafael Santos',
         'rafael@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Lider de projeto'
     ),
@@ -42,7 +45,7 @@ VALUES
         4,
         'Ana Beatriz',
         'ana@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Lider de projeto'
     ),
@@ -50,7 +53,7 @@ VALUES
         5,
         'Lucas Ferreira',
         'lucas@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Lider de projeto'
     ),
@@ -58,7 +61,7 @@ VALUES
         6,
         'Juliana Costa',
         'juliana@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Lider de projeto'
     ),
@@ -66,7 +69,7 @@ VALUES
         7,
         'Pedro Almeida',
         'pedro@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Membro de projeto'
     ),
@@ -74,7 +77,7 @@ VALUES
         8,
         'Gabriela Souza',
         'gabriela@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Membro de projeto'
     ),
@@ -82,7 +85,7 @@ VALUES
         9,
         'Felipe Rodrigues',
         'felipe@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Membro de projeto'
     ),
@@ -90,7 +93,7 @@ VALUES
         10,
         'Beatriz Lima',
         'beatriz@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Membro de projeto'
     ),
@@ -98,7 +101,7 @@ VALUES
         11,
         'Thiago Martins',
         'thiago@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Membro de projeto'
     ),
@@ -106,7 +109,7 @@ VALUES
         12,
         'Camila Ribeiro',
         'camila@taskops.com',
-        REPEAT ('A', 60),
+        '$2a$12$C7JSoS2S5/dpM/Hf3m.p3O8jHtQZjutGT6ypkbTvwzwfFJnhhRCRy',
         NULL,
         'Membro de projeto'
     );
