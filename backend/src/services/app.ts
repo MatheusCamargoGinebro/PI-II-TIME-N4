@@ -1,6 +1,6 @@
 /* 
     Autor: Matheus Camargo Ginebro
-    server.ts -> Arquivo responsável por configurar a API;
+    app.ts -> Arquivo responsável por configurar a API;
 */
 
 import express, { Request, Response } from "express";
