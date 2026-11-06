@@ -1,15 +1,29 @@
-/* 
-    Autor: Matheus Camargo Ginebro
-    routes.ts -> Arquivo responsável por definir as rotas da API;
-*/
 
 import { Router } from "express";
 import user_middlewares from "../users/middlewares";
 import controllers from "./controllers";
-/* import middlewares from "./middlewares"; */
 
 const router = Router();
 
-router.get("/overview", user_middlewares.user_token, controllers.get_overview);
+// Consultar tarefas do usuário
+router.get(
+    "/overview",
+    user_middlewares.user_token,
+    controllers.get_overview
+);
+
+// Consultar participantes de um projeto
+router.get(
+    "/project/:project_id/members",
+    user_middlewares.user_token,
+    controllers.get_project_members
+);
+
+// Cadastrar uma demanda
+router.post(
+    "/",
+    user_middlewares.user_token,
+    controllers.create
+);
 
 export default router;
