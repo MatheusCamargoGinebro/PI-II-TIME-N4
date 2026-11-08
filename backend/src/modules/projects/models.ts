@@ -141,10 +141,80 @@ const get_project_task_list = async (project_id: number) => {
 
 // O============================================================================================O
 
+const get_users_project = async (project_id: number) => {
+	const query = `
+        SELECT 
+            u.user_id AS member_id,
+            u.name AS member_name,
+            u.authority_level AS access_level,
+            u.profile_pic,
+            
+            COUNT(
+                CASE 
+                    WHEN t.status = 'CONCLUIDA' THEN 1
+                END
+            ) AS completed_tasks,
+
+            COUNT(t.task_id) AS total_tasks
+
+        FROM project_user pu
+
+        INNER JOIN user u
+            ON u.user_id = pu.fk_user_id
+
+        LEFT JOIN task t
+            ON t.fk_user_id = u.user_id
+            AND t.fk_project_id = pu.fk_project_id
+
+        WHERE pu.fk_project_id = ?
+
+        GROUP BY
+            u.user_id,
+            u.name,
+            u.authority_level,
+            u.profile_pic
+
+        ORDER BY u.name;
+    `;
+
+	const [result] = await connection.execute(query, [project_id]);
+
+	if (Array.isArray(result) && result.length > 0) {
+		return result;
+	} else {
+		return null;
+	}
+};
+
+const get_member_details = async (user_id: number, project_id: number) => {
+	const query = `
+        SELECT
+            t.title AS task_title,
+            t.due_date,
+            t.priority,
+            t.status
+        FROM task t
+        WHERE t.fk_user_id = ?
+          AND t.fk_project_id = ?
+        ORDER BY t.due_date ASC;
+    `;
+	const [result] = await connection.execute(query, [user_id, project_id]);
+
+	if (Array.isArray(result) && result.length > 0) {
+		return result;
+	} else {
+		return [];
+	}
+};
+
+// O============================================================================================O
+
 export default {
 	get_projects_by_user_id,
 	get_user_project,
 	get_project_task_list,
+	get_users_project,
+	get_member_details,
 };
 
 // O============================================================================================O

@@ -23,4 +23,17 @@ router.get(
 	controllers.get_project_tasks,
 );
 
+router.get(
+	"/:project_id/members",
+	middlewares.project_id_param,
+	controllers.get_project_members,
+);
+
+router.get(
+	"/:project_id/members/:user_id",
+	middlewares.project_id_param,
+	middlewares.user_id,
+	controllers.get_project_member_details,
+);
+
 export default router;
