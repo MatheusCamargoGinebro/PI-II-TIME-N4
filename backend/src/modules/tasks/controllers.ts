@@ -21,7 +21,7 @@ const get_overview = async (__req: Request, res: Response) => {
 
 	const tasks = await models.get_tasks_by_user_id(user_id);
 
-	if (tasks.length === 0) {
+	if (tasks === null) {
 		return res.status(404).json({
 			message: "Nenhuma tarefa encontrada para o usuário.",
 		});

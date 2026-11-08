@@ -16,7 +16,7 @@ const get_notifications_by_user_id = async (user_id: number) => {
 	const [result] = await connection.execute(query, [user_id]);
 
 	if (Array.isArray(result) && result.length > 0) {
-		return result[0];
+		return result;
 	} else {
 		return null;
 	}

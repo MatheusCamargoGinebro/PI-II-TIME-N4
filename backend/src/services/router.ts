@@ -9,6 +9,8 @@ import project_routes from "../modules/projects/routes";
 import task_routes from "../modules/tasks/routes";
 import notifications_routes from "../modules/notifications/routes";
 
+import user_middlewares from "../modules/users/middlewares";
+
 const router = express.Router();
 
 router.get("/", (__req: Request, res: Response) => {
@@ -16,8 +18,8 @@ router.get("/", (__req: Request, res: Response) => {
 });
 
 router.use("/users", user_routes);
-router.use("/projects", project_routes);
-router.use("/tasks", task_routes);
-router.use("/notifications", notifications_routes);
+router.use("/projects", user_middlewares.user_token, project_routes);
+router.use("/tasks", user_middlewares.user_token, task_routes);
+router.use("/notifications", user_middlewares.user_token, notifications_routes);
 
 export default router;

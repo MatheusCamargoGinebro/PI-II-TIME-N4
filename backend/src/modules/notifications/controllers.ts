@@ -19,7 +19,7 @@ const get_notifications = async (__req: Request, res: Response) => {
 
 	const notifications = await models.get_notifications_by_user_id(user_id);
 
-	if (notifications.length === 0) {
+	if (notifications === null) {
 		return res.status(404).json({
 			message: "Nenhuma notificação encontrada para o usuário.",
 		});

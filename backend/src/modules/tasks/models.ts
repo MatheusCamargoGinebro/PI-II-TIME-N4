@@ -40,7 +40,7 @@ const get_tasks_by_user_id = async (user_id: number) => {
 	if (Array.isArray(result) && result.length > 0) {
 		return result;
 	} else {
-		return [];
+		return null;
 	}
 };
 

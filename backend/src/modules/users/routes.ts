@@ -24,6 +24,6 @@ router.post(
 	controllers.register_user,
 );
 
-router.get("/", middlewares.user_token, controllers.get_user);
+router.get("/", controllers.get_user);
 
 export default router;
