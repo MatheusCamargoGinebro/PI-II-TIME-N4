@@ -36,4 +36,6 @@ router.get(
 	controllers.get_project_member_details,
 );
 
+router.post("/", controllers.register_new_project);
+
 export default router;

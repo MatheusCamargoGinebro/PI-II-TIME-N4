@@ -195,6 +195,35 @@ const get_project_member_details = async (__req: Request, res: Response) => {
 	});
 };
 
+const register_new_project = async (req: Request, res: Response) => {
+	/* -------------------------------------------------- */
+
+	const user_id = await res.locals.user_id;
+	const new_project_title = req.body.project_title;
+
+	/* -------------------------------------------------- */
+
+	const user = await user_models.get_user_by_id(user_id);
+
+	if (user === null || user.authority_level != "Administrador") {
+		return res.status(401).json({
+			message: "Usuário não tem autorização para registrar um novo projeto",
+		});
+	}
+
+	/* -------------------------------------------------- */
+
+	const register_project = await models.register_project(
+		user_id,
+		new_project_title,
+	);
+
+	return res.status(200).json({
+		message: "Projeto criado com sucesso.",
+		project_id: register_project,
+	});
+};
+
 // O============================================================================================O
 
 export default {
@@ -203,4 +232,5 @@ export default {
 	get_project_tasks,
 	get_project_members,
 	get_project_member_details,
+	register_new_project,
 };

@@ -206,6 +206,34 @@ const get_member_details = async (user_id: number, project_id: number) => {
 		return [];
 	}
 };
+// O============================================================================================O
+
+const register_project = async (user_id: number, project_title: string) => {
+	const [projectResult] = await connection.execute(
+		`
+        INSERT INTO project (title)
+        VALUES (?)
+        `,
+		[project_title],
+	);
+
+	const project_id = projectResult.insertId;
+
+	await connection.execute(
+		`
+        INSERT INTO project_user (
+            fk_project_id,
+            fk_user_id
+        )
+        VALUES (?, ?)
+        `,
+		[project_id, user_id],
+	);
+
+	return {
+		project_id,
+	};
+};
 
 // O============================================================================================O
 
@@ -215,6 +243,7 @@ export default {
 	get_project_task_list,
 	get_users_project,
 	get_member_details,
+	register_project,
 };
 
 // O============================================================================================O
