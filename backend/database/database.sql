@@ -7,7 +7,7 @@ USE TaskOps;
 CREATE TABLE IF NOT EXISTS
     user(
         user_id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(256) NOT NULL,
+        name VARCHAR(256) NOT NULL UNIQUE,
         email VARCHAR(256) NOT NULL UNIQUE,
         password CHAR(60) NOT NULL,
         profile_pic LONGTEXT,
