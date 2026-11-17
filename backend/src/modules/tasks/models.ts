@@ -21,7 +21,7 @@ const get_tasks_by_user_id = async (user_id: number) => {
             ON p.project_id = t.fk_project_id
         INNER JOIN user u_creator
             ON u_creator.user_id = t.fk_creator_id
-        INNER JOIN user u_responsible
+        LEFT JOIN user u_responsible
             ON u_responsible.user_id = t.fk_user_id
         WHERE
             t.fk_user_id = ?
@@ -43,10 +43,9 @@ const create_task = async (
     title: string,
     description: string,
     priority: string,
-    status: string,
-    due_date: string,
+    due_date: string | null,
     project_id: number,
-    responsible_id: number,
+    responsible_id: number | null,
     creator_id: number
 ) => {
     const query = `
@@ -54,20 +53,18 @@ const create_task = async (
             title,
             description,
             priority,
-            status,
             due_date,
             fk_project_id,
             fk_user_id,
             fk_creator_id
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+        VALUES (?, ?, ?, ?, ?, ?, ?);
     `;
 
     const [result] = await connection.execute(query, [
         title,
         description,
         priority,
-        status,
         due_date,
         project_id,
         responsible_id,

@@ -28,7 +28,6 @@ const create = async (req: Request, res: Response) => {
         title,
         description,
         priority,
-        status,
         due_date,
         project_id,
         responsible_id,
@@ -40,27 +39,39 @@ const create = async (req: Request, res: Response) => {
         baixa: "BAIXA",
         media: "MEDIA",
         alta: "ALTA",
+        critica: "CRITICA",
     };
 
-    const statusMap: Record<string, string> = {
-        pendente: "ABERTA",
-        andamento: "EM ANDAMENTO",
-        concluido: "CONCLUIDA",
-    };
+    const formattedPriority =
+        typeof priority === "string"
+            ? priorityMap[priority.toLowerCase()]
+            : undefined;
 
-    const formattedPriority = priorityMap[priority];
-    const formattedStatus = statusMap[status];
+    const formattedDueDate =
+        due_date === undefined || due_date === null || due_date === ""
+            ? null
+            : due_date;
+
+    const formattedResponsible =
+        responsible_id === undefined ||
+        responsible_id === null ||
+        responsible_id === ""
+            ? null
+            : Number(responsible_id);
 
     if (
         typeof title !== "string" ||
+        title.trim().length === 0 ||
         typeof description !== "string" ||
-        typeof due_date !== "string" ||
+        description.trim().length === 0 ||
         !formattedPriority ||
-        !formattedStatus ||
+        (formattedDueDate !== null &&
+            typeof formattedDueDate !== "string") ||
         !Number.isInteger(Number(project_id)) ||
         Number(project_id) <= 0 ||
-        !Number.isInteger(Number(responsible_id)) ||
-        Number(responsible_id) <= 0 ||
+        (formattedResponsible !== null &&
+            (!Number.isInteger(formattedResponsible) ||
+                formattedResponsible <= 0)) ||
         !Number.isInteger(creator_id) ||
         creator_id <= 0
     ) {
@@ -71,13 +82,12 @@ const create = async (req: Request, res: Response) => {
 
     try {
         const result = await models.create_task(
-            title,
-            description,
+            title.trim(),
+            description.trim(),
             formattedPriority,
-            formattedStatus,
-            due_date,
+            formattedDueDate,
             Number(project_id),
-            Number(responsible_id),
+            formattedResponsible,
             creator_id
         );
 

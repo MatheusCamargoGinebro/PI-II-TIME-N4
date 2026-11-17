@@ -47,9 +47,9 @@ CREATE TABLE IF NOT EXISTS
             'ABERTA'
         ) NOT NULL DEFAULT 'ABERTA',
         creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        due_date TIMESTAMP NOT NULL,
+        due_date TIMESTAMP,
         fk_project_id INT NOT NULL,
-        fk_user_id INT NOT NULL,
+        fk_user_id INT,
         fk_creator_id INT NOT NULL,
         FOREIGN KEY (fk_project_id) REFERENCES project (project_id) ON DELETE CASCADE,
         FOREIGN KEY (fk_user_id) REFERENCES user(user_id) ON DELETE CASCADE,
