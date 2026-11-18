@@ -76,6 +76,86 @@ const create_task = async (
 
 // O============================================================================================O
 
+
+const update_task = async (
+    task_id: number,
+    title: string,
+    description: string,
+    priority: string,
+    due_date: string | null,
+    responsible_id: number | null,
+    user_id: number
+) => {
+    const query = `
+        UPDATE task
+        SET
+            title = ?,
+            description = ?,
+            priority = ?,
+            due_date = ?,
+            fk_user_id = ?
+        WHERE
+            task_id = ?
+            AND (
+                fk_creator_id = ?
+                OR fk_user_id = ?
+            );
+    `;
+
+    const [result] = await connection.execute(query, [
+        title,
+        description,
+        priority,
+        due_date,
+        responsible_id,
+        task_id,
+        user_id,
+        user_id
+    ]);
+
+    return result;
+};
+
+// O============================================================================================O
+
+const get_task_by_id = async (
+    task_id: number,
+    user_id: number
+) => {
+    const query = `
+        SELECT
+            t.task_id,
+            t.fk_project_id,
+            t.fk_creator_id,
+            t.fk_user_id
+        FROM task t
+        WHERE
+            t.task_id = ?
+            AND (
+                t.fk_creator_id = ?
+                OR t.fk_user_id = ?
+            )
+            AND EXISTS (
+                SELECT 1
+                FROM project_user pu
+                WHERE
+                    pu.fk_project_id = t.fk_project_id
+                    AND pu.fk_user_id = ?
+            );
+    `;
+
+    const [result] = await connection.execute(query, [
+        task_id,
+        user_id,
+        user_id,
+        user_id
+    ]);
+
+    return result;
+};
+
+// O============================================================================================O
+
 const get_project_members = async (
     project_id: number,
     user_id: number
@@ -112,6 +192,8 @@ const get_project_members = async (
 export default {
     get_tasks_by_user_id,
     create_task,
+    update_task,
+    get_task_by_id,
     get_project_members,
 };
 

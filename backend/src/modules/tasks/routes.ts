@@ -26,4 +26,11 @@ router.post(
     controllers.create
 );
 
+// Editar uma demanda
+router.put(
+    "/:task_id",
+    user_middlewares.user_token,
+    controllers.update
+);
+
 export default router;
