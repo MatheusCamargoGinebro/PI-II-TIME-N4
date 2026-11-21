@@ -1,73 +1,73 @@
 // O============================================================================================O
 
-/* 
+/*
     Autor: Matheus Camargo Ginebro
-    controllers.ts -> Arquivo responsável pela lógica de controle da API;
+    controllers.ts -> Arquivo responsável pela lógica de controle do módulo de usuários (autenticação, registro e listagem);
 */
 
 // O============================================================================================O
 
 import { Request, Response } from "express";
-import models from "./models";
+import models, { PublicUser } from "./models";
 import bcrypt from "bcrypt";
 import JWT from "jsonwebtoken";
 
 // O============================================================================================O
 
+// Realiza a autenticação do usuário e gera um token JWT válido por 24 horas
 const login_user = async (req: Request, res: Response) => {
-	/* -------------------------------------------------- */
-
 	const { user_email, user_password } = req.body;
-
-	/* -------------------------------------------------- */
 
 	const user = await models.get_user_by_email(user_email);
 
 	if (!user) {
-		return res.status(404).json({
+		return res.status(401).json({
 			message: "Usuário ou senha incorretos.",
 		});
 	}
-
-	/* -------------------------------------------------- */
 
 	try {
 		const password_match = await bcrypt.compare(user_password, user.password);
 
 		if (!password_match) {
-			return res.status(404).json({
+			return res.status(401).json({
 				message: "Usuário ou senha incorretos.",
 			});
 		}
 	} catch (error) {
 		return res.status(500).json({
 			message: "Erro ao verificar a senha do usuário.",
-			error: error,
 		});
 	}
 
-	/* -------------------------------------------------- */
-
 	const token = JWT.sign(
-		{ user_id: user.user_id, user_email: user.user_email },
+		{
+			user_id: user.user_id,
+			user_email: user.email,
+			authority_level: user.authority_level,
+		},
 		process.env.JWT_SECRET as string,
 		{ expiresIn: 86400 }, // 24h
 	);
 
 	return res.status(200).json({
 		message: "Login realizado com sucesso.",
-		token: token,
+		token,
+		user: {
+			user_id: user.user_id,
+			name: user.name,
+			email: user.email,
+			profile_pic: user.profile_pic,
+			authority_level: user.authority_level,
+		},
 	});
 };
 
 // O============================================================================================O
 
+// Cadastra um novo usuário com validação de unicidade e requisitos de senha forte
 const register_user = async (req: Request, res: Response) => {
-	/* -------------------------------------------------- */
-
 	const { user_email, user_password, user_name } = req.body;
-
-	/* -------------------------------------------------- */
 
 	const test_email = await models.get_user_by_email(user_email);
 
@@ -78,8 +78,6 @@ const register_user = async (req: Request, res: Response) => {
 		});
 	}
 
-	/* -------------------------------------------------- */
-
 	const test_name = await models.get_user_by_name(user_name);
 
 	if (test_name) {
@@ -89,9 +87,7 @@ const register_user = async (req: Request, res: Response) => {
 		});
 	}
 
-	/* -------------------------------------------------- */
-
-	// Validando a senha
+	// Validando critérios mínimos de segurança da senha
 	if (user_password.length < 8) {
 		return res.status(400).json({
 			message: "A senha deve ter no mínimo 8 caracteres.",
@@ -127,8 +123,6 @@ const register_user = async (req: Request, res: Response) => {
 		});
 	}
 
-	/* -------------------------------------------------- */
-
 	const hashed_password = await bcrypt.hash(user_password, 12);
 
 	const new_user = await models.register_user(
@@ -145,19 +139,39 @@ const register_user = async (req: Request, res: Response) => {
 
 // O============================================================================================O
 
+// Retorna os dados do usuário atualmente autenticado
 const get_user = async (__req: Request, res: Response) => {
-	/* -------------------------------------------------- */
-
-	const user = await res.locals.user;
-
-	/* -------------------------------------------------- */
+	const user = res.locals.user as PublicUser;
 
 	return res.status(200).json({
 		message: "Usuário encontrado com sucesso.",
-		user: user,
+		user,
 	});
 };
 
 // O============================================================================================O
 
-export default { login_user, register_user, get_user };
+// Lista todos os usuários cadastrados no sistema (permissão exclusiva do Administrador - Seção 2.1.1)
+const list_users = async (__req: Request, res: Response) => {
+	const user = res.locals.user as PublicUser;
+
+	if (user.authority_level !== "Administrador") {
+		return res.status(403).json({
+			message:
+				"Acesso negado. Apenas administradores podem visualizar todos os usuários.",
+		});
+	}
+
+	const users = await models.get_all_users();
+
+	return res.status(200).json({
+		message: "Usuários listados com sucesso.",
+		users,
+	});
+};
+
+// O============================================================================================O
+
+export default { login_user, register_user, get_user, list_users };
+
+// O============================================================================================O

@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "/src/server.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "npx tsc",
 		"start": "npx tsc-watch --onSuccess \"node ./lib/services/server.js\""
 	},
 	"keywords": [],
