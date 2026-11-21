@@ -7,21 +7,17 @@ if (membersGrid) {
 	const activityFilter = document.querySelector("#member-activity");
 	const countLabel = document.querySelector("#member-count");
 
-	const normalize = (value) =>
-		value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
-
 	const updateMembers = () => {
-		const query = normalize(searchInput.value.trim());
+		const query = normalizeString(searchInput.value.trim());
 		const activity = activityFilter.value;
 		let visibleCount = 0;
 
 		members.forEach((member) => {
-			const text = normalize(member.textContent);
 			const counter = member.querySelector(".member-card-counter");
 			const [completedText, totalText] = Array.from(counter.children, (element) => element.textContent.trim());
 			const completed = Number(completedText);
 			const total = Number(totalText.replace("/", ""));
-			const matchesSearch = text.includes(query);
+			const matchesSearch = normalizeString(member.textContent).includes(query);
 			const matchesActivity =
 				!activity ||
 				(activity === "pendentes" && completed < total) ||

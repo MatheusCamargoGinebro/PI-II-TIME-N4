@@ -8,15 +8,12 @@ if (projectsList) {
 	const emptyState = document.querySelector("#projects-empty-state");
 	let selectedFilter = "todos";
 
-	const normalize = (value) =>
-		value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
-
 	const updateProjects = () => {
-		const query = normalize(searchInput.value.trim());
+		const query = normalizeString(searchInput.value.trim());
 		let visibleCount = 0;
 
 		projects.forEach((project) => {
-			const matchesSearch = normalize(project.textContent).includes(query);
+			const matchesSearch = normalizeString(project.textContent).includes(query);
 			const matchesFilter =
 				selectedFilter === "todos" ||
 				(selectedFilter === "recentes" && project.dataset.recent === "true") ||

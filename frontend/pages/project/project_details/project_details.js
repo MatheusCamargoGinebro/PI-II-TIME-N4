@@ -44,18 +44,10 @@ if (boardColumns.length) {
 	});
 
 	const applyTaskSearch = () => {
-		const query = searchInput.value
-			.trim()
-			.normalize("NFD")
-			.replace(/[\u0300-\u036f]/g, "")
-			.toLocaleLowerCase("pt-BR");
+		const query = normalizeString(searchInput.value.trim());
 
 		taskCards.forEach((task) => {
-			const text = task.textContent
-				.normalize("NFD")
-				.replace(/[\u0300-\u036f]/g, "")
-				.toLocaleLowerCase("pt-BR");
-			task.hidden = !text.includes(query);
+			task.hidden = !normalizeString(task.textContent).includes(query);
 		});
 	};
 

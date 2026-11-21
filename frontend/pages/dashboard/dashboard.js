@@ -1,6 +1,9 @@
 
 const taskTable = document.querySelector(".dashboard-tasks-table");
 
+
+document.getElementById
+
 if (taskTable) {
 	const taskBody = taskTable.querySelector("tbody");
 	const searchInput = document.querySelector("#dashboard-task-search");
@@ -9,21 +12,18 @@ if (taskTable) {
 	const emptyState = document.querySelector("#dashboard-task-empty");
 	const sortButtons = document.querySelectorAll(".dashboard-task-tabs [data-sort]");
 	const tasks = Array.from(taskBody.querySelectorAll("tr"));
-	const priorityOrder = { alta: 0, média: 1, media: 1, baixa: 2 };
+	const priorityOrder = { alta: 0, media: 1, baixa: 2 };
 	let currentSort = "default";
 
-	const normalize = (value) =>
-		value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
-
-	const getCellText = (row, index) => normalize(row.cells[index]?.textContent.trim() || "");
+	const getCellText = (row, index) => normalizeString(row.cells[index]?.textContent.trim() || "");
 
 	const updateTasks = () => {
-		const query = normalize(searchInput.value.trim());
-		const status = normalize(statusFilter.value);
+		const query = normalizeString(searchInput.value.trim());
+		const status = normalizeString(statusFilter.value);
 		let visibleCount = 0;
 
 		tasks.forEach((task) => {
-			const matchesSearch = normalize(task.textContent).includes(query);
+			const matchesSearch = normalizeString(task.textContent).includes(query);
 			const matchesStatus = !status || getCellText(task, 5) === status;
 			task.hidden = !matchesSearch || !matchesStatus;
 			if (!task.hidden) visibleCount += 1;

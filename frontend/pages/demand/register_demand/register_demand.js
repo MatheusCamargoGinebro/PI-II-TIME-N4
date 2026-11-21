@@ -1,3 +1,5 @@
+import { toast } from "../../../assets/js/toast.js";
+
 // Validação do formulário de cadastro/edição de demandas do TaskOps
 
 const formulario = document.getElementById("demanda-form");
@@ -40,6 +42,7 @@ function validarCampo(campo) {
     } else if (campo.id === "descricao" && valor.length > 500) {
         mensagem = "A descrição deve ter no máximo 500 caracteres.";
     }
+    
 
     mostrarErro(campo, mensagem);
     return mensagem === "";
@@ -79,6 +82,7 @@ formulario.addEventListener("submit", evento => {
 
     if (!formularioValido) {
         mensagemFormulario.textContent = "Corrija os campos destacados antes de salvar.";
+        toast.Toast("Corrija os campos destacados antes de salvar.");
         mensagemFormulario.className = "mensagem-geral mensagem-erro";
         return;
     }
