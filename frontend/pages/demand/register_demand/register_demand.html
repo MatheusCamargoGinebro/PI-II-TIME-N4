@@ -69,16 +69,49 @@
 						<small class="mensagem-erro" id="erro-descricao"></small>
 					</div>
 
-					<!-- Prioridade e Status -->
+					<!-- Projeto e Tipo -->
+					<div class="fields-row">
+						<div class="form-group">
+							<label for="projeto">Projeto</label>
+							<div class="select-wrapper">
+								<select id="projeto" name="projeto" class="form-control" required>
+									<option value="" selected disabled>Carregando projetos...</option>
+								</select>
+								<span class="select-arrow">
+									<i data-lucide="chevron-down" class="icon-small"></i>
+								</span>
+							</div>
+							<small class="mensagem-erro" id="erro-projeto"></small>
+						</div>
+
+						<div class="form-group">
+							<label for="tipo">Tipo</label>
+							<div class="select-wrapper">
+								<select id="tipo" name="tipo" class="form-control" required>
+									<option value="TAREFA" selected>Tarefa</option>
+									<option value="DEFEITO">Defeito</option>
+									<option value="MELHORIA">Melhoria</option>
+									<option value="DOCUMENTACAO">Documentação</option>
+								</select>
+								<span class="select-arrow">
+									<i data-lucide="chevron-down" class="icon-small"></i>
+								</span>
+							</div>
+							<small class="mensagem-erro" id="erro-tipo"></small>
+						</div>
+					</div>
+
+					<!-- Prioridade e Prazo -->
 					<div class="fields-row">
 						<div class="form-group">
 							<label for="prioridade">Prioridade</label>
 							<div class="select-wrapper">
 								<select id="prioridade" name="prioridade" class="form-control" required>
 									<option value="" selected disabled>Selecione uma opção...</option>
-									<option value="baixa">Baixa</option>
-									<option value="media">Média</option>
-									<option value="alta">Alta</option>
+									<option value="BAIXA">Baixa</option>
+									<option value="MEDIA">Média</option>
+									<option value="ALTA">Alta</option>
+									<option value="CRITICA">Crítica</option>
 								</select>
 								<span class="select-arrow">
 									<i data-lucide="chevron-down" class="icon-small"></i>
@@ -88,32 +121,24 @@
 						</div>
 
 						<div class="form-group">
-							<label for="status">Status</label>
-							<div class="select-wrapper">
-								<select id="status" name="status" class="form-control" required>
-									<option value="" selected disabled>Selecione uma opção...</option>
-									<option value="pendente">Pendente</option>
-									<option value="andamento">Em andamento</option>
-									<option value="concluido">Concluído</option>
-								</select>
-								<span class="select-arrow">
-									<i data-lucide="chevron-down" class="icon-small"></i>
-								</span>
-							</div>
-							<small class="mensagem-erro" id="erro-status"></small>
+							<label for="prazo">Prazo (opcional)</label>
+							<input
+								type="date"
+								id="prazo"
+								name="prazo"
+								class="form-control"
+							/>
+							<small class="mensagem-erro" id="erro-prazo"></small>
 						</div>
 					</div>
 
 					<!-- Responsável -->
 					<div class="responsible-group">
 						<div class="form-group">
-							<label for="responsavel">Responsável</label>
+							<label for="responsavel">Responsável (opcional)</label>
 							<div class="select-wrapper">
-								<select id="responsavel" name="responsavel" class="form-control" required>
-									<option value="" selected disabled>Selecione uma opção...</option>
-									<option value="fulano">Fulano da S.</option>
-									<option value="ciclano">Ciclano</option>
-									<option value="beltrano">Beltrano</option>
+								<select id="responsavel" name="responsavel" class="form-control">
+									<option value="">Nenhum (não atribuído)</option>
 								</select>
 								<span class="select-arrow">
 									<i data-lucide="chevron-down" class="icon-small"></i>

@@ -1,3 +1,4 @@
+import { register } from "../../../assets/js/repositories/authRepository.js";
 
 const formulario = document.querySelector(".form");
 const campoNome = document.querySelector("#nome");
@@ -10,7 +11,6 @@ const mensagemFormulario = document.querySelector("#mensagemFormulario");
 
 function mostrarErro(campo, elementoErro, mensagem) {
     campo.classList.toggle("is-invalid", mensagem !== "");
-
     elementoErro.innerHTML = mensagem;
 }
 
@@ -58,17 +58,21 @@ function validarSenha() {
         if (!/[a-z]/.test(senha)) {
             mensagens.push("A senha deve conter uma letra minúscula.");
         }
+        if (!/[0-9]/.test(senha)) {
+            mensagens.push("A senha deve conter pelo menos um número.");
+        }
         if (!/[^A-Za-z0-9\s]/.test(senha)) {
             mensagens.push("A senha deve conter um caractere especial.");
         }
     }
 
-    mostrarErro(campoSenha, erroSenha, mensagens.join("\n"));
+    mostrarErro(campoSenha, erroSenha, mensagens.join("<br>"));
     return mensagens.length === 0;
 }
 
 function limparMensagemGeral() {
     mensagemFormulario.textContent = "";
+    mensagemFormulario.classList.remove("text-success", "text-danger");
 }
 
 campoNome.addEventListener("input", () => {
@@ -86,7 +90,7 @@ campoSenha.addEventListener("input", () => {
     limparMensagemGeral();
 });
 
-formulario.addEventListener("submit", (evento) => {
+formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
     const nomeValido = validarNome();
@@ -95,10 +99,41 @@ formulario.addEventListener("submit", (evento) => {
 
     if (!nomeValido || !emailValido || !senhaValida) {
         mensagemFormulario.textContent = "Corrija os campos destacados.";
-   
+        mensagemFormulario.style.color = "red";
         return;
     }
 
-    mensagemFormulario.textContent =
-        "Dados válidos. O envio ainda não está conectado.";
+    try {
+        mensagemFormulario.textContent = "Cadastrando...";
+        mensagemFormulario.style.color = "inherit";
+
+        const res = await register(campoNome.value.trim(), campoEmail.value.trim(), campoSenha.value);
+
+        if (res.success) {
+            mensagemFormulario.textContent = res.message || "Conta criada com sucesso! Redirecionando para login...";
+            mensagemFormulario.style.color = "green";
+            formulario.reset();
+            setTimeout(() => {
+                window.location.href = "../login/login.html";
+            }, 1500);
+        } else {
+            mensagemFormulario.textContent = res.message;
+            mensagemFormulario.style.color = "red";
+
+            if (res.errorAt === "user_email") {
+                mostrarErro(campoEmail, erroEmail, res.message);
+                campoEmail.focus();
+            } else if (res.errorAt === "user_name") {
+                mostrarErro(campoNome, erroNome, res.message);
+                campoNome.focus();
+            } else if (res.errorAt === "user_password") {
+                mostrarErro(campoSenha, erroSenha, res.message);
+                campoSenha.focus();
+            }
+        }
+    } catch (err) {
+        console.error("Erro ao registrar usuário:", err);
+        mensagemFormulario.textContent = "Erro ao realizar cadastro. Tente novamente.";
+        mensagemFormulario.style.color = "red";
+    }
 });

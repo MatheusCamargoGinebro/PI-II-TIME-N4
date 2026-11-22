@@ -1,3 +1,5 @@
+import { login } from "../../../assets/js/repositories/authRepository.js";
+
 const formulario = document.querySelector(".form");
 const campoEmail = document.querySelector("#email");
 const campoSenha = document.querySelector("#senha");
@@ -30,14 +32,6 @@ function validarSenha() {
 
     if (senha === "") {
         mensagem = "Digite sua senha.";
-    } else if (senha.length < 8) {
-        mensagem = "A senha deve ter pelo menos 8 caracteres.";
-    } else if (!/[A-Z]/.test(senha)) {
-        mensagem = "A senha deve conter uma letra maiúscula.";
-    } else if (!/[a-z]/.test(senha)) {
-        mensagem = "A senha deve conter uma letra minúscula.";
-    } else if (!/[^A-Za-z0-9\s]/.test(senha)) {
-        mensagem = "A senha deve conter um caractere especial.";
     }
 
     mostrarErro(campoSenha, erroSenha, mensagem);
@@ -58,7 +52,7 @@ campoSenha.addEventListener("input", () => {
     limparMensagemGeral();
 });
 
-formulario.addEventListener("submit", (evento) => {
+formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
     const emailValido = validarEmail();
@@ -70,6 +64,24 @@ formulario.addEventListener("submit", (evento) => {
         return;
     }
 
-    mensagemFormulario.textContent =
-        "Dados válidos. O envio ainda não está conectado.";
+    try {
+        const res = await login(campoEmail.value, campoSenha.value);
+
+        if (res.success) {
+            mensagemFormulario.textContent = res.message || "Login realizado com sucesso!";
+            mensagemFormulario.style.color = "green";
+            localStorage.setItem("token", res.token);
+            if (res.user) {
+                localStorage.setItem("user", JSON.stringify(res.user));
+            }
+            window.location.href = "../../dashboard/dashboard.html";
+        } else {
+            mensagemFormulario.textContent = res.message;
+            mensagemFormulario.style.color = "red";
+        }
+    } catch (err) {
+        console.error("Erro ao fazer login:", err);
+        mensagemFormulario.textContent = "Erro ao fazer login. Tente novamente.";
+        mensagemFormulario.style.color = "red";
+    }
 });

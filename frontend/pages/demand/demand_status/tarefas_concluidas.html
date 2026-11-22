@@ -791,50 +791,9 @@
 			</main>
 		</div>
 
-		<script src="../../../assets/js/normalize.js"></script>
 		<script>
-			// Render Icons
 			lucide.createIcons();
-
-			let currentPriority = "todas";
-
-			function filterByPriority(priority, element) {
-				currentPriority = priority;
-
-				// Highlight Active Button
-				document.querySelectorAll(".filter-btn").forEach((btn) => {
-					btn.classList.remove("active");
-				});
-				element.classList.add("active");
-
-				applyFilters();
-			}
-
-			function applyFilters() {
-				const query = normalizeString(
-					document.getElementById("search-input").value.trim()
-				);
-				const rows = document.querySelectorAll(".task-row");
-				let visibleCount = 0;
-
-				rows.forEach((row) => {
-					const rowPriority = row.getAttribute("data-priority");
-					const rowText = normalizeString(row.innerText);
-
-					const matchesPriority =
-						currentPriority === "todas" || rowPriority === currentPriority;
-					const matchesSearch = rowText.includes(query);
-
-					if (matchesPriority && matchesSearch) {
-						row.style.display = "";
-						visibleCount++;
-					} else {
-						row.style.display = "none";
-					}
-				});
-
-				document.getElementById("visible-count").textContent = visibleCount;
-			}
 		</script>
+		<script type="module" src="./demand_status.js"></script>
 	</body>
 </html>

@@ -8,3 +8,9 @@ function normalizeString(value = "") {
 		.replace(/[úü]/g, "u")
 		.replace(/ç/g, "c");
 }
+
+if (typeof window !== "undefined") {
+	window.normalizeString = normalizeString;
+}
+
+export { normalizeString };

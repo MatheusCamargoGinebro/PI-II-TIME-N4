@@ -141,12 +141,18 @@
 							<label for="demand-details-type">Tipo de demanda</label>
 							<select name="demand-type" id="demand-details-type">
 								<option value="TAREFA">TAREFA</option>
+								<option value="DEFEITO">DEFEITO</option>
+								<option value="MELHORIA">MELHORIA</option>
+								<option value="DOCUMENTACAO">DOCUMENTAÇÃO</option>
 							</select>
 						</div>
 						<div class="demand-details-field">
 							<label for="demand-details-priority">Prioridade</label>
 							<select name="demand-priority" id="demand-details-priority">
+								<option value="BAIXA">BAIXA</option>
+								<option value="MEDIA">MÉDIA</option>
 								<option value="ALTA">ALTA</option>
+								<option value="CRITICA">CRÍTICA</option>
 							</select>
 						</div>
 					</div>
@@ -168,6 +174,10 @@
 							<label for="demand-details-status">Status</label>
 							<select name="demand-status" id="demand-details-status">
 								<option value="ABERTA">ABERTA</option>
+								<option value="EM ANDAMENTO">EM ANDAMENTO</option>
+								<option value="EM REVISAO">EM REVISÃO</option>
+								<option value="CONCLUIDA">CONCLUÍDA</option>
+								<option value="CANCELADA">CANCELADA</option>
 							</select>
 						</div>
 					</div>
@@ -352,5 +362,6 @@
 		<script>
 			lucide.createIcons();
 		</script>
+		<script type="module" src="./demand_details.js"></script>
 	</body>
 </html>
