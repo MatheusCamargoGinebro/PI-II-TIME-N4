@@ -1,4 +1,5 @@
-import { requireAuth, initUserProfile } from "../../../assets/js/repositories/authRepository.js";
+import { requireAuth, initUserProfile, listUsers } from "../../../assets/js/repositories/authRepository.js";
+import { getProjectMembers } from "../../../assets/js/repositories/projectRepository.js";
 import {
     getTaskDetails,
     updateTask,
@@ -7,6 +8,8 @@ import {
     createTaskComment,
     getTaskHistory
 } from "../../../assets/js/repositories/taskRepository.js";
+import { normalizeString } from "../../../assets/js/normalize.js";
+import { showAlertModal, showSelectModal } from "../../../assets/js/components/modal.js";
 
 requireAuth();
 initUserProfile();
@@ -15,6 +18,7 @@ const urlParams = new URLSearchParams(window.location.search);
 let taskId = urlParams.get("task_id") || "1";
 
 let originalTaskData = null;
+let selectedResponsible = null; // { id, name, email, profile_pic, role }
 
 // Form elements
 const formDetails = document.getElementById("demand-details-forms");
@@ -25,6 +29,11 @@ const prioritySelect = document.getElementById("demand-details-priority");
 const projectInput = document.getElementById("demand-details-associated-project");
 const statusSelect = document.getElementById("demand-details-status");
 const descriptionTextarea = document.getElementById("demand-details-description");
+
+const assigneeCard = document.querySelector(".demand-details-assignee");
+const assigneeAvatar = assigneeCard ? assigneeCard.querySelector("img") : null;
+const assigneeName = document.getElementById("demand-details-assignee-name");
+const assigneeRole = document.getElementById("demand-details-assignee-role");
 
 const saveBtn = document.getElementById("demand-details-save");
 const revertBtn = document.getElementById("demand-details-revert-button");
@@ -37,7 +46,6 @@ const historyContainer = document.querySelector(".demand-details-history");
 const infoTab = document.getElementById("demand-details-info-tab");
 const historyTab = document.getElementById("demand-details-history-tab");
 
-// Date formatting
 function formatDateTime(dateStr) {
     if (!dateStr) return "-";
     const d = new Date(dateStr);
@@ -53,6 +61,24 @@ function formatDateTime(dateStr) {
 
 function formatTaskCode(id) {
     return `TAR${String(id).padStart(5, "0")}`;
+}
+
+function renderAssignee(responsible) {
+    if (!assigneeName || !assigneeRole) return;
+
+    if (responsible && responsible.name) {
+        assigneeName.textContent = responsible.name;
+        assigneeRole.textContent = responsible.role || "Responsável designado";
+        if (assigneeAvatar) {
+            assigneeAvatar.src = responsible.profile_pic || "../../../assets/images/user.png";
+        }
+    } else {
+        assigneeName.textContent = "Não atribuído";
+        assigneeRole.textContent = "Clique para atribuir";
+        if (assigneeAvatar) {
+            assigneeAvatar.src = "../../../assets/images/user.png";
+        }
+    }
 }
 
 // Tab Switching
@@ -73,17 +99,25 @@ if (infoTab && historyTab && formDetails && formLogs) {
         formLogs.style.display = "block";
     });
 
-    // Default view: info tab
     formDetails.style.display = "";
     formLogs.style.display = "none";
 }
 
-// Populate UI with task data
 function populateFields(task) {
     originalTaskData = { ...task };
     const code = formatTaskCode(task.task_id);
 
-    // Headings and breadcrumb
+    const initialResponsibleId = task.fk_user_id ?? task.responsible_id ?? null;
+    selectedResponsible = task.responsible_name
+        ? {
+            id: initialResponsibleId != null ? String(initialResponsibleId) : null,
+            name: task.responsible_name,
+            email: task.responsible_email || "",
+            role: "Responsável designado",
+            profile_pic: task.responsible_profile_pic || "../../../assets/images/user.png"
+        }
+        : null;
+
     const mainHeading = document.querySelector(".details-heading h1");
     if (mainHeading) mainHeading.textContent = code;
 
@@ -99,7 +133,6 @@ function populateFields(task) {
         projectBreadcrumb.href = `../../project/project_details/project_details.html?project_id=${task.fk_project_id}`;
     }
 
-    // Inputs
     if (titleInput) titleInput.value = task.title || "";
     if (typeSelect) typeSelect.value = task.type || "TAREFA";
     if (prioritySelect) prioritySelect.value = task.priority || "MEDIA";
@@ -110,26 +143,141 @@ function populateFields(task) {
     if (statusSelect) statusSelect.value = task.status || "ABERTA";
     if (descriptionTextarea) descriptionTextarea.value = task.description || "";
 
-    // Dates
     const datesPs = document.querySelectorAll(".demand-details-dates > p");
     if (datesPs.length >= 2) {
         datesPs[0].innerHTML = `Criado em: <span>${formatDateTime(task.creation_date)}</span>`;
         datesPs[1].innerHTML = `Prazo: <span>${formatDateTime(task.due_date)}</span>`;
     }
 
-    // Users
     const requesterName = document.getElementById("demand-details-requester-name");
     const requesterRole = document.getElementById("demand-details-requester-role");
     if (requesterName) requesterName.textContent = task.creator_name || "Criador";
     if (requesterRole) requesterRole.textContent = "Criador da demanda";
 
-    const assigneeName = document.getElementById("demand-details-assignee-name");
-    const assigneeRole = document.getElementById("demand-details-assignee-role");
-    if (assigneeName) assigneeName.textContent = task.responsible_name || "Não atribuído";
-    if (assigneeRole) assigneeRole.textContent = task.responsible_name ? "Responsável designado" : "-";
+    renderAssignee(selectedResponsible);
+}
+async function getCandidateAssignees(projectId) {
+    if (projectId) {
+        const membersRes = await getProjectMembers(projectId);
+        if (membersRes.success && Array.isArray(membersRes.members) && membersRes.members.length > 0) {
+            return membersRes.members
+                .map((m, index) => {
+                    const rawId = m.user_id ?? m.id ?? m.member_id;
+                    if (rawId == null) return null;
+                    return {
+                        id: String(rawId),
+                        name: m.member_name || m.name || "Usuário",
+                        email: m.member_email || m.email || "",
+                        role: m.authority_level || "Membro de projeto",
+                        profile_pic: m.profile_pic || "../../../assets/images/user.png"
+                    };
+                })
+                .filter(Boolean);
+        }
+    }
+
+    const usersRes = await listUsers();
+    if (usersRes.success && Array.isArray(usersRes.users)) {
+        return usersRes.users
+            .map((u) => {
+                const rawId = u.user_id ?? u.id;
+                if (rawId == null) return null;
+                return {
+                    id: String(rawId),
+                    name: u.name || "Usuário",
+                    email: u.email || "",
+                    role: u.authority_level || "Usuário",
+                    profile_pic: u.profile_pic || "../../../assets/images/user.png"
+                };
+            })
+            .filter(Boolean);
+    }
+
+    return [];
 }
 
-// Load Task Details
+if (assigneeCard) {
+    assigneeCard.setAttribute("role", "button");
+    assigneeCard.setAttribute("tabindex", "0");
+    assigneeCard.title = "Clique para alterar o responsável";
+
+    const openAssigneeModal = async () => {
+        try {
+            const projectId = originalTaskData?.fk_project_id;
+            const candidates = await getCandidateAssignees(projectId);
+
+            if (candidates.length === 0) {
+                showAlertModal("Nenhum usuário disponível para atribuir à demanda.", "Atenção");
+                return;
+            }
+
+            const chosenId = await showSelectModal({
+                title: "Alterar responsável",
+                message: "Selecione o membro responsável pela demanda:",
+                items: candidates,
+                searchPlaceholder: "Buscar por nome, e-mail ou ID...",
+                confirmText: "Selecionar",
+                getItemId: (u) => u.id,
+                getSearchText: (u) => normalizeString(`${u.id} ${u.name} ${u.email} ${u.role}`),
+                renderItem: (u, isSelected) => `
+                    <button
+                        type="button"
+                        role="option"
+                        aria-selected="${isSelected}"
+                        data-option-id="${u.id}"
+                        class="base-card between align-center"
+                        style="
+                            width: 100%;
+                            text-align: left;
+                            padding: 10px 12px;
+                            cursor: pointer;
+                            border-radius: var(--radius-lg);
+                            border: 1px solid ${isSelected ? "var(--color-primary-500)" : "var(--color-neutral-200)"};
+                            background: ${isSelected ? "var(--color-primary-100)" : "var(--color-neutral-100)"};
+                        "
+                    >
+                        <div class="align-center gap-8" style="min-width: 0;">
+                            <img
+                                src="${u.profile_pic}"
+                                alt="${u.name}"
+                                style="width: 32px; height: 32px; border-radius: var(--radius-full); object-fit: cover; flex-shrink: 0;"
+                            />
+                            <div style="min-width: 0;">
+                                <div class="font-inter text-small text-weight-medium text-neutral" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    ${u.name}
+                                </div>
+                                <div class="font-inter text-tiny text-subtitle" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    ${u.email || u.role}
+                                </div>
+                            </div>
+                        </div>
+                        <span class="font-inter text-tiny text-subtitle" style="flex-shrink: 0; margin-left: 8px;">ID ${u.id}</span>
+                    </button>
+                `,
+            });
+
+            if (!chosenId) return;
+
+            const picked = candidates.find((c) => String(c.id) === String(chosenId));
+            if (picked) {
+                selectedResponsible = picked;
+                renderAssignee(selectedResponsible);
+            }
+        } catch (err) {
+            console.error("Erro ao carregar responsáveis:", err);
+            showAlertModal("Erro ao carregar lista de responsáveis.", "Erro");
+        }
+    };
+
+    assigneeCard.addEventListener("click", openAssigneeModal);
+    assigneeCard.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openAssigneeModal();
+        }
+    });
+}
+
 async function loadTask() {
     try {
         const res = await getTaskDetails(taskId);
@@ -137,14 +285,13 @@ async function loadTask() {
             populateFields(res.task);
             await loadCommentsAndHistory();
         } else {
-            window.alert(res.message || "Demanda não encontrada.");
+            showAlertModal(res.message || "Demanda não encontrada.", "Atenção");
         }
     } catch (err) {
         console.error("Erro ao carregar detalhes da demanda:", err);
     }
 }
 
-// Load comments and audit history
 async function loadCommentsAndHistory() {
     if (!historyContainer) return;
 
@@ -157,7 +304,6 @@ async function loadCommentsAndHistory() {
         const comments = (commentsRes.success && commentsRes.comments) ? commentsRes.comments : [];
         const history = (historyRes.success && historyRes.history) ? historyRes.history : [];
 
-        // Combine and sort by date descending
         const items = [];
 
         comments.forEach(c => {
@@ -172,7 +318,8 @@ async function loadCommentsAndHistory() {
         history.forEach(h => {
             items.push({
                 type: "system",
-                author: h.user_name || "Sistema",
+                author: h.actor_name || h.user_name || "Sistema",
+                summary: h.summary,
                 field: h.field_name,
                 oldValue: h.old_value,
                 newValue: h.new_value,
@@ -219,7 +366,7 @@ async function loadCommentsAndHistory() {
                             </div>
                         </div>
                         <div class="demand-details-history-content">
-                            <p><strong>${item.author}</strong> alterou <strong>${item.field}</strong>.</p>
+                            <p>${item.summary || `<strong>${item.author}</strong> alterou <strong>${item.field}</strong>.`}</p>
                             <p class="demand-details-history-change">De: ${item.oldValue ?? '(vazio)'} → Para: ${item.newValue}</p>
                         </div>
                     </div>
@@ -231,13 +378,12 @@ async function loadCommentsAndHistory() {
     }
 }
 
-// Add comment
 if (commentBtn && commentInput) {
     commentBtn.addEventListener("click", async (e) => {
         e.preventDefault();
         const content = commentInput.value.trim();
         if (!content) {
-            window.alert("Digite um comentário antes de enviar.");
+            showAlertModal("Digite um comentário antes de enviar.", "Atenção");
             return;
         }
 
@@ -247,35 +393,32 @@ if (commentBtn && commentInput) {
                 commentInput.value = "";
                 await loadCommentsAndHistory();
             } else {
-                window.alert(res.message || "Erro ao adicionar comentário.");
+                showAlertModal(res.message || "Erro ao adicionar comentário.", "Erro");
             }
         } catch (err) {
-            window.alert("Erro ao enviar comentário.");
+            showAlertModal("Erro ao enviar comentário.", "Erro");
         }
     });
 }
 
-// Save changes
 if (saveBtn) {
     saveBtn.addEventListener("click", async (e) => {
         e.preventDefault();
 
         if (!titleInput.value.trim()) {
-            window.alert("O título da demanda não pode ser vazio.");
+            showAlertModal("O título da demanda não pode ser vazio.", "Atenção");
             return;
         }
 
         try {
-            // First check if status changed
             if (statusSelect && originalTaskData && statusSelect.value !== originalTaskData.status) {
                 const statusRes = await updateTaskStatus(taskId, statusSelect.value);
                 if (!statusRes.success) {
-                    window.alert(statusRes.message || "Erro ao alterar status da demanda.");
+                    showAlertModal(statusRes.message || "Erro ao alterar status da demanda.", "Erro");
                     return;
                 }
             }
 
-            // Update other fields
             const updatePayload = {
                 title: titleInput.value.trim(),
                 description: descriptionTextarea.value.trim(),
@@ -283,20 +426,23 @@ if (saveBtn) {
                 priority: prioritySelect.value
             };
 
+            if (selectedResponsible && selectedResponsible.id != null) {
+                updatePayload.fk_user_id = Number(selectedResponsible.id);
+            }
+
             const updateRes = await updateTask(taskId, updatePayload);
             if (updateRes.success) {
-                window.alert("Alterações salvas com sucesso!");
+                showAlertModal("Alterações salvas com sucesso!", "Sucesso");
                 await loadTask();
             } else {
-                window.alert(updateRes.message || "Erro ao atualizar demanda.");
+                showAlertModal(updateRes.message || "Erro ao atualizar demanda.", "Erro");
             }
         } catch (err) {
-            window.alert("Erro ao salvar alterações.");
+            showAlertModal("Erro ao salvar alterações.", "Erro");
         }
     });
 }
 
-// Revert changes
 if (revertBtn) {
     revertBtn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -306,9 +452,7 @@ if (revertBtn) {
     });
 }
 
-// Prevent default form submits
 if (formDetails) formDetails.addEventListener("submit", (e) => e.preventDefault());
 if (formLogs) formLogs.addEventListener("submit", (e) => e.preventDefault());
 
-// Initial load
 loadTask();

@@ -2,6 +2,7 @@ import { requireAuth, initUserProfile, applyRoleRestrictions } from "../../../as
 import { getProjects, getProject, getProjectTasks } from "../../../assets/js/repositories/projectRepository.js";
 import { updateTaskStatus } from "../../../assets/js/repositories/taskRepository.js";
 import { normalizeString } from "../../../assets/js/normalize.js";
+import { showAlertModal } from "../../../assets/js/components/modal.js";
 
 requireAuth();
 initUserProfile();
@@ -268,11 +269,11 @@ function setupDragAndDrop() {
                     taskCard.dataset.currentStatus = targetStatus;
                     await loadProjectData();
                 } else {
-                    window.alert(res.message || "Não foi possível alterar o status da demanda.");
+                    showAlertModal(res.message || "Não foi possível alterar o status da demanda.", "Status não alterado");
                     previousParent.append(taskCard);
                 }
             } catch (err) {
-                window.alert("Erro ao comunicar com o servidor.");
+                showAlertModal("Erro ao comunicar com o servidor.", "Erro de comunicação");
                 previousParent.append(taskCard);
             }
         });

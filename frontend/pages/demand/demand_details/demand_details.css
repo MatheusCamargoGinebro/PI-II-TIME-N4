@@ -10,9 +10,26 @@
 	gap: var(--size-md);
 	font-weight: 700;
 }
+[hidden] {
+	display: none !important;
+}
+
 
 .demand-sleeping-action {
 	color: var(--color-neutral-500);
+}
+
+.demand-details-assignee {
+	justify-content: space-between;
+	border: var(--size-xxs) solid var(--color-neutral-300);
+	color: var(--color-neutral-700);
+	cursor: pointer;
+	transition: border-color 0.2s, background-color 0.2s;
+}
+
+.demand-details-assignee:hover {
+	border-color: var(--color-primary-500);
+	background-color: var(--color-neutral-200);
 }
 
 .demand-details-revert {

@@ -34,7 +34,7 @@
 /* Grid principal do dashboard */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr) 350px;
+    grid-template-columns: repeat(2, 1fr,1r,1fr) 350px;
     gap: 8px;
 }
 

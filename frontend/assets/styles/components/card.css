@@ -35,7 +35,7 @@
     color: var(--color-neutral-700);
 }
 
-.card-icon:hover{
+.card-icon-clickable:hover{
     cursor: pointer;
     color: var(--color-brand-neutral-200);
     background-color: var(--color-neutral-300);

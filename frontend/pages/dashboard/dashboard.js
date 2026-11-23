@@ -1,6 +1,7 @@
 import { requireAuth, initUserProfile, applyRoleRestrictions } from "../../assets/js/repositories/authRepository.js";
 import { getDashboard, listTasks } from "../../assets/js/repositories/taskRepository.js";
 import { normalizeString } from "../../assets/js/normalize.js";
+import { showAlertModal } from "../../assets/js/components/modal.js";
 
 // Ensure authenticated
 requireAuth();
@@ -154,7 +155,7 @@ async function loadTasksTable() {
                     <tr data-task-id="${task.task_id}" data-priority="${normalizeString(priorityInfo.label)}" data-deadline="${task.due_date || ''}">
                         <td>
                             <div class="dashboard-user-cell">
-                                <img class="dashboard-user-avatar" src="${respAvatar}" alt="Avatar" />
+                                
                                 <div>
                                     <p class="dashboard-user-name">${respName}</p>
                                     <p class="dashboard-user-email">${respEmail}</p>

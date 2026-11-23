@@ -1,4 +1,5 @@
 import { config } from '../config.js';
+import { showConfirmModal, showAlertModal } from "../components/modal.js";
 
 export const getAuthToken = () => {
     return localStorage.getItem("token");
@@ -307,8 +308,12 @@ export const initUserProfile = async () => {
     userProfiles.forEach(profile => {
         profile.style.cursor = "pointer";
         profile.title = "Clique para sair (logout)";
-        profile.addEventListener("click", () => {
-            if (confirm("Deseja encerrar a sessão?")) {
+        profile.addEventListener("click",  async () => {
+            confirm = await showConfirmModal("Deseja realmente sair da sua conta?", "Confirmação de Logout", {
+                confirmText: "Sair",
+                cancelText: "Cancelar"
+            });
+            if (confirm) {
                 logout();
             }
         });

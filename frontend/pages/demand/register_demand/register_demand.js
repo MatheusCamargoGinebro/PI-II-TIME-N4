@@ -102,7 +102,7 @@ async function carregarResponsaveis(projectId) {
             campoResponsavel.innerHTML = `
                 <option value="">Nenhum (não atribuído)</option>
                 ${res.members.map(m => `
-                    <option value="${m.user_id}">${m.name} (${m.email})</option>
+                    <option value="${m.user_id}">${m.member_name} (${m.member_email})</option>
                 `).join("")}
             `;
         } else {
