@@ -1,242 +1,275 @@
-import { requireAuth, initUserProfile, listUsers, applyRoleRestrictions } from "../../../assets/js/repositories/authRepository.js";
-import { getProjects, getProject, getProjectMembers, addProjectMember } from "../../../assets/js/repositories/projectRepository.js";
+/*
+    Autor: 
+    project_members.js -> Carrega dinamicamente os membros de um projeto, filtra por busca/atividade e permite vincular novos membros via modal.
+*/
+
+import {
+	requireAuth,
+	listUsers,
+	applyRoleRestrictions,
+} from "../../../assets/js/repositories/authRepository.js";
+import { initAppHeader } from "../../../assets/js/components/header.js";
+import {
+	getProjects,
+	getProject,
+	getProjectMembers,
+	addProjectMember,
+} from "../../../assets/js/repositories/projectRepository.js";
 import { normalizeString } from "../../../assets/js/normalize.js";
-import { showAlertModal, showSelectModal } from "../../../assets/js/components/modal.js";
+import {
+	showAlertModal,
+	showPromptModal,
+	showSelectModal,
+} from "../../../assets/js/components/modal.js";
+import {
+	escapeHtml,
+	renderProgressSegments,
+} from "../../../assets/js/utils/formatters.js";
 
 requireAuth();
-initUserProfile();
 
 const urlParams = new URLSearchParams(window.location.search);
 let projectId = urlParams.get("project_id");
 
-const membersGrid = document.querySelector("#project-members-grid");
-const searchInput = document.querySelector("#member-search");
-const activityFilter = document.querySelector("#member-activity");
-const countLabel = document.querySelector("#member-count");
-const addMemberBtn = document.querySelector(".project-members-header button");
+const headerPromise = initAppHeader({ activePage: "projects", projectId });
 
-let allMemberCards = [];
+const membersGrid = document.getElementById("project-members-grid");
+const searchInput = document.getElementById("member-search");
+const activityFilter = document.getElementById("member-activity");
+const countLabel = document.getElementById("member-count");
+const addMemberBtn = document.getElementById("add-member-btn");
+
+let allMembers = [];
 let currentProjectMemberIds = new Set();
 
-function renderMembers(members) {
-    if (!membersGrid) return;
+function renderMembers() {
+	if (!membersGrid) return;
 
-    currentProjectMemberIds = new Set(
-        (members || []).map((m) => String(m.user_id))
-    );
+	const query = normalizeString(searchInput?.value.trim() || "");
+	const activity = activityFilter?.value || "";
 
-    if (!members || members.length === 0) {
-        membersGrid.innerHTML = "<p class='text-subtitle'>Nenhum membro vinculado a este projeto.</p>";
-        if (countLabel) countLabel.textContent = "0 membros encontrados";
-        return;
-    }
+	const filtered = allMembers.filter((m) => {
+		const completed = Number(m.completed_tasks || 0);
+		const total = Number(m.total_tasks || 0);
 
-    membersGrid.innerHTML = members.map(m => {
-        const completed = m.completed_tasks ? Number(m.completed_tasks) : 0;
-        const total = m.total_tasks ? Number(m.total_tasks) : 0;
-        const progressPercent = total > 0 ? Math.round((completed / total) * 100) : 0;
-        const filledSegments = Math.round((progressPercent / 100) * 12);
+		if (activity === "pendentes" && !(completed < total)) return false;
+		if (activity === "concluidas" && !(total > 0 && completed === total))
+			return false;
 
-        const segmentsHtml = Array.from({ length: 12 }, (_, i) =>
-            `<div class="progress-bar-segment ${i < filledSegments ? 'progress-bar-filled' : 'progress-bar-empty'}"></div>`
-        ).join("");
+		if (query) {
+			const haystack = normalizeString(
+				`${m.member_name} ${m.member_email} ${m.access_level || ""}`,
+			);
+			if (!haystack.includes(query)) return false;
+		}
+		return true;
+	});
 
-        return `
-            <div class="base-card member-card" data-user-id="${m.user_id}">
-                <div class="member-card-header">
-                    <img class="member-card-avatar" src="${m.profile_pic || '../../../assets/images/user.png'}" alt="Avatar" />
-                    <div>
-                        <h3 class="text-neutral text-regular text-weight-medium font-inter member-card-name">${m.member_name}</h3>
-                        <p class="text-subtitle font-inter text-small member-card-role">${m.authority_level || 'Membro'}</p>
-                    </div>
-                </div>
+	if (countLabel) {
+		countLabel.textContent = `${filtered.length} ${filtered.length === 1 ? "membro encontrado" : "membros encontrados"}`;
+	}
 
-                <div class="member-card-progress">
-                    <div class="between align-center">
-                        <p class="text-subtitle font-inter text-small">Tarefas</p>
-                        <div class="member-card-counter font-inter text-small">
-                            <span class="text-primary text-weight-medium">${completed}</span>
-                            <span class="text-subtitle">/${total}</span>
-                        </div>
-                    </div>
-                    <div class="progress-bar">
-                        ${segmentsHtml}
-                    </div>
-                </div>
+	if (filtered.length === 0) {
+		membersGrid.innerHTML = `<p class="text-subtitle font-inter text-small">Nenhum membro encontrado.</p>`;
+		return;
+	}
 
-                <div class="member-card-footer between align-center">
-                    <span class="text-subtitle font-inter text-tiny">${m.member_email}</span>
-                </div>
-            </div>
-        `;
-    }).join("");
+	membersGrid.innerHTML = filtered
+		.map((m) => {
+			const memberId = m.member_id ?? m.user_id;
+			const completed = Number(m.completed_tasks || 0);
+			const total = Number(m.total_tasks || 0);
+			const role = m.access_level || m.authority_level || "Membro da equipe";
+			const avatar = m.profile_pic || "../../../assets/images/user.png";
 
-    allMemberCards = Array.from(membersGrid.querySelectorAll(".member-card"));
-    updateMembers();
-    applyRoleRestrictions();
+			return `
+				<div class="base-card member-card" data-user-id="${escapeHtml(memberId)}">
+					<div class="member-card-image-wrapper">
+						<img class="member-card-image" src="${escapeHtml(avatar)}" alt="${escapeHtml(m.member_name)}" />
+					</div>
 
-    if (window.lucide) {
-        window.lucide.createIcons();
-    }
-}
+					<div class="member-card-info">
+						<h4 class="text-neutral font-inter text-large text-weight-medium">${escapeHtml(m.member_name)}</h4>
+						<p class="text-subtitle font-inter text-small">${escapeHtml(role)}</p>
+						<p class="text-subtitle font-inter text-tiny">${escapeHtml(m.member_email)}</p>
+					</div>
 
-function updateMembers() {
-    const query = normalizeString(searchInput ? searchInput.value.trim() : "");
-    const activity = activityFilter ? activityFilter.value : "";
-    let visibleCount = 0;
+					<div class="member-card-progress">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<i data-lucide="check-circle-2" class="icon-small" style="color: var(--color-neutral-700)"></i>
+								<span class="text-subtitle font-inter text-tiny">Tarefas Concluídas</span>
+							</div>
+							<div class="member-card-counter font-inter text-regular">
+								<span class="text-primary">${completed}</span><span class="text-primary-light">/${total}</span>
+							</div>
+						</div>
+						<div class="progress-bar progress-bar-thin">
+							${renderProgressSegments(completed, total, 8, false)}
+						</div>
+					</div>
 
-    allMemberCards.forEach((member) => {
-        const counter = member.querySelector(".member-card-counter");
-        let completed = 0;
-        let total = 0;
-        if (counter) {
-            const [completedText, totalText] = Array.from(counter.children, (element) => element.textContent.trim());
-            completed = Number(completedText) || 0;
-            total = Number(totalText ? totalText.replace("/", "") : 0) || 0;
-        }
+					<a href="../project_member_details/project_member_details.html?project_id=${encodeURIComponent(projectId)}&user_id=${encodeURIComponent(memberId)}" class="btn btn-full btn-sm secondary-btn member-card-btn">
+						<span>Ver Detalhes</span>
+						<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+					</a>
+				</div>
+			`;
+		})
+		.join("");
 
-        const matchesSearch = normalizeString(member.textContent).includes(query);
-        const matchesActivity =
-            !activity ||
-            (activity === "pendentes" && completed < total) ||
-            (activity === "concluidas" && completed === total && total > 0);
-
-        member.hidden = !matchesSearch || !matchesActivity;
-        if (!member.hidden) visibleCount += 1;
-    });
-
-    if (countLabel) {
-        countLabel.textContent = `${visibleCount} ${visibleCount === 1 ? "membro encontrado" : "membros encontrados"}`;
-    }
+	if (window.lucide) {
+		window.lucide.createIcons({ root: membersGrid });
+	}
 }
 
 async function loadProjectMembers() {
-    try {
-        if (!projectId) {
-            const pRes = await getProjects();
-            if (pRes.success && pRes.projects.length > 0) {
-                projectId = pRes.projects[0].project_id;
-            } else {
-                return;
-            }
-        }
+	if (!projectId) {
+		const pRes = await getProjects();
+		if (pRes.success && pRes.projects.length > 0) {
+			projectId = String(pRes.projects[0].project_id);
+		} else {
+			return;
+		}
+	}
 
-        const panelTab = document.querySelector(".project-members-toolbar a[href*='project_details']");
-        if (panelTab) panelTab.href = `../project_details/project_details.html?project_id=${projectId}`;
+	const panelTab = document.getElementById("members-panel-tab");
+	if (panelTab) {
+		panelTab.href = `../project_details/project_details.html?project_id=${encodeURIComponent(projectId)}`;
+	}
 
-        const projectBreadcrumb = document.querySelector(".breadcrumb-item[href*='project_details']");
-        if (projectBreadcrumb) projectBreadcrumb.href = `../project_details/project_details.html?project_id=${projectId}`;
+	const projectBreadcrumb = document.getElementById(
+		"members-project-breadcrumb",
+	);
+	if (projectBreadcrumb) {
+		projectBreadcrumb.href = `../project_details/project_details.html?project_id=${encodeURIComponent(projectId)}`;
+	}
 
-        const projectRes = await getProject(projectId);
-        if (projectRes.success && projectRes.project) {
-            const projectTitle = projectRes.project.project_name || projectRes.project.title || "Projeto";
-            if (projectBreadcrumb) projectBreadcrumb.textContent = projectTitle;
+	const [projectRes, membersRes] = await Promise.all([
+		getProject(projectId),
+		getProjectMembers(projectId),
+	]);
 
-            const heading = document.querySelector(".project-members-header h2");
-            if (heading) heading.textContent = projectTitle;
-        }
+	if (projectRes.success && projectRes.project) {
+		const title =
+			projectRes.project.project_name || projectRes.project.title || "Projeto";
+		document.title = `TaskOps - Membros | ${title}`;
+		if (projectBreadcrumb) projectBreadcrumb.textContent = title;
+		const pageTitle = document.getElementById("members-page-title");
+		if (pageTitle) pageTitle.textContent = `Membros — ${title}`;
+	}
 
-        const membersRes = await getProjectMembers(projectId);
-        if (membersRes.success) {
-            renderMembers(membersRes.members);
-        } else {
-            console.error("Erro ao carregar membros:", membersRes.message);
-        }
-    } catch (err) {
-        console.error("Erro ao carregar membros do projeto:", err);
-    }
+	if (membersRes.success) {
+		allMembers = membersRes.members || [];
+		currentProjectMemberIds = new Set(
+			allMembers.map((m) => String(m.member_id ?? m.user_id)),
+		);
+		renderMembers();
+	}
+
+	applyRoleRestrictions();
+	if (window.lucide) {
+		window.lucide.createIcons();
+	}
 }
 
-if (searchInput) {
-    searchInput.addEventListener("input", updateMembers);
-}
+if (searchInput) searchInput.addEventListener("input", renderMembers);
+if (activityFilter) activityFilter.addEventListener("change", renderMembers);
 
-if (activityFilter) {
-    activityFilter.addEventListener("change", updateMembers);
-}
-
+// Vincular novo membro ao projeto (modal com busca para Admin ou entrada de ID para Líder)
 if (addMemberBtn) {
-    addMemberBtn.addEventListener("click", async () => {
-        try {
-            const usersRes = await listUsers();
+	addMemberBtn.addEventListener("click", async () => {
+		const usersRes = await listUsers();
+		let targetUserId = null;
 
-            if (!usersRes.success || !Array.isArray(usersRes.users) || usersRes.users.length === 0) {
-                showAlertModal(
-                    usersRes.message || "Não foi possível carregar a lista de usuários disponíveis.",
-                    "Atenção"
-                );
-                return;
-            }
+		if (usersRes.success && Array.isArray(usersRes.users)) {
+			const candidates = usersRes.users.filter(
+				(u) => !currentProjectMemberIds.has(String(u.user_id)),
+			);
 
-            const candidateUsers = usersRes.users.filter(
-                (u) => !currentProjectMemberIds.has(String(u.user_id))
-            );
+			if (candidates.length === 0) {
+				await showAlertModal(
+					"Todos os usuários cadastrados já estão vinculados a este projeto.",
+					"Sem usuários novos",
+				);
+				return;
+			}
 
-            if (candidateUsers.length === 0) {
-                showAlertModal("Todos os usuários disponíveis já fazem parte deste projeto.", "Sem usuários novos");
-                return;
-            }
+			targetUserId = await showSelectModal({
+				title: "Adicionar membro ao projeto",
+				message: "Selecione um usuário da lista para vincular ao projeto:",
+				items: candidates,
+				searchPlaceholder: "Buscar por nome, e-mail ou ID...",
+				confirmText: "Adicionar",
+				getItemId: (u) => u.user_id,
+				getSearchText: (u) =>
+					normalizeString(`${u.user_id} ${u.name} ${u.email}`),
+				renderItem: (u, isSelected) => `
+					<button
+						type="button"
+						role="option"
+						aria-selected="${isSelected}"
+						data-option-id="${escapeHtml(u.user_id)}"
+						class="feedback-modal-option between align-center ${isSelected ? "is-selected" : ""}"
+					>
+						<div class="align-center gap-8" style="min-width: 0;">
+							<img
+								src="${escapeHtml(u.profile_pic || "../../../assets/images/user.png")}"
+								alt="${escapeHtml(u.name)}"
+								style="width: 32px; height: 32px; border-radius: 9999px; object-fit: cover; flex-shrink: 0;"
+							/>
+							<div style="min-width: 0;">
+								<div class="font-inter text-small text-weight-medium text-neutral" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+									${escapeHtml(u.name)}
+								</div>
+								<div class="font-inter text-tiny text-subtitle" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+									${escapeHtml(u.email)}
+								</div>
+							</div>
+						</div>
+						<span class="font-inter text-tiny text-subtitle" style="flex-shrink: 0; margin-left: 8px;">ID ${escapeHtml(u.user_id)}</span>
+					</button>
+				`,
+			});
+		} else if (usersRes.status === 403) {
+			// Líder de projeto pode vincular membro informando o ID do usuário
+			targetUserId = await showPromptModal({
+				title: "Adicionar membro ao projeto",
+				message: "Informe o ID do usuário que deseja vincular a este projeto:",
+				placeholder: "Ex.: 4",
+				confirmText: "Adicionar",
+				validate: (val) =>
+					/^\d+$/.test(val) && Number(val) > 0
+						? null
+						: "Informe um número inteiro positivo válido.",
+			});
+		} else {
+			await showAlertModal(
+				usersRes.message ||
+					"Não foi possível carregar os usuários disponíveis.",
+				"Erro",
+			);
+			return;
+		}
 
-            const targetUserId = await showSelectModal({
-                title: "Adicionar membro ao projeto",
-                message: "Selecione um usuário da lista para vincular ao projeto:",
-                items: candidateUsers,
-                searchPlaceholder: "Buscar por nome, e-mail ou ID...",
-                confirmText: "Adicionar",
-                getItemId: (u) => u.user_id,
-                getSearchText: (u) => normalizeString(`${u.user_id ?? ""} ${u.name ?? ""} ${u.email ?? ""}`),
-                renderItem: (u, isSelected) => `
-                    <button
-                        type="button"
-                        role="option"
-                        aria-selected="${isSelected}"
-                        data-option-id="${u.user_id}"
-                        class="base-card between align-center"
-                        style="
-                            width: 100%;
-                            text-align: left;
-                            padding: 10px 12px;
-                            cursor: pointer;
-                            border-radius: var(--radius-lg);
-                            border: 1px solid ${isSelected ? "var(--color-primary-500)" : "var(--color-neutral-200)"};
-                            background: ${isSelected ? "var(--color-primary-100)" : "var(--color-neutral-100)"};
-                        "
-                    >
-                        <div class="align-center gap-8" style="min-width: 0;">
-                            <img
-                                src="${u.profile_pic || "../../../assets/images/user.png"}"
-                                alt="${u.name}"
-                                style="width: 32px; height: 32px; border-radius: var(--radius-full); object-fit: cover; flex-shrink: 0;"
-                            />
-                            <div style="min-width: 0;">
-                                <div class="font-inter text-small text-weight-medium text-neutral" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                    ${u.name}
-                                </div>
-                                <div class="font-inter text-tiny text-subtitle" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                    ${u.email}
-                                </div>
-                            </div>
-                        </div>
-                        <span class="font-inter text-tiny text-subtitle" style="flex-shrink: 0; margin-left: 8px;">ID ${u.user_id}</span>
-                    </button>
-                `,
-            });
+		if (!targetUserId) return;
 
-            if (!targetUserId) return;
-
-            const res = await addProjectMember(projectId, targetUserId);
-            if (res.success) {
-                showAlertModal("Membro vinculado com sucesso!", "Sucesso");
-                await loadProjectMembers();
-            } else {
-                showAlertModal(res.message || "Não foi possível vincular o usuário.", "Erro");
-            }
-        } catch (err) {
-            console.error("Erro ao adicionar membro:", err);
-            showAlertModal("Erro ao adicionar membro.", "Erro");
-        }
-    });
+		const res = await addProjectMember(projectId, targetUserId);
+		if (res.success) {
+			await showAlertModal(
+				"Membro vinculado ao projeto com sucesso!",
+				"Sucesso",
+			);
+			await loadProjectMembers();
+		} else {
+			await showAlertModal(
+				res.message || "Não foi possível vincular o usuário.",
+				"Erro",
+			);
+		}
+	});
 }
 
-// Initial load
-loadProjectMembers();
+headerPromise.then(() => {
+	loadProjectMembers();
+});

@@ -1,12 +1,30 @@
-import { requireAuth, initUserProfile } from "../../../assets/js/repositories/authRepository.js";
-import { getProjectMemberDetails, getProject } from "../../../assets/js/repositories/projectRepository.js";
+/*
+    Autor: 
+    project_member_details.js -> Carrega dinamicamente os dados de um membro e suas demandas atribuídas em um projeto.
+*/
+
+import { requireAuth } from "../../../assets/js/repositories/authRepository.js";
+import { initAppHeader } from "../../../assets/js/components/header.js";
+import {
+	getProjectMemberDetails,
+	getProject,
+} from "../../../assets/js/repositories/projectRepository.js";
+import {
+	escapeHtml,
+	formatShortDate,
+	formatTaskCode,
+	getPriorityInfo,
+	getStatusInfo,
+	getTypeLabel,
+} from "../../../assets/js/utils/formatters.js";
 
 requireAuth();
-initUserProfile();
 
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("project_id");
 const userId = urlParams.get("user_id");
+
+const headerPromise = initAppHeader({ activePage: "projects", projectId });
 
 const memberAvatar = document.getElementById("member-avatar");
 const memberName = document.getElementById("member-name");
@@ -19,67 +37,88 @@ const membersLink = document.querySelector(".members-link");
 const memberBreadcrumb = document.querySelector(".member-name-breadcrumb");
 const memberTitle = document.querySelector(".member-title");
 
-function formatDate(dateStr) {
-    if (!dateStr) return "-";
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return "-";
-    return d.toLocaleDateString("pt-BR");
-}
-
 async function loadDetails() {
-    if (!projectId || !userId) {
-        if (tasksBody) tasksBody.innerHTML = `<tr><td colspan="5" class="text-center p-16 text-subtitle">Parâmetros de projeto ou usuário ausentes.</td></tr>`;
-        return;
-    }
+	if (!projectId || !userId) {
+		if (tasksBody) {
+			tasksBody.innerHTML = `<tr><td colspan="6" class="text-subtitle" style="text-align: center; padding: 16px;">Parâmetros de projeto ou usuário ausentes.</td></tr>`;
+		}
+		return;
+	}
 
-    if (projectLink) projectLink.href = `../project_details/project_details.html?project_id=${projectId}`;
-    if (membersLink) membersLink.href = `../project_members/project_members.html?project_id=${projectId}`;
+	if (projectLink)
+		projectLink.href = `../project_details/project_details.html?project_id=${encodeURIComponent(projectId)}`;
+	if (membersLink)
+		membersLink.href = `../project_members/project_members.html?project_id=${encodeURIComponent(projectId)}`;
 
-    try {
-        const [projectRes, memberRes] = await Promise.all([
-            getProject(projectId),
-            getProjectMemberDetails(projectId, userId)
-        ]);
+	const [projectRes, memberRes] = await Promise.all([
+		getProject(projectId),
+		getProjectMemberDetails(projectId, userId),
+	]);
 
-        if (projectRes.success && projectRes.project && projectLink) {
-            projectLink.textContent = projectRes.project.title;
-        }
+	if (projectRes.success && projectRes.project && projectLink) {
+		projectLink.textContent =
+			projectRes.project.project_name || projectRes.project.title || "Projeto";
+	}
 
-        if (memberRes.success && memberRes.data) {
-            const { user_info, task_list } = memberRes.data;
+	if (memberRes.success && memberRes.data) {
+		const { user_info, task_list } = memberRes.data;
 
-            if (memberName) memberName.textContent = user_info.name;
-            if (memberEmail) memberEmail.textContent = user_info.email;
-            if (memberRole) memberRole.textContent = `Nível de autoridade: ${user_info.authority_level}`;
-            if (memberAvatar && user_info.profile_pic) memberAvatar.src = user_info.profile_pic;
+		document.title = `TaskOps - ${user_info.name}`;
+		if (memberName) memberName.textContent = user_info.name;
+		if (memberEmail) memberEmail.textContent = user_info.email;
+		if (memberRole)
+			memberRole.textContent = `Perfil: ${user_info.authority_level}`;
+		if (memberAvatar && user_info.profile_pic)
+			memberAvatar.src = user_info.profile_pic;
+		if (memberBreadcrumb) memberBreadcrumb.textContent = user_info.name;
+		if (memberTitle) memberTitle.textContent = user_info.name;
 
-            if (memberBreadcrumb) memberBreadcrumb.textContent = user_info.name;
-            if (memberTitle) memberTitle.textContent = user_info.name;
+		if (task_list && task_list.length > 0) {
+			tasksBody.innerHTML = task_list
+				.map((t) => {
+					const title = t.task_title || t.title || "Demanda";
+					const priorityInfo = getPriorityInfo(t.priority);
+					const statusInfo = getStatusInfo(t.status);
 
-            if (task_list && task_list.length > 0) {
-                tasksBody.innerHTML = task_list.map(t => `
-                    <tr>
-                        <td>
-                            <a href="../../demand/demand_details/demand_details.html?task_id=${t.task_id}" class="dashboard-task-cell font-inter text-weight-medium">
-                                ${t.title}
-                            </a>
-                        </td>
-                        <td><span class="dashboard-task-cell">${t.type || 'TAREFA'}</span></td>
-                        <td><span class="dashboard-task-cell">${t.priority || 'MEDIA'}</span></td>
-                        <td><span class="status-badge">${t.status}</span></td>
-                        <td><span class="dashboard-task-cell">${formatDate(t.due_date)}</span></td>
-                    </tr>
-                `).join("");
-            } else {
-                tasksBody.innerHTML = `<tr><td colspan="5" class="text-center p-16 text-subtitle">Nenhuma tarefa atribuída a este membro no projeto.</td></tr>`;
-            }
-        } else {
-            if (tasksBody) tasksBody.innerHTML = `<tr><td colspan="5" class="text-center p-16 text-subtitle">${memberRes.message || 'Membro não encontrado.'}</td></tr>`;
-        }
-    } catch (err) {
-        console.error("Erro ao carregar detalhes do membro:", err);
-        if (tasksBody) tasksBody.innerHTML = `<tr><td colspan="5" class="text-center p-16 text-subtitle">Erro ao conectar ao servidor.</td></tr>`;
-    }
+					return `
+						<tr>
+							<td>
+								<a href="../../demand/demand_details/demand_details.html?task_id=${t.task_id}" class="dashboard-task-link">
+									${escapeHtml(formatTaskCode(t.task_id))}
+								</a>
+							</td>
+							<td>
+								<a href="../../demand/demand_details/demand_details.html?task_id=${t.task_id}" class="dashboard-task-cell dashboard-task-link">
+									${escapeHtml(title)}
+								</a>
+							</td>
+							<td><span class="dashboard-task-cell">${escapeHtml(getTypeLabel(t.type))}</span></td>
+							<td>
+								<div class="align-center gap-8">
+									<span class="badge-dot ${priorityInfo.dotClass}"></span>
+									<span class="dashboard-task-cell">${escapeHtml(priorityInfo.label)}</span>
+								</div>
+							</td>
+							<td><span class="status-badge ${statusInfo.className}">${escapeHtml(statusInfo.label)}</span></td>
+							<td><span class="dashboard-task-cell">${escapeHtml(formatShortDate(t.due_date))}</span></td>
+						</tr>
+					`;
+				})
+				.join("");
+		} else {
+			tasksBody.innerHTML = `<tr><td colspan="6" class="text-subtitle" style="text-align: center; padding: 16px;">Nenhuma demanda atribuída a este membro neste projeto.</td></tr>`;
+		}
+	} else {
+		if (tasksBody) {
+			tasksBody.innerHTML = `<tr><td colspan="6" class="text-subtitle" style="text-align: center; padding: 16px;">${escapeHtml(memberRes.message || "Membro não encontrado.")}</td></tr>`;
+		}
+	}
+
+	if (window.lucide) {
+		window.lucide.createIcons();
+	}
 }
 
-loadDetails();
+headerPromise.then(() => {
+	loadDetails();
+});

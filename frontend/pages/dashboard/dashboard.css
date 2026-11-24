@@ -1,329 +1,329 @@
+/*
+    Autor: 
+    dashboard.css -> Estilos específicos da tela de Dashboard.
+*/
+
 @import url(../../assets/styles/global.css);
-
-[hidden] {
-    display: none !important;
-}
-
-/* =============================================
-   Estilos específicos da página de Dashboard
-   ============================================= */
 
 /* Conteúdo principal */
 .dashboard-content {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: 38px;
-    padding-top: 16px;
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	gap: 32px;
+	padding-top: 16px;
 }
 
 /* Cabeçalho do dashboard (boas-vindas e data) */
 .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	width: 100%;
+	gap: 16px;
 }
 
 .dashboard-header-date {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
 }
 
-/* Grid principal do dashboard */
+/* Grid principal do dashboard (3 colunas para os cards de métricas e resumos) */
 .dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr,1r,1fr) 350px;
-    gap: 8px;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 12px;
 }
 
 /* Cards de métricas */
 .dashboard-metric-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 8px;
-    min-height: 140px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 8px;
+	min-height: 140px;
 }
 
 .dashboard-metric-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
 }
 
-/* Coluna lateral (Sidebar: Agenda e Caixa de Entrada) */
-.dashboard-sidebar {
-    grid-column: 4;
-    grid-row: 1 / 4;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+/* Cards de insights (Prioridade/Tipo, Críticas, Prazos próximos) */
+.dashboard-insight-card {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	min-height: 170px;
 }
 
-.dashboard-card-agenda,
-.dashboard-card-inbox {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.dashboard-breakdown-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 16px;
 }
 
-.dashboard-card-agenda-content,
-.dashboard-card-inbox-content {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.dashboard-breakdown-list {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-top: 8px;
 }
 
-/* Seções e itens da Agenda */
-.dashboard-agenda-section {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.dashboard-breakdown-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-family: "Inter", sans-serif;
+	font-size: var(--text-small);
+	color: var(--color-neutral-800);
 }
 
-.dashboard-agenda-list,
-.dashboard-card-inbox-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.dashboard-count-pill {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 28px;
+	height: 24px;
+	padding: 0 8px;
+	border-radius: 9999px;
+	background-color: var(--color-primary-100);
+	color: var(--color-primary-700);
+	font-family: "Inter", sans-serif;
+	font-size: var(--text-tiny);
+	font-weight: 700;
 }
 
-.dashboard-agenda-item,
-.dashboard-inbox-item {
-    display: flex;
-    padding: 8px;
-    border-radius: 8px;
-    background-color: var(--color-neutral-200);
-    gap: 8px;
+.dashboard-count-pill.is-danger {
+	background-color: #ffe4e8;
+	color: #ff2d55;
 }
 
-.dashboard-agenda-item {
-    justify-content: space-between;
-    align-items: center;
+.dashboard-mini-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 
-.dashboard-agenda-item:hover,
-.dashboard-inbox-item:hover {
-    cursor: pointer;
-    background-color: var(--color-neutral-300);
+.dashboard-mini-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 10px;
+	border-radius: 8px;
+	background-color: var(--color-neutral-200);
+	transition: background-color 0.2s ease;
 }
 
-/* Itens e botões da Caixa de Entrada */
-.dashboard-inbox-item {
-    flex-direction: column;
+.dashboard-mini-item:hover {
+	background-color: var(--color-neutral-300);
 }
 
-.dashboard-inbox-item-row {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+.dashboard-mini-item-title {
+	font-family: "Inter", sans-serif;
+	font-size: var(--text-small);
+	font-weight: 500;
+	color: var(--color-neutral-900);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-.dashboard-inbox-item-header {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+.dashboard-mini-item-meta {
+	font-family: "Inter", sans-serif;
+	font-size: var(--text-tiny);
+	color: var(--color-neutral-600);
+	flex-shrink: 0;
 }
 
-.dashboard-inbox-actions {
-    display: flex;
-    gap: 8px;
-    width: 100%;
-    margin-top: 4px;
-}
-
-.btn-accept {
-    flex: 1;
-    background-color: var(--color-primary-500);
-    color: var(--color-accent-100);
-    font-weight: 600;
-    border-radius: 8px;
-    padding: 8px;
-    text-align: center;
-}
-
-.btn-accept:hover {
-    color: var(--color-accent-500);
-}
-
-.btn-reject {
-    flex: 1;
-    background-color: var(--color-neutral-300);
-    color: var(--color-neutral-800);
-    font-weight: 600;
-    border-radius: 8px;
-    padding: 8px;
-    text-align: center;
-}
-
-.btn-reject:hover {
-    background-color: var(--color-neutral-400);
-}
-
-/* Card Lista de Tarefas (ocupa as primeiras 3 colunas) */
+/* Card Lista de Tarefas (ocupa todas as 3 colunas) */
 .dashboard-card-tasks {
-    grid-column: 1 / 4;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+	grid-column: 1 / -1;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
 }
 
 /* Tabela da Lista de Tarefas */
 .dashboard-tasks-table-wrapper {
-    width: 100%;
-    overflow-x: auto;
+	width: 100%;
+	overflow-x: auto;
 }
 
 .dashboard-task-filters {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 12px 0;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 4px 0;
 }
 
 .dashboard-task-filters .search-input {
-    flex: 1 1 280px;
-    max-width: 438px;
+	flex: 1 1 260px;
+	max-width: 420px;
 }
 
 .dashboard-task-status-filter,
 .member-activity-filter {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--color-neutral-700);
-    font: 400 var(--text-small) 'Inter', sans-serif;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--color-neutral-700);
+	font:
+		400 var(--text-small) "Inter",
+		sans-serif;
 }
 
 .dashboard-task-status-filter select,
 .member-activity-filter select {
-    min-height: 40px;
-    padding: 8px 32px 8px 12px;
-    border: 1px solid var(--color-neutral-400);
-    border-radius: 8px;
-    background: var(--color-neutral-100);
-    color: var(--color-neutral-800);
+	min-height: 40px;
+	padding: 8px 12px;
+	border: 1px solid var(--color-neutral-400);
+	border-radius: 8px;
+	background: var(--color-neutral-100);
+	color: var(--color-neutral-800);
+	cursor: pointer;
+}
+
+.dashboard-task-tabs {
+	flex-wrap: wrap;
 }
 
 .dashboard-task-tabs button {
-    border: 0;
-    font: inherit;
+	border: 0;
+	font: inherit;
 }
 
 .dashboard-task-empty {
-    padding: 16px 12px;
-    color: var(--color-neutral-700);
-    font-family: 'Inter', sans-serif;
+	padding: 20px 12px;
+	color: var(--color-neutral-700);
+	font-family: "Inter", sans-serif;
+	text-align: center;
 }
 
 .dashboard-tasks-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
 }
 
 .dashboard-tasks-table th {
-    padding: 10px 12px;
-    color: var(--color-neutral-700);
-    font-size: var(--text-small);
-    font-weight: 400;
-    font-family: 'Inter', sans-serif;
+	padding: 10px 12px;
+	color: var(--color-neutral-700);
+	font-size: var(--text-small);
+	font-weight: 500;
+	font-family: "Inter", sans-serif;
+	border-bottom: 1px solid var(--color-neutral-200);
+	white-space: nowrap;
 }
 
 .dashboard-tasks-table td {
-    padding: 12px;
-    font-family: 'Inter', sans-serif;
-    font-size: var(--text-small);
-    vertical-align: middle;
+	padding: 12px;
+	font-family: "Inter", sans-serif;
+	font-size: var(--text-small);
+	vertical-align: middle;
+	border-bottom: 1px solid var(--color-neutral-200);
 }
 
 .dashboard-tasks-table tbody tr {
-    transition: background-color 0.2s ease;
+	transition: background-color 0.2s ease;
 }
 
 .dashboard-tasks-table tbody tr:hover {
-    background-color: var(--color-neutral-200);
+	background-color: var(--color-neutral-200);
 }
 
 .dashboard-user-cell {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
 .dashboard-user-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 9999px;
-    object-fit: cover;
+	width: 32px;
+	height: 32px;
+	border-radius: 9999px;
+	object-fit: cover;
+	flex-shrink: 0;
 }
 
 .dashboard-user-name {
-    color: var(--color-primary-500);
-    font-weight: 500;
-    font-size: var(--text-small);
-    font-family: 'Inter', sans-serif;
+	color: var(--color-primary-500);
+	font-weight: 500;
+	font-size: var(--text-small);
+	font-family: "Inter", sans-serif;
 }
 
 .dashboard-user-email {
-    color: var(--color-neutral-600);
-    font-size: var(--text-tiny);
-    font-family: 'Inter', sans-serif;
+	color: var(--color-neutral-600);
+	font-size: var(--text-tiny);
+	font-family: "Inter", sans-serif;
 }
 
 .dashboard-task-cell {
-    color: var(--color-neutral-800);
-    font-weight: 500;
-    font-size: var(--text-small);
-    font-family: 'Inter', sans-serif;
+	color: var(--color-neutral-800);
+	font-weight: 500;
+	font-size: var(--text-small);
+	font-family: "Inter", sans-serif;
+}
+
+.dashboard-task-link {
+	color: var(--color-primary-600);
+	font-weight: 600;
+}
+
+.dashboard-task-link:hover {
+	text-decoration: underline;
 }
 
 .status-badge {
-    font-size: var(--text-small);
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
+	font-size: var(--text-small);
+	font-weight: 600;
+	font-family: "Inter", sans-serif;
+	white-space: nowrap;
+}
+
+.status-open {
+	color: var(--color-primary-600);
+}
+
+.status-progress {
+	color: #f59e0b;
 }
 
 .status-complete {
-    color: #34c759;
+	color: #22c55e;
 }
 
 .status-review {
-    color: #0088ff;
+	color: #0088ff;
 }
 
 .status-late {
-    color: #ff2d55;
+	color: #ff2d55;
 }
 
-/* Responsividade simples */
-@media (max-width: 1200px) {
-    .dashboard-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .dashboard-sidebar {
-        grid-column: 1 / -1;
-        grid-row: auto;
-    }
-    .dashboard-card-tasks {
-        grid-column: 1 / -1;
-    }
+@media (max-width: 1080px) {
+	.dashboard-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
 }
 
 @media (max-width: 768px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-    .dashboard-header {
-        flex-direction: column;
-        gap: 16px;
-    }
-    .dashboard-header-date {
-        align-items: flex-start;
-    }
+	.dashboard-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.dashboard-header {
+		flex-direction: column;
+	}
+
+	.dashboard-header-date {
+		align-items: flex-start;
+	}
 }

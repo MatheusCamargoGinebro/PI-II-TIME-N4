@@ -1,1 +1,208 @@
+<!--
+    Autor: 
+    demands_list.html -> Tela unificada e dinâmica de listagem de demandas por status (Aberta, Em andamento, Em revisão, Concluída, Cancelada ou Todas) com filtros, busca, ordenação e paginação.
+-->
 
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>TaskOps - Demandas</title>
+
+		<link rel="stylesheet" href="./demands_list.css" />
+		<script src="https://unpkg.com/lucide@latest"></script>
+	</head>
+	<body>
+		<header id="app-header" class="header"></header>
+
+		<main class="container">
+			<div class="demands-content">
+				<!-- Breadcrumbs dinâmicos -->
+				<div class="breadcrumb" id="demands-breadcrumb">
+					<a href="../../dashboard/dashboard.html" class="breadcrumb-item"
+						>Dashboard</a
+					>
+					<i data-lucide="chevron-right" class="breadcrumb-separator"></i>
+					<span id="breadcrumb-status" class="breadcrumb-item active"
+						>Demandas</span
+					>
+				</div>
+
+				<!-- Título e contador dinâmico -->
+				<div class="demands-page-header">
+					<h2 id="page-title" class="text-primary">Demandas</h2>
+					<p id="page-subtitle" class="text-subtitle font-inter text-regular">
+						Carregando demandas...
+					</p>
+				</div>
+
+				<!-- Navegação rápida entre categorias de status -->
+				<ul
+					class="tab-bar demands-status-tabs"
+					id="status-tabs"
+					aria-label="Filtrar por status"
+				>
+					<li>
+						<a href="./demands_list.html" class="tab" data-status="">Todas</a>
+					</li>
+					<li>
+						<a
+							href="./demands_list.html?status=ABERTA"
+							class="tab"
+							data-status="ABERTA"
+							>Abertas</a
+						>
+					</li>
+					<li>
+						<a
+							href="./demands_list.html?status=EM%20ANDAMENTO"
+							class="tab"
+							data-status="EM ANDAMENTO"
+							>Em Andamento</a
+						>
+					</li>
+					<li>
+						<a
+							href="./demands_list.html?status=EM%20REVISAO"
+							class="tab"
+							data-status="EM REVISAO"
+							>Em Revisão</a
+						>
+					</li>
+					<li>
+						<a
+							href="./demands_list.html?status=CONCLUIDA"
+							class="tab"
+							data-status="CONCLUIDA"
+							>Concluídas</a
+						>
+					</li>
+					<li>
+						<a
+							href="./demands_list.html?status=CANCELADA"
+							class="tab"
+							data-status="CANCELADA"
+							>Canceladas</a
+						>
+					</li>
+				</ul>
+
+				<!-- Toolbar de filtros, ordenação e busca -->
+				<div class="demands-toolbar">
+					<div class="filter-group" id="priority-filters">
+						<button type="button" class="filter-btn active" data-priority="">
+							Todas
+						</button>
+						<button type="button" class="filter-btn" data-priority="CRITICA">
+							Crítica
+						</button>
+						<button type="button" class="filter-btn" data-priority="ALTA">
+							Alta
+						</button>
+						<button type="button" class="filter-btn" data-priority="MEDIA">
+							Média
+						</button>
+						<button type="button" class="filter-btn" data-priority="BAIXA">
+							Baixa
+						</button>
+					</div>
+
+					<div class="demands-controls">
+						<select
+							id="type-filter"
+							class="demands-select"
+							aria-label="Filtrar por tipo"
+						>
+							<option value="">Todos os tipos</option>
+							<option value="TAREFA">Tarefa</option>
+							<option value="DEFEITO">Defeito</option>
+							<option value="MELHORIA">Melhoria</option>
+							<option value="DOCUMENTACAO">Documentação</option>
+						</select>
+
+						<select
+							id="sort-select"
+							class="demands-select"
+							aria-label="Ordenar demandas"
+						>
+							<option value="creation_date:DESC">Mais recentes</option>
+							<option value="priority:DESC">Maior prioridade</option>
+							<option value="due_date:ASC">Prazo mais próximo</option>
+							<option value="status:ASC">Por status</option>
+						</select>
+
+						<label class="search-input demands-search">
+							<i
+								data-lucide="search"
+								class="icon-small"
+								style="color: var(--color-neutral-600)"
+							></i>
+							<input
+								type="search"
+								id="search-input"
+								placeholder="Buscar por título, código ou descrição..."
+								aria-label="Buscar demandas"
+							/>
+						</label>
+					</div>
+				</div>
+
+				<!-- Tabela de demandas -->
+				<div class="base-card table-card">
+					<div class="table-wrapper">
+						<table id="tasks-table">
+							<thead>
+								<tr>
+									<th>Código</th>
+									<th>Título da Demanda</th>
+									<th>Tipo</th>
+									<th>Prioridade</th>
+									<th>Status</th>
+									<th>Responsável</th>
+									<th>Criação</th>
+									<th>Prazo</th>
+									<th>Projeto</th>
+								</tr>
+							</thead>
+							<tbody id="table-body">
+								<tr>
+									<td colspan="9" class="table-empty-cell">
+										Carregando demandas...
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="table-footer">
+						<p class="footer-info" id="footer-info">
+							Mostrando <strong>0</strong> de <strong>0</strong> demandas
+						</p>
+						<div class="pagination">
+							<button
+								type="button"
+								id="prev-page-btn"
+								class="page-btn"
+								disabled
+							>
+								Anterior
+							</button>
+							<span id="page-indicator" class="footer-info">Página 1 de 1</span>
+							<button
+								type="button"
+								id="next-page-btn"
+								class="page-btn"
+								disabled
+							>
+								Próximo
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script type="module" src="./demands_list.js"></script>
+	</body>
+</html>

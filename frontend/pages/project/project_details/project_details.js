@@ -1,298 +1,332 @@
-import { requireAuth, initUserProfile, applyRoleRestrictions } from "../../../assets/js/repositories/authRepository.js";
-import { getProjects, getProject, getProjectTasks } from "../../../assets/js/repositories/projectRepository.js";
-import { updateTaskStatus } from "../../../assets/js/repositories/taskRepository.js";
+/*
+    Autor: 
+    project_details.js -> Carrega métricas e quadro Kanban do projeto via API com drag-and-drop respeitando a máquina de estados e RBAC.
+*/
+
+import {
+	requireAuth,
+	applyRoleRestrictions,
+} from "../../../assets/js/repositories/authRepository.js";
+import { initAppHeader } from "../../../assets/js/components/header.js";
+import {
+	getProjects,
+	getProject,
+	getProjectTasks,
+} from "../../../assets/js/repositories/projectRepository.js";
+import {
+	updateTaskStatus,
+	cancelTask,
+} from "../../../assets/js/repositories/taskRepository.js";
 import { normalizeString } from "../../../assets/js/normalize.js";
-import { showAlertModal } from "../../../assets/js/components/modal.js";
+import {
+	showAlertModal,
+	showConfirmModal,
+} from "../../../assets/js/components/modal.js";
+import {
+	escapeHtml,
+	formatShortDate,
+	getPriorityInfo,
+	getTypeLabel,
+	renderProgressSegments,
+} from "../../../assets/js/utils/formatters.js";
 
 requireAuth();
-initUserProfile();
 
 const urlParams = new URLSearchParams(window.location.search);
 let projectId = urlParams.get("project_id");
 
-const boardColumns = Array.from(document.querySelectorAll(".project-board-column[data-task-status]"));
-const searchInput = document.querySelector("#task-board-search");
+const headerPromise = initAppHeader({ activePage: "projects", projectId });
 
-const columnToStatusMap = {
-    "andamento": "EM ANDAMENTO",
-    "revisao": "EM REVISAO",
-    "cancelada": "CANCELADA",
-    "concluida": "CONCLUIDA"
-};
+const boardColumns = Array.from(
+	document.querySelectorAll(".project-board-column[data-task-status]"),
+);
+const searchInput = document.getElementById("task-board-search");
 
-const statusToColumnMap = {
-    "ABERTA": "andamento",
-    "EM ANDAMENTO": "andamento",
-    "EM REVISAO": "revisao",
-    "CANCELADA": "cancelada",
-    "CONCLUIDA": "concluida"
-};
+function updateCurrentDate() {
+	const dateEl = document.getElementById("project-current-date");
+	if (!dateEl) return;
 
-function formatDate(dateStr) {
-    if (!dateStr) return "-";
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return "-";
-    const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-    return `${meses[d.getMonth()]} ${String(d.getDate()).padStart(2, "0")}`;
+	const now = new Date();
+	const dias = [
+		"Domingo",
+		"Segunda-feira",
+		"Terça-feira",
+		"Quarta-feira",
+		"Quinta-feira",
+		"Sexta-feira",
+		"Sábado",
+	];
+	const meses = [
+		"janeiro",
+		"fevereiro",
+		"março",
+		"abril",
+		"maio",
+		"junho",
+		"julho",
+		"agosto",
+		"setembro",
+		"outubro",
+		"novembro",
+		"dezembro",
+	];
+	dateEl.textContent = `Hoje é ${dias[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
 }
 
-function getPriorityBadge(priority) {
-    const p = String(priority).toUpperCase();
-    if (p === "CRITICA" || p === "ALTA") return "badge-pink";
-    if (p === "MEDIA") return "badge-blue";
-    return "badge-green";
-}
+function updateMetricCard(key, count, total, accent = false) {
+	const card = document.querySelector(`[data-project-metric="${key}"]`);
+	if (!card) return;
 
-function updateProjectDate() {
-    const dateText = document.querySelector(".project-date-info p");
-    if (dateText) {
-        const now = new Date();
-        const diasSemana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
-        const meses = [
-            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-        ];
-        dateText.textContent = `Hoje é ${diasSemana[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]}`;
-    }
+	const valueEl = card.querySelector("[data-metric-value]");
+	const barEl = card.querySelector("[data-metric-bar]");
+	const subtitleEl = card.querySelector("[data-metric-subtitle]");
+
+	if (valueEl) valueEl.textContent = String(count);
+	if (barEl) barEl.innerHTML = renderProgressSegments(count, total, 19, accent);
+
+	if (subtitleEl) {
+		if (key === "total") {
+			subtitleEl.textContent = `${total} ${total === 1 ? "demanda no projeto" : "demandas no projeto"}`;
+		} else {
+			const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+			subtitleEl.textContent =
+				key === "CONCLUIDA"
+					? `${pct}% do projeto concluído`
+					: `${pct}% do total de demandas`;
+		}
+	}
 }
 
 function renderTaskCard(task) {
-    const prazo = formatDate(task.due_date);
-    const badge = getPriorityBadge(task.priority);
-    const priorityLabel = task.priority ? (task.priority.charAt(0) + task.priority.slice(1).toLowerCase()) : "Média";
+	const priorityInfo = getPriorityInfo(task.priority);
+	const responsibleName =
+		task.responsible_user_name || task.responsible_name || "Não atribuído";
+	const avatar =
+		task.profile_pic ||
+		task.responsible_profile_pic ||
+		"../../../assets/images/user.png";
 
-    return `
-        <div class="project-task-item" data-task-id="${task.task_id}" data-current-status="${task.status}" draggable="true" tabindex="0">
-            <div class="between align-center">
-                <div>
-                    <a href="../../demand/demand_details/demand_details.html?task_id=${task.task_id}" class="text-neutral font-inter text-regular text-weight-medium">
-                        ${task.title}
-                    </a>
-                    <div class="align-center gap-4 text-subtitle text-tiny">
-                        <span>${prazo}</span>
-                        <span class="dot-separator"></span>
-                        <span>${priorityLabel}</span>
-                    </div>
-                </div>
-                <div class="align-center gap-8">
-                    <span class="badge-dot ${badge}"></span>
-                </div>
-            </div>
-            ${task.responsible_name ? `
-                <div class="align-center gap-8 mt-8">
-                    <img src="${task.responsible_profile_pic || '../../../assets/images/user.png'}" class="icon-tiny rounded-full" alt="" style="width: 18px; height: 18px; border-radius: 50%;" />
-                    <span class="text-tiny text-subtitle">${task.responsible_name}</span>
-                </div>
-            ` : ''}
-        </div>
-    `;
+	return `
+		<div class="project-task-item" data-task-id="${task.task_id}" data-current-status="${escapeHtml(task.status)}" draggable="true" tabindex="0">
+			<div class="between align-center gap-8">
+				<a href="../../demand/demand_details/demand_details.html?task_id=${task.task_id}" class="text-neutral font-inter text-small text-weight-semibold">
+					${escapeHtml(task.title || task.task_name)}
+				</a>
+				<span class="badge-dot ${priorityInfo.dotClass}" title="Prioridade ${escapeHtml(priorityInfo.label)}"></span>
+			</div>
+
+			<div class="align-center gap-4 text-subtitle text-tiny font-inter" style="flex-wrap: wrap;">
+				<span>${escapeHtml(getTypeLabel(task.type))}</span>
+				<span class="dot-separator"></span>
+				<span>${escapeHtml(priorityInfo.label)}</span>
+				<span class="dot-separator"></span>
+				<span>${escapeHtml(formatShortDate(task.due_date))}</span>
+			</div>
+
+			<div class="align-center gap-8">
+				<img src="${escapeHtml(avatar)}" class="project-task-avatar" alt="${escapeHtml(responsibleName)}" />
+				<span class="text-tiny text-subtitle font-inter">${escapeHtml(responsibleName)}</span>
+			</div>
+		</div>
+	`;
 }
 
-function updateSegments(cardIndex, count, total, accent = false) {
-    const card = document.querySelector(`.project-details-grid > div:nth-child(${cardIndex})`);
-    if (!card) return;
-    const segments = card.querySelectorAll(".progress-bar-segment");
-    const filledCount = total > 0 ? Math.round((count / total) * segments.length) : 0;
-    segments.forEach((seg, idx) => {
-        seg.className = "progress-bar-segment";
-        if (idx < filledCount) {
-            seg.classList.add(accent ? "progress-bar-accent-filled" : "progress-bar-filled");
-        } else {
-            seg.classList.add(accent ? "progress-bar-accent-empty" : "progress-bar-empty");
-        }
-    });
+// Vincula eventos de dragstart apenas aos cartões recém-renderizados
+function bindTaskCardDragEvents() {
+	document
+		.querySelectorAll(".project-task-item[data-task-id]")
+		.forEach((card) => {
+			card.addEventListener("dragstart", (event) => {
+				card.classList.add("is-dragging");
+				event.dataTransfer.setData("text/plain", card.dataset.taskId);
+				event.dataTransfer.setData(
+					"application/source-status",
+					card.dataset.currentStatus,
+				);
+				event.dataTransfer.effectAllowed = "move";
+			});
+
+			card.addEventListener("dragend", () => {
+				card.classList.remove("is-dragging");
+			});
+		});
 }
 
-async function loadProjectData() {
-    try {
-        updateProjectDate();
+// Vincula eventos de drop nas colunas UMA ÚNICA VEZ (evita disparos duplicados após recarregar dados)
+function initBoardColumnDropZones() {
+	boardColumns.forEach((column) => {
+		column.addEventListener("dragover", (event) => {
+			event.preventDefault();
+			column.classList.add("is-drop-target");
+			event.dataTransfer.dropEffect = "move";
+		});
 
-        if (!projectId) {
-            const projectsRes = await getProjects();
-            if (projectsRes.success && projectsRes.projects.length > 0) {
-                projectId = projectsRes.projects[0].project_id;
-            } else {
-                return;
-            }
-        }
+		column.addEventListener("dragleave", (event) => {
+			if (!column.contains(event.relatedTarget)) {
+				column.classList.remove("is-drop-target");
+			}
+		});
 
-        // Atualiza links com o project_id
-        const membersTab = document.querySelector(".project-details-toolbar a[href*='project_members']");
-        if (membersTab) membersTab.href = `../project_members/project_members.html?project_id=${projectId}`;
+		column.addEventListener("drop", async (event) => {
+			event.preventDefault();
+			column.classList.remove("is-drop-target");
 
-        const addTaskBtn = document.querySelector(".project-details-header a[href*='register_demand']");
-        if (addTaskBtn) addTaskBtn.href = `../../demand/register_demand/register_demand.html?project_id=${projectId}`;
+			const taskId = event.dataTransfer.getData("text/plain");
+			const sourceStatus = event.dataTransfer.getData(
+				"application/source-status",
+			);
+			const targetStatus = column.dataset.taskStatus;
 
-        // Atualiza os links das páginas de status com o project_id
-        document.querySelectorAll("a[href*='demand_status']").forEach(link => {
-            const url = new URL(link.href, window.location.href);
-            url.searchParams.set("project_id", projectId);
-            link.href = url.pathname + url.search;
-        });
+			if (!taskId || !targetStatus || sourceStatus === targetStatus) return;
 
-        // Obtém métricas e dados do projeto
-        const detailsRes = await getProject(projectId);
-        if (detailsRes.success && detailsRes.project) {
-            const p = detailsRes.project;
-            const projectTitle = p.project_name || p.title || "Projeto";
+			if (targetStatus === "CANCELADA") {
+				const confirmed = await showConfirmModal(
+					"Deseja cancelar esta demanda? O registro será mantido no histórico.",
+					"Cancelar Demanda",
+					{ confirmText: "Sim, cancelar", cancelText: "Voltar" },
+				);
+				if (!confirmed) return;
+			}
 
-            const heading = document.querySelector(".project-details-header-info h2");
-            if (heading) heading.textContent = projectTitle;
+			const taskCard = document.querySelector(
+				`.project-task-item[data-task-id="${taskId}"]`,
+			);
+			const previousParent = taskCard ? taskCard.parentElement : null;
+			if (taskCard) {
+				column.querySelector(".project-task-list")?.append(taskCard);
+			}
 
-            const breadcrumb = document.querySelector(".breadcrumb-item.active");
-            if (breadcrumb) breadcrumb.textContent = projectTitle;
+			const res =
+				targetStatus === "CANCELADA"
+					? await cancelTask(taskId)
+					: await updateTaskStatus(taskId, targetStatus);
 
-            // Extrai as métricas reais retornadas pelo backend
-            const total = Number(p.total_tasks ?? 0);
-            const abertas = Number(p.abertas ?? 0);
-            const emAndamento = Number(p.em_andamento ?? 0);
-            const emRevisao = Number(p.em_revisao ?? 0);
-            const pendentes = emAndamento + emRevisao;
-            const concluidas = Number(p.concluidas ?? 0);
-
-            // Card 1: Total de Tarefas
-            const totalH1 = document.querySelector(".project-details-grid > div:nth-child(1) .project-metric-body h1");
-            if (totalH1) totalH1.textContent = String(total);
-            const totalDesc = document.querySelector(".project-details-grid > div:nth-child(1) .text-subtitle p");
-            if (totalDesc) totalDesc.textContent = `${total} ${total === 1 ? 'tarefa no projeto.' : 'tarefas no projeto.'}`;
-
-            // Card 2: Tarefas Abertas
-            const abertasH1 = document.querySelector(".project-details-grid > div:nth-child(2) .project-metric-body h1");
-            if (abertasH1) abertasH1.textContent = String(abertas);
-            updateSegments(2, abertas, total, false);
-            const abertasDesc = document.querySelector(".project-details-grid > div:nth-child(2) .text-subtitle p");
-            if (abertasDesc) {
-                const pct = total > 0 ? Math.round((abertas / total) * 100) : 0;
-                abertasDesc.textContent = `${pct}% do total de tarefas.`;
-            }
-
-            // Card 3: Tarefas Pendentes
-            const pendentesH1 = document.querySelector(".project-details-grid > div:nth-child(3) .project-metric-body h1");
-            if (pendentesH1) pendentesH1.textContent = String(pendentes);
-            updateSegments(3, pendentes, total, false);
-            const pendentesDesc = document.querySelector(".project-details-grid > div:nth-child(3) .text-subtitle p");
-            if (pendentesDesc) {
-                const pct = total > 0 ? Math.round((pendentes / total) * 100) : 0;
-                pendentesDesc.textContent = `${pct}% do total de tarefas.`;
-            }
-
-            // Card 4: Tarefas Concluídas
-            const concluidasH1 = document.querySelector(".project-details-grid > div:nth-child(4) .project-metric-body h1");
-            if (concluidasH1) concluidasH1.textContent = String(concluidas);
-            updateSegments(4, concluidas, total, true);
-            const concluidasDesc = document.querySelector(".project-details-grid > div:nth-child(4) > div:last-child p");
-            if (concluidasDesc) {
-                const pct = total > 0 ? Math.round((concluidas / total) * 100) : 0;
-                concluidasDesc.textContent = `${pct}% do total concluído.`;
-            }
-        }
-
-        // Obtém tarefas do projeto para o quadro
-        const tasksRes = await getProjectTasks(projectId);
-        if (tasksRes.success) {
-            // Limpa as colunas do quadro
-            boardColumns.forEach(col => {
-                const list = col.querySelector(".project-task-list");
-                if (list) list.innerHTML = "";
-            });
-
-            // Popula tarefas
-            tasksRes.tasks.forEach(task => {
-                const colKey = statusToColumnMap[task.status] || "andamento";
-                const column = boardColumns.find(c => c.dataset.taskStatus === colKey);
-                if (column) {
-                    const list = column.querySelector(".project-task-list");
-                    if (list) {
-                        list.insertAdjacentHTML("beforeend", renderTaskCard(task));
-                    }
-                }
-            });
-
-            setupDragAndDrop();
-            applyTaskSearch();
-        }
-
-        // Aplica restrições de permissões (oculta opções de administrador)
-        applyRoleRestrictions();
-
-        if (window.lucide) {
-            window.lucide.createIcons();
-        }
-    } catch (err) {
-        console.error("Erro ao carregar dados do projeto:", err);
-    }
-}
-
-function setupDragAndDrop() {
-    const taskCards = Array.from(document.querySelectorAll(".project-task-item[data-task-id]"));
-
-    taskCards.forEach((task) => {
-        task.addEventListener("dragstart", (event) => {
-            task.classList.add("is-dragging");
-            event.dataTransfer.setData("text/plain", task.dataset.taskId);
-            event.dataTransfer.setData("application/source-col", task.closest(".project-board-column").dataset.taskStatus);
-            event.dataTransfer.effectAllowed = "move";
-        });
-        task.addEventListener("dragend", () => task.classList.remove("is-dragging"));
-    });
-
-    boardColumns.forEach((column) => {
-        column.addEventListener("dragover", (event) => {
-            event.preventDefault();
-            column.classList.add("is-drop-target");
-            event.dataTransfer.dropEffect = "move";
-        });
-        column.addEventListener("dragleave", (event) => {
-            if (!column.contains(event.relatedTarget)) column.classList.remove("is-drop-target");
-        });
-        column.addEventListener("drop", async (event) => {
-            event.preventDefault();
-            column.classList.remove("is-drop-target");
-            const taskId = event.dataTransfer.getData("text/plain");
-            const sourceCol = event.dataTransfer.getData("application/source-col");
-            const targetCol = column.dataset.taskStatus;
-
-            if (sourceCol === targetCol) return;
-
-            const targetStatus = columnToStatusMap[targetCol];
-            if (!targetStatus) return;
-
-            const taskCard = document.querySelector(`.project-task-item[data-task-id="${taskId}"]`);
-            if (!taskCard) return;
-
-            const previousParent = taskCard.parentElement;
-            column.querySelector(".project-task-list").append(taskCard);
-
-            try {
-                const res = await updateTaskStatus(taskId, targetStatus);
-                if (res.success) {
-                    taskCard.dataset.currentStatus = targetStatus;
-                    await loadProjectData();
-                } else {
-                    showAlertModal(res.message || "Não foi possível alterar o status da demanda.", "Status não alterado");
-                    previousParent.append(taskCard);
-                }
-            } catch (err) {
-                showAlertModal("Erro ao comunicar com o servidor.", "Erro de comunicação");
-                previousParent.append(taskCard);
-            }
-        });
-    });
+			if (res.success) {
+				await loadProjectData();
+			} else {
+				if (taskCard && previousParent) {
+					previousParent.append(taskCard);
+				}
+				await showAlertModal(
+					res.message || "Não foi possível alterar o status da demanda.",
+					"Status não alterado",
+				);
+			}
+		});
+	});
 }
 
 function applyTaskSearch() {
-    if (!searchInput) return;
-    const query = normalizeString(searchInput.value.trim());
-    const taskCards = Array.from(document.querySelectorAll(".project-task-item[data-task-id]"));
+	if (!searchInput) return;
+	const query = normalizeString(searchInput.value.trim());
+	document
+		.querySelectorAll(".project-task-item[data-task-id]")
+		.forEach((card) => {
+			card.hidden = !normalizeString(card.textContent).includes(query);
+		});
+}
 
-    taskCards.forEach((task) => {
-        task.hidden = !normalizeString(task.textContent).includes(query);
-    });
+function updateProjectLinks() {
+	const membersTab = document.getElementById("project-members-tab");
+	if (membersTab) {
+		membersTab.href = `../project_members/project_members.html?project_id=${encodeURIComponent(projectId)}`;
+	}
+
+	const addTaskBtn = document.getElementById("project-add-task-btn");
+	if (addTaskBtn) {
+		addTaskBtn.href = `../../demand/register_demand/register_demand.html?project_id=${encodeURIComponent(projectId)}`;
+	}
+
+	const headerAddTask = document.querySelector("[data-add-task-link]");
+	if (headerAddTask) {
+		headerAddTask.href = `../../demand/register_demand/register_demand.html?project_id=${encodeURIComponent(projectId)}`;
+	}
+
+	// Atualiza todos os links de status para apontar exatamente para a categoria específica + projeto atual
+	document.querySelectorAll("a[data-status-link]").forEach((link) => {
+		const status = link.dataset.statusLink || "";
+		const params = new URLSearchParams();
+		if (status) params.set("status", status);
+		params.set("project_id", projectId);
+		link.href = `../../demand/demands_list/demands_list.html?${params.toString()}`;
+	});
+}
+
+async function loadProjectData() {
+	updateCurrentDate();
+
+	if (!projectId) {
+		const projectsRes = await getProjects();
+		if (projectsRes.success && projectsRes.projects.length > 0) {
+			projectId = String(projectsRes.projects[0].project_id);
+		} else {
+			await showAlertModal(
+				"Nenhum projeto encontrado para exibição.",
+				"Atenção",
+			);
+			window.location.href = "../projects_list/projects_list.html";
+			return;
+		}
+	}
+
+	updateProjectLinks();
+
+	const [detailsRes, tasksRes] = await Promise.all([
+		getProject(projectId),
+		getProjectTasks(projectId),
+	]);
+
+	if (detailsRes.success && detailsRes.project) {
+		const p = detailsRes.project;
+		const title = p.project_name || p.title || "Projeto";
+
+		document.title = `TaskOps - ${title}`;
+		const titleEl = document.getElementById("project-title");
+		const breadcrumbEl = document.getElementById("project-breadcrumb-title");
+		if (titleEl) titleEl.textContent = title;
+		if (breadcrumbEl) breadcrumbEl.textContent = title;
+
+		const total = Number(p.total_tasks || 0);
+		updateMetricCard("total", total, total, false);
+		updateMetricCard("ABERTA", Number(p.abertas || 0), total, false);
+		updateMetricCard("EM ANDAMENTO", Number(p.em_andamento || 0), total, false);
+		updateMetricCard("EM REVISAO", Number(p.em_revisao || 0), total, false);
+		updateMetricCard("CANCELADA", Number(p.canceladas || 0), total, false);
+		updateMetricCard("CONCLUIDA", Number(p.concluidas || 0), total, true);
+	}
+
+	if (tasksRes.success) {
+		boardColumns.forEach((col) => {
+			const list = col.querySelector(".project-task-list");
+			if (list) list.innerHTML = "";
+		});
+
+		tasksRes.tasks.forEach((task) => {
+			const column = boardColumns.find(
+				(col) => col.dataset.taskStatus === task.status,
+			);
+			if (column) {
+				column
+					.querySelector(".project-task-list")
+					?.insertAdjacentHTML("beforeend", renderTaskCard(task));
+			}
+		});
+
+		bindTaskCardDragEvents();
+		applyTaskSearch();
+	}
+
+	applyRoleRestrictions();
+	if (window.lucide) {
+		window.lucide.createIcons();
+	}
 }
 
 if (searchInput) {
-    searchInput.addEventListener("input", applyTaskSearch);
+	searchInput.addEventListener("input", applyTaskSearch);
 }
 
-// Carga inicial
-loadProjectData();
+initBoardColumnDropZones();
+headerPromise.then(() => {
+	loadProjectData();
+});

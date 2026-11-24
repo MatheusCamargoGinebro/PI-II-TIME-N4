@@ -1,3 +1,8 @@
+<!--
+    Autor: 
+    project_member_details.html -> Tela de detalhes de um membro específico dentro de um projeto e suas demandas atribuídas.
+-->
+
 <!doctype html>
 <html lang="pt-BR">
 	<head>
@@ -7,85 +12,109 @@
 
 		<link rel="stylesheet" href="../project_members/project_members.css" />
 		<link rel="stylesheet" href="../../dashboard/dashboard.css" />
-		<!-- Lucide Icons -->
 		<script src="https://unpkg.com/lucide@latest"></script>
 	</head>
 
 	<body>
-		<header class="header">
-			<nav class="nav">
-				<img src="../../../assets/images/logo.png" alt="TaskOps" />
-
-				<ul class="nav-list">
-					<li><a href="../../dashboard/dashboard.html" class="btn btn-lg ghost-btn">Dashboard</a></li>
-					<li><a href="../projects_list/projects_list.html" class="btn btn-lg primary-btn">Projetos</a></li>
-				</ul>
-			</nav>
-
-			<div class="user-profile">
-				<div class="align-center gap-16">
-					<img class="user-profile-avatar" src="../../../assets/images/user.png" alt="Avatar" />
-					<div class="user-profile-info">
-						<p class="user-profile-name text-large">Usuário</p>
-						<p class="user-profile-email font-inter text-tiny text-subtitle">email@taskops.com</p>
-					</div>
-				</div>
-				<i data-lucide="chevron-down" class="icon-medium" style="color: var(--color-primary-500)"></i>
-			</div>
-		</header>
+		<header id="app-header" class="header"></header>
 
 		<main class="container">
 			<div class="project-members-content">
 				<div class="project-members-header">
 					<div class="project-members-header-info">
 						<div class="breadcrumb">
-							<a href="../projects_list/projects_list.html" class="breadcrumb-item">Projetos</a>
+							<a
+								href="../projects_list/projects_list.html"
+								class="breadcrumb-item"
+								>Projetos</a
+							>
 							<i data-lucide="chevron-right" class="breadcrumb-separator"></i>
-							<a href="../project_details/project_details.html" class="breadcrumb-item project-link">Projeto</a>
+							<a
+								href="../project_details/project_details.html"
+								class="breadcrumb-item project-link"
+								>Projeto</a
+							>
 							<i data-lucide="chevron-right" class="breadcrumb-separator"></i>
-							<a href="../project_members/project_members.html" class="breadcrumb-item members-link">Membros</a>
+							<a
+								href="../project_members/project_members.html"
+								class="breadcrumb-item members-link"
+								>Membros</a
+							>
 							<i data-lucide="chevron-right" class="breadcrumb-separator"></i>
-							<span class="breadcrumb-item active member-name-breadcrumb">Detalhes</span>
+							<span class="breadcrumb-item active member-name-breadcrumb"
+								>Detalhes</span
+							>
 						</div>
 						<h2 class="text-primary member-title">Detalhes do Membro</h2>
 					</div>
 				</div>
 
-				<div class="base-card p-24 mb-24" style="padding: 24px; margin-bottom: 24px;">
+				<div class="base-card" style="padding: 24px">
 					<div class="align-center gap-16">
-						<img id="member-avatar" class="rounded-full" src="../../../assets/images/user.png" alt="Avatar" style="width: 64px; height: 64px; border-radius: 50%;" />
+						<img
+							id="member-avatar"
+							src="../../../assets/images/user.png"
+							alt="Avatar"
+							style="
+								width: 64px;
+								height: 64px;
+								border-radius: 50%;
+								object-fit: cover;
+							"
+						/>
 						<div>
-							<h3 id="member-name" class="text-primary text-large text-weight-bold">Carregando...</h3>
-							<p id="member-email" class="text-subtitle font-inter text-regular"></p>
-							<p id="member-role" class="text-subtitle font-inter text-small"></p>
+							<h3
+								id="member-name"
+								class="text-primary text-large text-weight-bold"
+							>
+								Carregando...
+							</h3>
+							<p
+								id="member-email"
+								class="text-subtitle font-inter text-regular"
+							></p>
+							<p
+								id="member-role"
+								class="text-subtitle font-inter text-small"
+							></p>
 						</div>
 					</div>
 				</div>
 
-				<h3 class="text-primary text-large mb-16" style="margin-bottom: 16px;">Demandas atribuídas neste projeto</h3>
+				<div class="base-card" style="padding: 20px">
+					<h3 class="text-primary text-large" style="margin-bottom: 16px">
+						Demandas atribuídas neste projeto
+					</h3>
 
-				<div class="dashboard-tasks-table-wrapper">
-					<table class="dashboard-tasks-table">
-						<thead>
-							<tr>
-								<th>Tarefa</th>
-								<th>Tipo</th>
-								<th>Prioridade</th>
-								<th>Status</th>
-								<th>Prazo</th>
-							</tr>
-						</thead>
-						<tbody id="member-tasks-body">
-							<tr><td colspan="5" class="text-center p-16 text-subtitle">Carregando tarefas...</td></tr>
-						</tbody>
-					</table>
+					<div class="dashboard-tasks-table-wrapper">
+						<table class="dashboard-tasks-table">
+							<thead>
+								<tr>
+									<th>Código</th>
+									<th>Demanda</th>
+									<th>Tipo</th>
+									<th>Prioridade</th>
+									<th>Status</th>
+									<th>Prazo</th>
+								</tr>
+							</thead>
+							<tbody id="member-tasks-body">
+								<tr>
+									<td
+										colspan="6"
+										class="text-subtitle"
+										style="text-align: center; padding: 16px"
+									>
+										Carregando tarefas...
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</main>
 
-		<script>
-			lucide.createIcons();
-		</script>
 		<script type="module" src="./project_member_details.js"></script>
 	</body>
 </html>

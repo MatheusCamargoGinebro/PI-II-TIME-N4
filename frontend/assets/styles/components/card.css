@@ -1,42 +1,58 @@
-.base-card{
-    padding: 16px;
-    gap: 8px;
-    background-color: var(--color-neutral-100);
-    border-radius: 8px;
-    
+/*
+    Autor: 
+    card.css -> Estilos base de cards e ícones quadrados centralizados dos cards.
+*/
+
+.base-card {
+	padding: 16px;
+	gap: 8px;
+	background-color: var(--color-neutral-100);
+	border-radius: 8px;
 }
 
-.highlight-card{
-    padding: 16px;
-    gap: 8px;
-    background-color: var(--color-primary-500);
-    color: var(--color-neutral-100);
-    border-radius: 8px;
-    
+.highlight-card {
+	padding: 16px;
+	gap: 8px;
+	background-color: var(--color-primary-500);
+	color: var(--color-neutral-100);
+	border-radius: 8px;
 }
 
-.highlight-card .card-icon{
-    background-color: var(--color-primary-400);
+.highlight-card .card-icon {
+	background-color: var(--color-primary-400);
 }
 
-.card-icon{
-    max-width:32px;
-    max-height:32px;
-    padding: 4px;
-    background-color: var(--color-neutral-200);
-    border-radius: 4px;
-    width: fit-content;
-    height: fit-content;
+/* Container quadrado (32x32) com espaçamento igual em todos os lados */
+.card-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	aspect-ratio: 1 / 1;
+	flex-shrink: 0;
+	padding: 0;
+	background-color: var(--color-neutral-200);
+	border-radius: 6px;
 }
 
-.card-icon i{
-    width: 24px;
-    height: 24px;
-    color: var(--color-neutral-700);
+.card-icon i,
+.card-icon svg {
+	display: block;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
 }
 
-.card-icon-clickable:hover{
-    cursor: pointer;
-    color: var(--color-brand-neutral-200);
-    background-color: var(--color-neutral-300);
+.card-icon-clickable {
+	transition: background-color 0.2s ease;
+}
+
+.card-icon-clickable:hover {
+	cursor: pointer;
+	background-color: var(--color-neutral-300);
+}
+
+.highlight-card .card-icon-clickable:hover {
+	background-color: var(--color-primary-600);
 }

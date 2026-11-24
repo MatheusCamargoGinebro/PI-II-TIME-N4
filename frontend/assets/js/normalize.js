@@ -1,3 +1,8 @@
+/*
+    Autor: 
+    normalize.js -> Normaliza strings removendo acentos e convertendo para minúsculas para buscas e comparações.
+*/
+
 function normalizeString(value = "") {
 	return String(value)
 		.toLowerCase()

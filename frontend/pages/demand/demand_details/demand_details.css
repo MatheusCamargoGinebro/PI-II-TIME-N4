@@ -1,17 +1,97 @@
 .demand-details-actions {
 	display: flex;
 	align-items: center;
-	gap: var(--size-xxl);
+	flex-wrap: wrap;
+	gap: var(--size-lg);
 }
 
 #demand-details-revert-button,
-#demand-details-save {
+#demand-details-save,
+#demand-details-cancel-button {
 	display: flex;
-	gap: var(--size-md);
+	align-items: center;
+	gap: var(--size-sm);
 	font-weight: 700;
+	cursor: pointer;
 }
-[hidden] {
-	display: none !important;
+
+.demand-cancel-action {
+	background-color: #fee2e2;
+	color: #b91c1c;
+	border: 1px solid #fecaca;
+	border-radius: var(--radius-md);
+	padding: 12px 18px;
+	transition: background-color 0.2s ease;
+}
+
+.demand-cancel-action:hover {
+	background-color: #fecaca;
+}
+
+.demand-readonly-notice {
+	margin-top: 12px;
+	padding: 10px 14px;
+	border-radius: var(--radius-md);
+	background-color: var(--color-neutral-200);
+	color: var(--color-neutral-700);
+	font-family: "Inter", sans-serif;
+	font-size: var(--text-small);
+}
+
+.demand-details-due-field {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: var(--size-sm);
+}
+
+.demand-details-due-field input[type="date"] {
+	background-color: var(--color-neutral-200);
+	border: 1px solid var(--color-neutral-300);
+	border-radius: var(--radius-sm);
+	padding: 6px 10px;
+	color: var(--color-neutral-900);
+	font-family: "Inter", sans-serif;
+	font-size: var(--text-small);
+}
+
+.demand-details-due-field input[type="date"]:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.demand-details-sla-alert {
+	font-family: "Inter", sans-serif;
+	font-size: var(--text-small);
+	color: var(--color-neutral-700);
+	justify-content: flex-end !important;
+}
+
+.demand-details-sla-alert.is-overdue {
+	color: #dc2626;
+	font-weight: 600;
+}
+
+.demand-details-assignee.is-readonly {
+	cursor: default;
+	opacity: 0.85;
+}
+
+.demand-details-assignee.is-readonly:hover {
+	border-color: var(--color-neutral-300);
+	background-color: transparent;
+}
+
+.demand-details-assignee.is-readonly .demand-details-assignee-chevron {
+	display: none;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
 }
 
 

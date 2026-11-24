@@ -1,3 +1,8 @@
+<!--
+    Autor: 
+    project_details.html -> Tela de painel do projeto com métricas dinâmicas por status e quadro Kanban interativo com drag-and-drop.
+-->
+
 <!doctype html>
 <html lang="pt-BR">
 	<head>
@@ -6,32 +11,11 @@
 		<title>TaskOps - Detalhes do Projeto</title>
 
 		<link rel="stylesheet" href="./project_details.css" />
-		<!-- Lucide Icons -->
 		<script src="https://unpkg.com/lucide@latest"></script>
 	</head>
 
 	<body>
-		<header class="header">
-			<nav class="nav">
-				<img src="../../../assets/images/logo.png" alt="TaskOps" />
-
-				<ul class="nav-list">
-					<li><a href="../../dashboard/dashboard.html" class="btn btn-lg ghost-btn">Dashboard</a></li>
-					<li><a href="../projects_list/projects_list.html" class="btn btn-lg primary-btn">Projetos</a></li>
-				</ul>
-			</nav>
-
-			<div class="user-profile">
-				<div class="align-center gap-16">
-					<img class="user-profile-avatar" src="../../../assets/images/user.png" alt="Avatar" />
-					<div class="user-profile-info">
-						<p class="user-profile-name text-large">Fulano da S.</p>
-						<p class="user-profile-email font-inter text-tiny text-subtitle">fulano@email.com</p>
-					</div>
-				</div>
-				<i data-lucide="chevron-down" class="icon-medium" style="color: var(--color-primary-500)"></i>
-			</div>
-		</header>
+		<header id="app-header" class="header"></header>
 
 		<main class="container">
 			<div class="project-details-content">
@@ -39,14 +23,29 @@
 				<div class="project-details-header">
 					<div class="project-details-header-info">
 						<div class="breadcrumb">
-							<a href="../projects_list/projects_list.html" class="breadcrumb-item">Projetos</a>
+							<a
+								href="../projects_list/projects_list.html"
+								class="breadcrumb-item"
+								>Projetos</a
+							>
 							<i data-lucide="chevron-right" class="breadcrumb-separator"></i>
-							<a href="./project_details.html" class="breadcrumb-item active">Projeto Inovador</a>
+							<span id="project-breadcrumb-title" class="breadcrumb-item active"
+								>Carregando...</span
+							>
 						</div>
-						<h2 class="text-primary">Projeto Inovador</h2>
+						<h2 id="project-title" class="text-primary">Carregando...</h2>
 					</div>
-					<a href="../../demand/register_demand/register_demand.html" class="btn btn-lg primary-btn">
-						<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
+					<a
+						id="project-add-task-btn"
+						href="../../demand/register_demand/register_demand.html"
+						class="btn btn-lg primary-btn"
+						data-manager-only
+					>
+						<i
+							data-lucide="plus"
+							class="icon-medium"
+							style="color: var(--color-accent-100)"
+						></i>
 						Adicionar Tarefa
 					</a>
 				</div>
@@ -55,300 +54,498 @@
 				<div class="project-details-toolbar">
 					<ul class="tab-bar">
 						<li><div class="tab tab-active">Painel</div></li>
-						<li><a href="../project_members/project_members.html" class="tab">Membros</a></li>
+						<li>
+							<a
+								id="project-members-tab"
+								href="../project_members/project_members.html"
+								class="tab"
+								>Membros</a
+							>
+						</li>
 					</ul>
 				</div>
 
-				<!-- Grid com Métricas e Quadro de Tarefas -->
-				<div class="project-details-grid">
-					<!-- Card 1: Total de Tarefas -->
-					<div class="base-card project-metric-card">
+				<!-- Cards de Métricas por Status -->
+				<div class="project-metrics-grid">
+					<!-- Card 1: Total -->
+					<div
+						class="base-card project-metric-card"
+						data-project-metric="total"
+					>
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="calendar" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="calendar"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">Total de Tarefas</p>
+								<a
+									data-status-link=""
+									href="../../demand/demands_list/demands_list.html"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Total de Demandas</a
+								>
 							</div>
-							<a href="../../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
-									<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<a
+								data-status-link=""
+								href="../../demand/demands_list/demands_list.html"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver todas as demandas do projeto"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
 							</a>
 						</div>
 						<div class="project-metric-body">
-							<h1 class="text-primary">50</h1>
+							<h1 class="text-primary" data-metric-value>0</h1>
 						</div>
 						<div class="align-center gap-8 text-subtitle">
-							<i data-lucide="clock" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							<p class="font-inter text-small">27 tarefas a mais que o mês passado.</p>
+							<i
+								data-lucide="layers"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0 demandas no projeto
+							</p>
 						</div>
 					</div>
 
-					<!-- Card 2: Tarefas Abertas -->
-					<div class="base-card project-metric-card">
+					<!-- Card 2: Abertas -->
+					<div
+						class="base-card project-metric-card"
+						data-project-metric="ABERTA"
+					>
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="loader-circle" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="loader-circle"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<a href="../../demand/demand_status/tarefas_abertas.html" class="text-neutral font-inter text-regular text-weight-medium">Tarefas Abertas</a>
+								<a
+									data-status-link="ABERTA"
+									href="../../demand/demands_list/demands_list.html?status=ABERTA"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Tarefas Abertas</a
+								>
 							</div>
-							<a href="../../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver tarefas abertas">
-									<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<a
+								data-status-link="ABERTA"
+								href="../../demand/demands_list/demands_list.html?status=ABERTA"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas abertas"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
 							</a>
 						</div>
 						<div class="project-metric-body">
-							<h1 class="text-primary">34</h1>
-							<div class="progress-bar progress-bar-compact">
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-							</div>
+							<h1 class="text-primary" data-metric-value>0</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
 						</div>
 						<div class="align-center gap-8 text-subtitle">
-							<i data-lucide="clock" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							<p class="font-inter text-small">27 tarefas a mais que o mês passado.</p>
+							<i
+								data-lucide="percent"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0% do total
+							</p>
 						</div>
 					</div>
 
-					<!-- Card 3: Tarefas Pendentes -->
-					<div class="base-card project-metric-card">
+					<!-- Card 3: Em Andamento -->
+					<div
+						class="base-card project-metric-card"
+						data-project-metric="EM ANDAMENTO"
+					>
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="circle-alert" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="clock-3"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<a href="../../demand/demand_status/tarefas_pendentes.html" class="text-neutral font-inter text-regular text-weight-medium">Tarefas Pendentes</a>
+								<a
+									data-status-link="EM ANDAMENTO"
+									href="../../demand/demands_list/demands_list.html?status=EM%20ANDAMENTO"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Em Andamento</a
+								>
 							</div>
-							<a href="../../demand/demand_status/tarefas_pendentes.html" class="card-icon" aria-label="Ver tarefas pendentes">
-									<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<a
+								data-status-link="EM ANDAMENTO"
+								href="../../demand/demands_list/demands_list.html?status=EM%20ANDAMENTO"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas em andamento"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
 							</a>
 						</div>
 						<div class="project-metric-body">
-							<h1 class="text-primary">27</h1>
-							<div class="progress-bar progress-bar-compact">
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-							</div>
+							<h1 class="text-primary" data-metric-value>0</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
 						</div>
 						<div class="align-center gap-8 text-subtitle">
-							<i data-lucide="clock" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							<p class="font-inter text-small">27 tarefas a mais que o mês passado.</p>
+							<i
+								data-lucide="percent"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0% do total
+							</p>
 						</div>
 					</div>
 
-					<!-- Card 4: Tarefas Concluídas -->
-					<div class="highlight-card project-metric-card">
+					<!-- Card 4: Em Revisão -->
+					<div
+						class="base-card project-metric-card"
+						data-project-metric="EM REVISAO"
+					>
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="circle-check" class="icon-small" style="color: var(--color-accent-400)"></i>
+									<i
+										data-lucide="eye"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<a href="../../demand/demand_status/tarefas_concluidas.html" class="text-weight-medium font-inter text-regular" style="color: var(--color-neutral-100)">Tarefas Concluídas</a>
+								<a
+									data-status-link="EM REVISAO"
+									href="../../demand/demands_list/demands_list.html?status=EM%20REVISAO"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Em Revisão</a
+								>
 							</div>
-							<a href="../../demand/demand_status/tarefas_concluidas.html" class="card-icon" aria-label="Ver tarefas concluídas">
-								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-accent-400)"></i>
+							<a
+								data-status-link="EM REVISAO"
+								href="../../demand/demands_list/demands_list.html?status=EM%20REVISAO"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas em revisão"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
 							</a>
 						</div>
 						<div class="project-metric-body">
-							<h1 style="color: var(--color-neutral-100)">16</h1>
-							<div class="progress-bar progress-bar-compact">
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
+							<h1 class="text-primary" data-metric-value>0</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
+						</div>
+						<div class="align-center gap-8 text-subtitle">
+							<i
+								data-lucide="percent"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0% do total
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 5: Canceladas -->
+					<div
+						class="base-card project-metric-card"
+						data-project-metric="CANCELADA"
+					>
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i
+										data-lucide="circle-x"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
+								</div>
+								<a
+									data-status-link="CANCELADA"
+									href="../../demand/demands_list/demands_list.html?status=CANCELADA"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Canceladas</a
+								>
 							</div>
+							<a
+								data-status-link="CANCELADA"
+								href="../../demand/demands_list/demands_list.html?status=CANCELADA"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas canceladas"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
+							</a>
 						</div>
-						<div class="align-center gap-8" style="color: var(--color-accent-400)">
-							<i data-lucide="clock" class="icon-small" style="color: var(--color-accent-400)"></i>
-							<p class="font-inter text-small">27 tarefas a mais que o mês passado.</p>
+						<div class="project-metric-body">
+							<h1 class="text-primary" data-metric-value>0</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
+						</div>
+						<div class="align-center gap-8 text-subtitle">
+							<i
+								data-lucide="percent"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0% do total
+							</p>
 						</div>
 					</div>
 
-					<!-- Card 5: Filtro de Data (Setembro / Esta Semana) -->
-					<div class="base-card project-date-filter">
-						<div class="project-date-filter-content">
-							<div class="project-date-info">
-								<p class="text-neutral font-inter text-medium text-weight-medium">Setembro</p>
-						
+					<!-- Card 6: Concluídas -->
+					<div
+						class="highlight-card project-metric-card"
+						data-project-metric="CONCLUIDA"
+					>
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i
+										data-lucide="circle-check"
+										class="icon-small"
+										style="color: var(--color-accent-400)"
+									></i>
+								</div>
+								<a
+									data-status-link="CONCLUIDA"
+									href="../../demand/demands_list/demands_list.html?status=CONCLUIDA"
+									class="text-weight-medium font-inter text-regular"
+									style="color: var(--color-neutral-100)"
+									>Concluídas</a
+								>
 							</div>
-							<div class="project-date-divider"></div>
-							
+							<a
+								data-status-link="CONCLUIDA"
+								href="../../demand/demands_list/demands_list.html?status=CONCLUIDA"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas concluídas"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-accent-400)"
+								></i>
+							</a>
+						</div>
+						<div class="project-metric-body">
+							<h1 style="color: var(--color-neutral-100)" data-metric-value>
+								0
+							</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
+						</div>
+						<div
+							class="align-center gap-8"
+							style="color: var(--color-accent-400)"
+						>
+							<i
+								data-lucide="check"
+								class="icon-small"
+								style="color: var(--color-accent-400)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0% concluído
+							</p>
 						</div>
 					</div>
+				</div>
 
-					<div class="project-board-toolbar">
-						<label class="search-input">
-							<i data-lucide="search" class="icon-medium" style="color: var(--color-neutral-600)"></i>
-							<input id="task-board-search" type="search" placeholder="Buscar tarefas ou responsáveis" aria-label="Buscar tarefas ou responsáveis" />
-						</label>
-						<p class="text-subtitle text-small">Arraste uma tarefa para mudar o status.</p>
+				<!-- Barra de data atual e busca no quadro -->
+				<div class="base-card project-date-filter">
+					<div class="project-date-filter-content between align-center">
+						<div class="project-date-info">
+							<p
+								id="project-current-date"
+								class="text-neutral font-inter text-medium text-weight-medium"
+							></p>
+						</div>
+						<p class="text-subtitle text-small font-inter">
+							Arraste uma demanda entre colunas para atualizar seu status.
+						</p>
 					</div>
+				</div>
 
-					<!-- Card 6: Coluna Em Andamento -->
-					<div class="base-card project-board-column" data-task-status="andamento">
+				<div class="project-board-toolbar">
+					<label class="search-input">
+						<i
+							data-lucide="search"
+							class="icon-medium"
+							style="color: var(--color-neutral-600)"
+						></i>
+						<input
+							id="task-board-search"
+							type="search"
+							placeholder="Buscar demandas ou responsáveis"
+							aria-label="Buscar demandas ou responsáveis"
+						/>
+					</label>
+				</div>
+
+				<!-- Quadro Kanban com todas as 5 etapas do ciclo de vida -->
+				<div class="project-board-grid">
+					<div class="base-card project-board-column" data-task-status="ABERTA">
 						<div class="project-board-header">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="clock-3" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="loader-circle"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">Em Andamento</p>
-								<span class="badge-dot badge-blue"></span>
+								<a
+									data-status-link="ABERTA"
+									href="../../demand/demands_list/demands_list.html?status=ABERTA"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Abertas</a
+								>
 							</div>
-							
+							<span class="badge-dot badge-blue"></span>
 						</div>
-
-						<div class="project-task-list">
-							<div class="project-task-item" data-task-id="dashboard" draggable="true" tabindex="0" aria-label="Tarefa Dashboard. Arraste para mudar o status.">
-								<div class="between align-center">
-									<div>
-										<a href="../../demand/demand_details/demand_details.html" class="text-neutral font-inter text-regular text-weight-medium">Dashboard</a>
-										<div class="align-center gap-4 text-subtitle text-tiny">
-											<span>Terça</span>
-											<span class="dot-separator"></span>
-											<span>14h00 pm</span>
-											<span class="dot-separator"></span>
-											<span>Alta Prioridade</span>
-										</div>
-									</div>
-									
-								</div>
-								<div class="align-center gap-8">
-									<img class="project-task-avatar" src="../../../assets/images/user.png" alt="Avatar" />
-									<span class="text-subtitle font-inter text-tiny text-weight-medium">Fulano da Silva</span>
-								</div>
-							</div>
-						</div>
+						<div class="project-task-list"></div>
 					</div>
 
-					<!-- Card 7: Coluna Em Revisão -->
-					<div class="base-card project-board-column" data-task-status="revisao">
+					<div
+						class="base-card project-board-column"
+						data-task-status="EM ANDAMENTO"
+					>
 						<div class="project-board-header">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="circle-dot" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="clock-3"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">Em Revisão</p>
-								<span class="badge-dot badge-indigo"></span>
+								<a
+									data-status-link="EM ANDAMENTO"
+									href="../../demand/demands_list/demands_list.html?status=EM%20ANDAMENTO"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Em Andamento</a
+								>
 							</div>
-							
+							<span class="badge-dot badge-indigo"></span>
 						</div>
-
-						<div class="project-task-list">
-							<!-- Lista vazia no estado inicial -->
-						</div>
+						<div class="project-task-list"></div>
 					</div>
 
-					<!-- Card 8: Coluna Canceladas -->
-					<div class="base-card project-board-column" data-task-status="cancelada">
+					<div
+						class="base-card project-board-column"
+						data-task-status="EM REVISAO"
+					>
 						<div class="project-board-header">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="circle-x" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="eye"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">Canceladas</p>
-								<span class="badge-dot badge-pink"></span>
+								<a
+									data-status-link="EM REVISAO"
+									href="../../demand/demands_list/demands_list.html?status=EM%20REVISAO"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Em Revisão</a
+								>
 							</div>
-							
+							<span class="badge-dot badge-blue"></span>
 						</div>
-
-						<div class="project-task-list">
-							<div class="project-task-item" data-task-id="relatorio" draggable="true" tabindex="0" aria-label="Tarefa Relatório. Arraste para mudar o status.">
-								<div class="between align-center">
-									<div>
-										<a href="../../demand/demand_details/demand_details.html" class="text-neutral font-inter text-regular text-weight-medium">Relatório</a>
-										<div class="align-center gap-4 text-subtitle text-tiny">
-											<span>Terça</span>
-											<span class="dot-separator"></span>
-											<span>14h00 pm</span>
-											<span class="dot-separator"></span>
-											<span>Alta Prioridade</span>
-										</div>
-									</div>
-									<div class="card-icon">
-											<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
-									</div>
-								</div>
-								<div class="align-center gap-8">
-									<img class="project-task-avatar" src="../../../assets/images/user.png" alt="Avatar" />
-									<span class="text-subtitle font-inter text-tiny text-weight-medium">Fulano da Silva</span>
-								</div>
-							</div>
-						</div>
+						<div class="project-task-list"></div>
 					</div>
 
-					<!-- Card 9: Coluna Tarefas Concluidas -->
-					<div class="base-card project-board-column" data-task-status="concluida">
+					<div
+						class="base-card project-board-column"
+						data-task-status="CONCLUIDA"
+					>
 						<div class="project-board-header">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="circle-check" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="circle-check"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<a href="../../demand/demand_status/tarefas_concluidas.html" class="text-neutral font-inter text-regular text-weight-medium">Tarefas Concluídas</a>
-								<span class="badge-dot badge-green"></span>
+								<a
+									data-status-link="CONCLUIDA"
+									href="../../demand/demands_list/demands_list.html?status=CONCLUIDA"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Concluídas</a
+								>
 							</div>
-							
+							<span class="badge-dot badge-green"></span>
 						</div>
+						<div class="project-task-list"></div>
+					</div>
 
-						<div class="project-task-list">
-							<!-- Lista vazia no estado inicial -->
+					<div
+						class="base-card project-board-column"
+						data-task-status="CANCELADA"
+					>
+						<div class="project-board-header">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i
+										data-lucide="circle-x"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
+								</div>
+								<a
+									data-status-link="CANCELADA"
+									href="../../demand/demands_list/demands_list.html?status=CANCELADA"
+									class="text-neutral font-inter text-regular text-weight-medium"
+									>Canceladas</a
+								>
+							</div>
+							<span class="badge-dot badge-pink"></span>
 						</div>
+						<div class="project-task-list"></div>
 					</div>
 				</div>
 			</div>
 		</main>
 
-		<script>
-			lucide.createIcons();
-		</script>
 		<script type="module" src="./project_details.js"></script>
 	</body>
-	
 </html>

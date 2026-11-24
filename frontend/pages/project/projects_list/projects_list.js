@@ -1,154 +1,171 @@
-import { requireAuth, initUserProfile, applyRoleRestrictions, isAdmin } from "../../../assets/js/repositories/authRepository.js";
-import { getProjects, createProject } from "../../../assets/js/repositories/projectRepository.js";
+/*
+    Autor: 
+    projects_list.js -> Carrega projetos dinamicamente pela API, aplica filtros/busca e permite criação de projetos via modal (Administrador).
+*/
+
+import {
+	requireAuth,
+	isAdmin,
+} from "../../../assets/js/repositories/authRepository.js";
+import { initAppHeader } from "../../../assets/js/components/header.js";
+import {
+	getProjects,
+	createProject,
+} from "../../../assets/js/repositories/projectRepository.js";
 import { normalizeString } from "../../../assets/js/normalize.js";
+import {
+	showAlertModal,
+	showPromptModal,
+} from "../../../assets/js/components/modal.js";
+import {
+	escapeHtml,
+	renderProgressSegments,
+} from "../../../assets/js/utils/formatters.js";
 
 requireAuth();
-initUserProfile();
+const headerPromise = initAppHeader({ activePage: "projects" });
 
-const projectsContainer = document.querySelector("#projects-list");
-const searchInput = document.querySelector("#project-search");
-const filterButtons = document.querySelectorAll(".project-filter-tabs [data-filter]");
-const emptyState = document.querySelector("#projects-empty-state");
-const totalLabel = document.querySelector(".projects-header-info p span");
-const createProjectBtn = document.querySelector(".projects-header button");
+const projectsContainer = document.getElementById("projects-list");
+const searchInput = document.getElementById("project-search");
+const filterButtons = document.querySelectorAll(
+	".project-filter-tabs [data-filter]",
+);
+const emptyState = document.getElementById("projects-empty-state");
+const summaryEl = document.getElementById("projects-summary");
+const createProjectBtn = document.getElementById("create-project-btn");
 
-if (createProjectBtn && !isAdmin()) {
-    createProjectBtn.style.setProperty("display", "none", "important");
-}
-
+let allProjects = [];
 let selectedFilter = "todos";
-let projectElements = [];
 
-function renderProjects(projects) {
-    if (!projectsContainer) return;
+function renderProjects() {
+	if (!projectsContainer) return;
 
-    if (!projects || projects.length === 0) {
-        projectsContainer.innerHTML = "";
-        if (emptyState) emptyState.hidden = false;
-        if (totalLabel) totalLabel.textContent = "0";
-        return;
-    }
+	const query = normalizeString(searchInput?.value.trim() || "");
 
-    if (totalLabel) totalLabel.textContent = String(projects.length);
+	const filtered = allProjects.filter((project) => {
+		const total = Number(project.total_tasks || 0);
+		const completed = Number(project.completed_tasks || 0);
+		const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
-    projectsContainer.innerHTML = projects.map((p, index) => {
-        // Calculate progress or display default
-        const total = p.total_tasks ? Number(p.total_tasks) : 0;
-        const completed = p.completed_tasks ? Number(p.completed_tasks) : 0;
-        const progressPercent = total > 0 ? Math.round((completed / total) * 100) : 50;
+		if (selectedFilter === "ativos" && !(total > 0 && progress < 100))
+			return false;
+		if (selectedFilter === "concluidos" && !(total > 0 && progress === 100))
+			return false;
+		if (selectedFilter === "sem_demandas" && total !== 0) return false;
 
-        // Segments calculation (12 segments)
-        const filledSegments = Math.round((progressPercent / 100) * 12);
-        const segmentsHtml = Array.from({ length: 12 }, (_, i) => 
-            `<div class="progress-bar-segment ${i < filledSegments ? 'progress-bar-filled' : 'progress-bar-empty'}"></div>`
-        ).join("");
+		if (query) {
+			const haystack = normalizeString(
+				`${project.title} #${project.project_id}`,
+			);
+			if (!haystack.includes(query)) return false;
+		}
+		return true;
+	});
 
-        return `
-            <div class="project-card base-card" data-owner="todos" data-recent="true" data-project-id="${p.project_id}">
-                <div class="project-card-header">
-                    <a href="../project_details/project_details.html?project_id=${p.project_id}" class="text-neutral text-medium text-weight-medium font-inter">
-                        ${p.title}
-                    </a>
-                    <div class="project-card-menu">
-                        <i data-lucide="settings" class="icon-medium" style="color: var(--color-neutral-700)"></i>
-                    </div>
-                </div>
-                <div class="project-card-progress">
-                    <p class="text-label text-small text-weight-medium font-inter">Progresso</p>
-                    <h1 class="text-primary">${progressPercent}%</h1>
-                    <div class="progress-bar">
-                        ${segmentsHtml}
-                    </div>
-                </div>
-                <div class="project-card-footer">
-                    <div class="align-center gap-8">
-                        <span class="project-card-badge project-card-badge-indigo"></span>
-                        <p class="text-subtitle font-inter text-small">Projeto #${p.project_id}</p>
-                    </div>
-                    <a href="../project_details/project_details.html?project_id=${p.project_id}" class="card-icon" aria-label="Ver detalhes do projeto">
-                        <i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
-                    </a>
-                </div>
-            </div>
-        `;
-    }).join("");
+	if (summaryEl) {
+		const count = filtered.length;
+		summaryEl.innerHTML = `Você tem <span class="text-primary">${count}</span> ${count === 1 ? "projeto" : "projetos"}`;
+	}
 
-    projectElements = Array.from(projectsContainer.querySelectorAll(".project-card"));
-    updateFilterAndSearch();
-    applyRoleRestrictions();
+	if (emptyState) {
+		emptyState.hidden = filtered.length > 0;
+	}
 
-    if (window.lucide) {
-        window.lucide.createIcons();
-    }
-}
+	projectsContainer.innerHTML = filtered
+		.map((p) => {
+			const total = Number(p.total_tasks || 0);
+			const completed = Number(p.completed_tasks || 0);
+			const members = Number(p.total_members || 0);
+			const progressPercent =
+				total > 0 ? Math.round((completed / total) * 100) : 0;
 
-function updateFilterAndSearch() {
-    const query = normalizeString(searchInput ? searchInput.value.trim() : "");
-    let visibleCount = 0;
+			return `
+				<div class="project-card base-card" data-project-id="${p.project_id}">
+					<div class="project-card-header">
+						<a href="../project_details/project_details.html?project_id=${p.project_id}" class="text-neutral text-medium text-weight-medium font-inter">
+							${escapeHtml(p.title)}
+						</a>
+						<a href="../project_details/project_details.html?project_id=${p.project_id}" class="card-icon card-icon-clickable" aria-label="Abrir projeto ${escapeHtml(p.title)}">
+							<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+						</a>
+					</div>
 
-    projectElements.forEach((project) => {
-        const matchesSearch = normalizeString(project.textContent).includes(query);
-        const matchesFilter =
-            selectedFilter === "todos" ||
-            (selectedFilter === "recentes" && project.dataset.recent === "true") ||
-            (project.dataset.owner === selectedFilter);
+					<div class="project-card-progress">
+						<p class="text-label text-small text-weight-medium font-inter">Progresso</p>
+						<h1 class="text-primary">${progressPercent}%</h1>
+						<div class="progress-bar">
+							${renderProgressSegments(completed, total, 16, false)}
+						</div>
+					</div>
 
-        project.hidden = !matchesSearch || !matchesFilter;
-        if (!project.hidden) visibleCount += 1;
-    });
+					<div class="project-card-footer">
+						<div class="align-center gap-8">
+							<i data-lucide="check-square" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<p class="text-label text-tiny text-weight-medium font-inter">${completed}/${total} ${total === 1 ? "demanda" : "demandas"}</p>
+						</div>
+						<p class="text-label text-tiny font-inter">${members} ${members === 1 ? "membro" : "membros"}</p>
+					</div>
+				</div>
+			`;
+		})
+		.join("");
 
-    if (emptyState) emptyState.hidden = visibleCount > 0;
-    if (totalLabel) totalLabel.textContent = String(visibleCount);
+	if (window.lucide) {
+		window.lucide.createIcons({ root: projectsContainer });
+	}
 }
 
 async function loadProjects() {
-    try {
-        const res = await getProjects();
-        if (res.success) {
-            renderProjects(res.projects);
-        } else {
-            console.error("Erro ao carregar projetos:", res.message);
-        }
-    } catch (err) {
-        console.error("Erro ao carregar projetos:", err);
-    }
+	const res = await getProjects();
+	allProjects = res.success ? res.projects : [];
+	renderProjects();
 }
 
-// Event Listeners
 if (searchInput) {
-    searchInput.addEventListener("input", updateFilterAndSearch);
+	searchInput.addEventListener("input", renderProjects);
 }
 
 filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        selectedFilter = button.dataset.filter;
-        filterButtons.forEach((item) => {
-            const active = item === button;
-            item.classList.toggle("tab-active", active);
-            item.setAttribute("aria-pressed", String(active));
-        });
-        updateFilterAndSearch();
-    });
+	button.addEventListener("click", () => {
+		selectedFilter = button.dataset.filter || "todos";
+		filterButtons.forEach((item) => {
+			const active = item === button;
+			item.classList.toggle("tab-active", active);
+			item.setAttribute("aria-pressed", String(active));
+		});
+		renderProjects();
+	});
 });
 
+// Modal de criação de novo projeto (exclusivo Administrador)
 if (createProjectBtn) {
-    createProjectBtn.addEventListener("click", async () => {
-        const title = window.prompt("Digite o nome do novo projeto:");
-        if (!title || title.trim() === "") return;
+	createProjectBtn.addEventListener("click", async () => {
+		if (!isAdmin()) return;
 
-        try {
-            const res = await createProject(title.trim());
-            if (res.success) {
-                window.alert("Projeto criado com sucesso!");
-                await loadProjects();
-            } else {
-                window.alert(res.message || "Erro ao criar projeto.");
-            }
-        } catch (err) {
-            window.alert("Erro ao criar projeto. Tente novamente.");
-        }
-    });
+		const title = await showPromptModal({
+			title: "Criar novo projeto",
+			message: "Informe o nome do projeto que deseja cadastrar:",
+			placeholder: "Ex.: Portal do Cliente v2",
+			confirmText: "Criar Projeto",
+			validate: (val) =>
+				val.length < 3 ? "O nome deve ter pelo menos 3 caracteres." : null,
+		});
+
+		if (!title) return;
+
+		const res = await createProject(title);
+		if (res.success) {
+			await showAlertModal("Projeto criado com sucesso!", "Sucesso");
+			await loadProjects();
+		} else {
+			await showAlertModal(
+				res.message || "Não foi possível criar o projeto.",
+				"Erro",
+			);
+		}
+	});
 }
 
-// Initial load
-loadProjects();
+headerPromise.then(() => {
+	loadProjects();
+});

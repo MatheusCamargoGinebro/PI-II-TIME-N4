@@ -1,19 +1,28 @@
-.icon-small{
-    width: 16px;
-    height: 16px;
+/*
+    Autor: 
+    icons.css -> Tamanhos padrão dos ícones Lucide usados na interface.
+*/
+
+.icon-small {
+	display: block;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
 }
 
 .icon-medium {
-    width: 24px;
-    height: 24px;
-}
-.icon-neutral  {
-    color: white !important;
-    stroke: var(--color-neutral-700);
-    
+	display: block;
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
 }
 
-.icon-clickable:hover{
-    cursor: pointer;
-    color: var(--color-accent-500);
+.icon-neutral {
+	color: white !important;
+	stroke: var(--color-neutral-700);
+}
+
+.icon-clickable:hover {
+	cursor: pointer;
+	color: var(--color-accent-500);
 }

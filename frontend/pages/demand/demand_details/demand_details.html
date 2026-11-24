@@ -1,41 +1,23 @@
+<!--
+    Autor: 
+    demand_details.html -> Tela de visualização, edição, mudança de status, cancelamento, comentários e histórico de alterações de uma demanda.
+-->
+
 <!doctype html>
-<html lang="en">
-	<!-- v Parte reutilizável abaixo v -->
+<html lang="pt-BR">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>TaskOps</title>
+		<title>TaskOps - Detalhes da Demanda</title>
 
 		<link rel="icon" href="../../../assets/images/single_white.png" />
-
 		<link rel="stylesheet" href="../../../assets/styles/global.css" />
 		<link rel="stylesheet" href="../../../assets/styles/components.css" />
 		<link rel="stylesheet" href="./demand_details.css" />
-		<!-- Lucide Icons -->
 		<script src="https://unpkg.com/lucide@latest"></script>
 	</head>
 	<body>
-		<header class="header">
-			<nav class="nav">
-				<img src="../../../assets/images/logo.png" alt="TaskOps" />
-
-				<ul class="nav-list">
-					<li><a href="../../dashboard/dashboard.html" class="btn btn-lg ghost-btn">Dashboard</a></li>
-					<li><a href="../../project/projects_list/projects_list.html" class="btn btn-lg primary-btn">Projetos</a></li>
-				</ul>
-			</nav>
-
-			<div class="user-profile">
-				<div class="align-center gap-16">
-					<img class="user-profile-avatar" src="../../../assets/images/user.png" alt="Avatar" />
-					<div class="user-profile-info">
-						<p class="user-profile-name text-large">Fulano da S.</p>
-						<p class="user-profile-email font-inter text-tiny text-subtitle">fulano@email.com</p>
-					</div>
-				</div>
-				<i data-lucide="chevron-down" class="icon-medium" style="color: var(--color-primary-500)"></i>
-			</div>
-		</header>
+		<header id="app-header" class="header"></header>
 
 		<div class="details-subheader">
 			<div class="details-breadcrumb">
@@ -52,9 +34,10 @@
 					</li>
 					<li>
 						<a
+							id="breadcrumb-project-link"
 							href="../../project/project_details/project_details.html"
 							class="details-breadcrumb-link"
-							>Projeto Inovador</a
+							>Projeto</a
 						>
 					</li>
 					<li>
@@ -62,7 +45,8 @@
 					</li>
 					<li>
 						<a
-							href="../demand_status/tarefas_abertas.html"
+							id="breadcrumb-demands-link"
+							href="../demands_list/demands_list.html"
 							class="details-breadcrumb-link"
 							>Demandas</a
 						>
@@ -71,44 +55,65 @@
 						<span class="details-breadcrumb-chevron" aria-hidden="true"></span>
 					</li>
 					<li>
-						<a href="./demand_details.html" class="details-breadcrumb-link"
-							><span>TAR00001</span></a
+						<span class="details-breadcrumb-link"
+							><span id="breadcrumb-task-code">...</span></span
 						>
 					</li>
 				</ul>
 			</div>
+
 			<div class="demand-details-actions">
 				<button
+					type="button"
+					id="demand-details-cancel-button"
+					class="demand-cancel-action"
+					data-manager-only
+					hidden
+				>
+					<i data-lucide="ban" class="icon-small"></i>
+					Cancelar demanda
+				</button>
+				<button
+					type="button"
 					id="demand-details-revert-button"
 					class="demand-sleeping-action"
 				>
 					<span class="demand-details-revert" aria-hidden="true"></span>
 					Reverter alterações
 				</button>
-				<button id="demand-details-save" class="demand-acivate-action">
+				<button
+					type="button"
+					id="demand-details-save"
+					class="demand-acivate-action"
+				>
 					<span class="demand-details-save" aria-hidden="true"></span>
 					Salvar alterações
 				</button>
 			</div>
-			<!-- ^ Parte reutilizável acima ^ -->
 		</div>
 
 		<div class="details-heading">
-			<h1>TAR00001</h1>
+			<h1 id="demand-heading-code">Carregando...</h1>
 		</div>
+
 		<div class="demand-details-tabs">
 			<button
+				type="button"
 				id="demand-details-info-tab"
 				class="demand-details-tab-button demand-details-selected-tab"
 			>
 				Informações gerais
 			</button>
-			<button id="demand-details-history-tab" class="demand-details-tab-button">
+			<button
+				type="button"
+				id="demand-details-history-tab"
+				class="demand-details-tab-button"
+			>
 				Histórico e anotações
 			</button>
 		</div>
 
-		<form action="" id="demand-details-forms">
+		<form id="demand-details-forms" novalidate>
 			<div class="demand-details-information">
 				<div class="demand-details-section-heading">
 					<div class="icon-case">
@@ -117,45 +122,55 @@
 							aria-hidden="true"
 						></span>
 					</div>
-					<p>Informações da demanda TAR00001</p>
+					<p id="demand-section-title">Informações da demanda</p>
 				</div>
+
+				<p
+					id="demand-readonly-notice"
+					class="demand-readonly-notice"
+					hidden
+				></p>
 
 				<div class="demand-details-form-fields">
 					<div
 						class="demand-details-form-section demand-details-form-section-title"
 					>
 						<div class="demand-details-field">
-							<label for="demand-details-title">Titulo da demanda</label>
+							<label for="demand-details-title">Título da demanda</label>
 							<input
 								type="text"
 								name="demand-title"
 								id="demand-details-title"
+								maxlength="256"
 							/>
 							<p id="demand-details-title-error"></p>
 						</div>
 					</div>
+
 					<div
 						class="demand-details-form-section demand-details-form-section-metadata"
 					>
 						<div class="demand-details-field">
 							<label for="demand-details-type">Tipo de demanda</label>
 							<select name="demand-type" id="demand-details-type">
-								<option value="TAREFA">TAREFA</option>
-								<option value="DEFEITO">DEFEITO</option>
-								<option value="MELHORIA">MELHORIA</option>
-								<option value="DOCUMENTACAO">DOCUMENTAÇÃO</option>
+								<option value="TAREFA">Tarefa</option>
+								<option value="DEFEITO">Defeito</option>
+								<option value="MELHORIA">Melhoria</option>
+								<option value="DOCUMENTACAO">Documentação</option>
 							</select>
 						</div>
+
 						<div class="demand-details-field">
 							<label for="demand-details-priority">Prioridade</label>
 							<select name="demand-priority" id="demand-details-priority">
-								<option value="BAIXA">BAIXA</option>
-								<option value="MEDIA">MÉDIA</option>
-								<option value="ALTA">ALTA</option>
-								<option value="CRITICA">CRÍTICA</option>
+								<option value="BAIXA">Baixa</option>
+								<option value="MEDIA">Média</option>
+								<option value="ALTA">Alta</option>
+								<option value="CRITICA">Crítica</option>
 							</select>
 						</div>
 					</div>
+
 					<div
 						class="demand-details-form-section demand-details-form-section-classification"
 					>
@@ -167,20 +182,23 @@
 								type="text"
 								name="associated-project"
 								id="demand-details-associated-project"
+								readonly
 							/>
 							<p id="demand-details-associated-project-error"></p>
 						</div>
+
 						<div class="demand-details-field">
 							<label for="demand-details-status">Status</label>
 							<select name="demand-status" id="demand-details-status">
-								<option value="ABERTA">ABERTA</option>
-								<option value="EM ANDAMENTO">EM ANDAMENTO</option>
-								<option value="EM REVISAO">EM REVISÃO</option>
-								<option value="CONCLUIDA">CONCLUÍDA</option>
-								<option value="CANCELADA">CANCELADA</option>
+								<option value="ABERTA">Aberta</option>
+								<option value="EM ANDAMENTO">Em andamento</option>
+								<option value="EM REVISAO">Em revisão</option>
+								<option value="CONCLUIDA">Concluída</option>
+								<option value="CANCELADA">Cancelada</option>
 							</select>
 						</div>
 					</div>
+
 					<div
 						class="demand-details-form-section demand-details-form-section-description"
 					>
@@ -194,6 +212,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="demand-details-sidebar">
 				<div class="demand-details-dates">
 					<div class="demand-details-section-heading">
@@ -208,28 +227,19 @@
 
 					<p>
 						Criado em:
-						<span>
-							<span
-								class="starting-icon demand-details-section-heading-icon"
-								aria-hidden="true"
-							></span>
-							16/09/2026 08:46</span
-						>
+						<span id="demand-created-at">-</span>
 					</p>
 					<p>
-						Prazo:
-						<span>
-							<span
-								class="flag-icon demand-details-section-heading-icon"
-								aria-hidden="true"
-							></span
-							>18/09/2026 08:46</span
-						>
+						Atualizado em:
+						<span id="demand-updated-at">-</span>
 					</p>
-					<p class="demand-details-sla-alert">
-						Faltal <b>23 horas</b>para a violação de SLA
-					</p>
+					<div class="demand-details-due-field">
+						<label for="demand-details-due-date">Prazo:</label>
+						<input type="date" id="demand-details-due-date" name="due-date" />
+					</div>
+					<p id="demand-details-sla-alert" class="demand-details-sla-alert"></p>
 				</div>
+
 				<div class="demand-details-users">
 					<div class="demand-details-section-heading">
 						<div class="icon-case">
@@ -245,27 +255,29 @@
 						<p>Usuário solicitante</p>
 						<div class="demand-details-requester">
 							<img
+								id="demand-details-requester-avatar"
 								src="../../../assets/images/user.png"
 								alt="Usuário solicitante"
 							/>
 							<div>
-								<p id="demand-details-requester-name">Fulano da Silva</p>
-								<p id="demand-details-requester-role">Líder de projeto</p>
+								<p id="demand-details-requester-name">Carregando...</p>
+								<p id="demand-details-requester-role">Criador da demanda</p>
 							</div>
 						</div>
 					</div>
 
 					<div class="demand-details-assignee-section">
 						<p>Usuário designado</p>
-						<div class="demand-details-assignee">
+						<div class="demand-details-assignee" id="demand-assignee-card">
 							<div class="demand-details-assignee-info">
 								<img
+									id="demand-details-assignee-avatar"
 									src="../../../assets/images/user.png"
 									alt="Usuário designado"
 								/>
 								<div>
-									<p id="demand-details-assignee-name">Ciclano de souza</p>
-									<p id="demand-details-assignee-role">Membro de projeto</p>
+									<p id="demand-details-assignee-name">Não atribuído</p>
+									<p id="demand-details-assignee-role">Sem responsável</p>
 								</div>
 							</div>
 							<span
@@ -278,7 +290,7 @@
 			</div>
 		</form>
 
-		<form action="" id="demand-logs-forms">
+		<form id="demand-logs-forms" style="display: none">
 			<div class="demand-details-section-heading">
 				<div class="icon-case">
 					<span
@@ -286,7 +298,7 @@
 						aria-hidden="true"
 					></span>
 				</div>
-				<p>Histórico e anotações de demandas</p>
+				<p>Histórico e anotações da demanda</p>
 			</div>
 
 			<div class="demand-details-comment-form">
@@ -295,73 +307,25 @@
 					<textarea
 						name="demand-comment"
 						id="demand-details-comment"
+						placeholder="Escreva um comentário ou atualização sobre a demanda..."
 					></textarea>
 				</div>
 				<div class="demand-details-comment-submit">
-					<button id="demand-details-comment-button">Comentar</button>
+					<button type="button" id="demand-details-comment-button">
+						Comentar
+					</button>
 				</div>
 			</div>
 
 			<div class="demand-details-history-divider" aria-hidden="true"></div>
 
-			<div class="demand-details-history">
-				<div
-					class="demand-details-history-entry demand-details-history-entry-system"
-				>
-					<div class="demand-details-section-heading">
-						<div class="demand-details-history-title">
-							<span
-								class="demand-details-history-icon demand-details-system-icon"
-								aria-hidden="true"
-							></span>
-							<p>Sistema</p>
-						</div>
-						<div class="demand-details-history-date">
-							<p>Alteração de status - 16/09/2026 16:09:11</p>
-						</div>
-					</div>
-
-					<div class="demand-details-history-content">
-						<p>
-							<strong>Ciclano de Souza</strong> alterou
-							<strong>status</strong> da demanda de <strong>Aberta</strong> para
-							<strong>Em andamento</strong>.
-						</p>
-						<p class="demand-details-history-change">
-							Alteração: Status = Aberta → Em andamento
-						</p>
-					</div>
-				</div>
-				<div
-					class="demand-details-history-entry demand-details-history-entry-comment"
-				>
-					<div class="demand-details-section-heading">
-						<div class="demand-details-history-title">
-							<span
-								class="demand-details-history-icon demand-details-comment-icon"
-								aria-hidden="true"
-							></span>
-							<p>Comentário</p>
-						</div>
-						<div class="demand-details-history-date">
-							<p>Comentário - 16/09/2026 15:03:11</p>
-						</div>
-					</div>
-
-					<div class="demand-details-history-content">
-						<p class="demand-details-history-author">Ciclano de Souza:</p>
-						<p class="demand-details-history-comment">
-							Favor verificar a demanda. Não esquecer do prazo (SLA). Tratar com
-							o cliente.
-						</p>
-					</div>
-				</div>
+			<div class="demand-details-history" id="demand-history-list">
+				<p class="text-subtitle font-inter text-small">
+					Carregando histórico...
+				</p>
 			</div>
 		</form>
 
-		<script>
-			lucide.createIcons();
-		</script>
 		<script type="module" src="./demand_details.js"></script>
 	</body>
 </html>

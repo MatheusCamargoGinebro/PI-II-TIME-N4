@@ -1,18 +1,16 @@
-/* 
-    Arquivo de definição de states globais;
-
-    Autor principal: Matheus Camargo Ginebro;
+/*
+    Arquivo de definição de estilos e tokens globais da aplicação TaskOps.
+    Autor: 
 */
 
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
+@import url(./typography.css);
+@import url(./icons.css);
 @import url(./components/buttons.css);
 @import url(./components/nav.css);
-@import url(./components/heading.css);
-@import url(./typography.css);
 @import url(./components/card.css);
-@import url(./components/icons.css);
 @import url(./components/tabs.css);
 @import url(./components/modal.css);
 @import url(./components/input.css);
@@ -20,26 +18,22 @@
 @import url(./components/progress.css);
 @import url(./components/breadcrumb.css);
 @import url(./components/badge.css);
-@import url(./components/toast.css);
-@import url(./components/modal.css);
-
-
-
 
 * {
 	font-family: "Space Grotesk", sans-serif;
 	margin: 0;
 	padding: 0;
-	margin: 0;
 	scroll-behavior: smooth;
-
 	box-sizing: border-box;
 }
 
+/* Garante que o atributo HTML hidden sempre oculte elementos, inclusive flex/grid */
+[hidden] {
+	display: none !important;
+}
 
 html,
 body {
-	background-color: var(--color-neutral-200);
 	background-color: var(--color-neutral-200);
 	color: var(--color-neutral-900);
 	font-size: 16px;
@@ -63,44 +57,46 @@ textarea {
 	scrollbar-width: none;
 }
 
-.justify-center{
+.justify-center {
 	display: flex;
 	justify-content: center;
 }
-.align-center{
+
+.align-center {
 	display: flex;
 	align-items: center;
 }
 
-.center{
+.center {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-.between{
+.between {
 	display: flex;
 	justify-content: space-between;
 }
 
-.around{
+.around {
 	display: flex;
 	justify-content: space-around;
 }
 
-.gap-4{
+.gap-4 {
 	gap: 4px;
 }
-.gap-8{
+
+.gap-8 {
 	gap: 8px;
 }
-.gap-16{
+
+.gap-16 {
 	gap: 16px;
 }
 
 .container {
-	
-	padding: 0 var(--padding-global);
+	padding: 0 var(--padding-global) 48px;
 }
 
 :root {
@@ -151,30 +147,25 @@ textarea {
 	--padding-section-large: 112px;
 
 	/* Global Page Padding */
-	--padding-global: 48px;
+	--padding-global: 64px;
 
 	/* Text sizing */
-
-	--text-large:20px;
-	--text-medium:18px;
-	--text-regular:16px;
-	--text-small:14px;
-	--text-tiny:12px;
-	--text-line-height:150%;
+	--text-large: 20px;
+	--text-medium: 18px;
+	--text-regular: 16px;
+	--text-small: 14px;
+	--text-tiny: 12px;
+	--text-line-height: 150%;
 
 	/* Heading sizing */
-
-	--h1:56px;
-	--h2:48px;
-	--h3:40x;
-	--h4:32px;
-	--h5:24px;
-	--h6:20px;
-	--tagline:16px;
-	--heading-line-height:150%;
-
-
-	--padding-global: 64px;
+	--h1: 56px;
+	--h2: 48px;
+	--h3: 40px;
+	--h4: 32px;
+	--h5: 24px;
+	--h6: 20px;
+	--tagline: 16px;
+	--heading-line-height: 150%;
 
 	--size-xxxs: 1px;
 	--size-xxs: 2px;
@@ -193,4 +184,10 @@ textarea {
 	--radius-lg: 8px;
 	--radius-xl: 12px;
 	--radius-full: 100%;
+}
+
+@media (max-width: 768px) {
+	:root {
+		--padding-global: 20px;
+	}
 }

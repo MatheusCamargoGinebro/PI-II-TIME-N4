@@ -1,3 +1,8 @@
+<!--
+    Autor: 
+    dashboard.html -> Tela inicial (Dashboard) com resumo dinâmico das demandas, métricas por status/prioridade/tipo, alertas críticos/prazo e listagem filtrável.
+-->
+
 <!doctype html>
 <html lang="pt-BR">
 	<head>
@@ -6,384 +11,576 @@
 		<title>TaskOps - Dashboard</title>
 
 		<link rel="stylesheet" href="./dashboard.css" />
-		<!-- Lucide Icons -->
 		<script src="https://unpkg.com/lucide@latest"></script>
 	</head>
 
 	<body>
-		<header class="header">
-			<nav class="nav">
-				<img src="../../assets/images/logo.png" alt="TaskOps" />
+		<header id="app-header" class="header"></header>
 
-				<ul class="nav-list">
-					<li><a href="./dashboard.html" class="btn btn-lg primary-btn">Dashboard</a></li>
-					<li><a href="../project/projects_list/projects_list.html" class="btn btn-lg ghost-btn">Projetos</a></li>
-				</ul>
-			</nav>
-
-			<div class="align-center gap-16">
-				<a href="../demand/register_demand/register_demand.html" class="btn btn-lg primary-btn">
-					<i data-lucide="plus" class="icon-medium" style="color: var(--color-accent-100)"></i>
-					Adicionar Tarefa
-				</a>
-
-				<div class="user-profile">
-					<div class="align-center gap-16">
-						<img class="user-profile-avatar" src="../../assets/images/user.png" alt="Avatar" />
-						<div class="user-profile-info">
-							<p class="user-profile-name text-large">Fulano da S.</p>
-							<p class="user-profile-email font-inter text-tiny text-subtitle">fulano@email.com</p>
-						</div>
-					</div>
-					<i data-lucide="square-arrow-right-exit" class="icon-medium" style="color: var(--color-primary-500)"></i>
-				</div>
-			</div>
-		</header>
-		
 		<main class="container">
 			<div class="dashboard-content">
 				<div class="dashboard-header">
 					<div>
-						<h2 class="text-primary">Seja Bem-vindo, Fulano.</h2>
+						<h2 class="text-primary">Seja Bem-vindo.</h2>
 						<p class="text-subtitle text-weight-regular text-small">
-							Acompanhe seus projetos, gerencie suas tarefas e fique produtivo.
+							Acompanhe seus projetos, gerencie suas demandas e acompanhe os
+							prazos.
 						</p>
 					</div>
 					<div class="dashboard-header-date">
-						<h4 class="text-primary">15h00</h4>
-						<p class="text-subtitle text-small">5 de setembro de 2026</p>
+						<h4 id="dashboard-clock" class="text-primary">--h--</h4>
+						<p id="dashboard-date" class="text-subtitle text-small"></p>
 					</div>
 				</div>
 
 				<div class="dashboard-grid">
-					<!-- Card 1: Total de Tarefas -->
-					<div class="base-card dashboard-metric-card">
+					<!-- Card 1: Total de Demandas -->
+					<div class="base-card dashboard-metric-card" data-metric-card="total">
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="calendar" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="calendar"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">
-									Total de Tarefas
-								</p>
+								<a
+									href="../demand/demands_list/demands_list.html"
+									class="text-neutral font-inter text-regular text-weight-medium"
+								>
+									Total de Demandas
+								</a>
 							</div>
-							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
-								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<a
+								href="../demand/demands_list/demands_list.html"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver todas as demandas"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
 							</a>
 						</div>
 						<div class="dashboard-metric-body">
-							<h1 class="text-primary">50</h1>
+							<h1 class="text-primary" data-metric-value>0</h1>
 						</div>
 						<div class="align-center gap-8 text-subtitle">
-							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							<p class="font-inter text-small">
-								27 tarefas a mais que o mês passado.
+							<i
+								data-lucide="layers"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								Carregando métricas...
 							</p>
 						</div>
 					</div>
 
 					<!-- Card 2: Tarefas Abertas -->
-					<div class="base-card dashboard-metric-card">
+					<div
+						class="base-card dashboard-metric-card"
+						data-metric-card="ABERTA"
+					>
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="loader-circle" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="loader-circle"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<a href="../demand/demand_status/tarefas_abertas.html" class="text-neutral font-inter text-regular text-weight-medium">
+								<a
+									href="../demand/demands_list/demands_list.html?status=ABERTA"
+									class="text-neutral font-inter text-regular text-weight-medium"
+								>
 									Tarefas Abertas
 								</a>
 							</div>
-							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
-								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<a
+								href="../demand/demands_list/demands_list.html?status=ABERTA"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas abertas"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
 							</a>
 						</div>
 						<div class="dashboard-metric-body">
-							<h1 class="text-primary">34</h1>
-							<div class="progress-bar progress-bar-compact">
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-							</div>
+							<h1 class="text-primary" data-metric-value>0</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
 						</div>
 						<div class="align-center gap-8 text-subtitle">
-							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							<p class="font-inter text-small">
-								27 tarefas a mais que o mês passado.
+							<i
+								data-lucide="percent"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0% do total de demandas
 							</p>
 						</div>
 					</div>
 
-					<!-- Card 3: Tarefas Pendentes -->
-					<div class="base-card dashboard-metric-card">
+					<!-- Card 3: Em Andamento -->
+					<div
+						class="base-card dashboard-metric-card"
+						data-metric-card="EM ANDAMENTO"
+					>
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="circle-alert" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="clock-3"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<a href="../demand/demand_status/tarefas_pendentes.html" class="text-neutral font-inter text-regular text-weight-medium">
-									Tarefas Pendentes
+								<a
+									href="../demand/demands_list/demands_list.html?status=EM%20ANDAMENTO"
+									class="text-neutral font-inter text-regular text-weight-medium"
+								>
+									Em Andamento
 								</a>
 							</div>
-							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
-								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<a
+								href="../demand/demands_list/demands_list.html?status=EM%20ANDAMENTO"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas em andamento"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
 							</a>
 						</div>
 						<div class="dashboard-metric-body">
-							<h1 class="text-primary">27</h1>
-							<div class="progress-bar progress-bar-compact">
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-							</div>
+							<h1 class="text-primary" data-metric-value>0</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
 						</div>
 						<div class="align-center gap-8 text-subtitle">
-							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							<p class="font-inter text-small">
-								27 tarefas a mais que o mês passado.
+							<i
+								data-lucide="percent"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0% do total de demandas
 							</p>
 						</div>
 					</div>
 
-					
-
-					<!-- Card 4 (Linha 2, Coluna 1): Tarefas Canceladas -->
-					<div class="base-card dashboard-metric-card">
+					<!-- Card 4: Tarefas Canceladas -->
+					<div
+						class="base-card dashboard-metric-card"
+						data-metric-card="CANCELADA"
+					>
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="circle-x" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="circle-x"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">
+								<a
+									href="../demand/demands_list/demands_list.html?status=CANCELADA"
+									class="text-neutral font-inter text-regular text-weight-medium"
+								>
 									Tarefas Canceladas
-								</p>
+								</a>
 							</div>
-							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
-								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<a
+								href="../demand/demands_list/demands_list.html?status=CANCELADA"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas canceladas"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
 							</a>
 						</div>
 						<div class="dashboard-metric-body">
-							<h1 class="text-primary">0</h1>
-							<div class="progress-bar progress-bar-compact">
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-							</div>
+							<h1 class="text-primary" data-metric-value>0</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
 						</div>
 						<div class="align-center gap-8 text-subtitle">
-							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							<p class="font-inter text-small">
-								27 tarefas a mais que o mês passado.
+							<i
+								data-lucide="percent"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0% do total de demandas
 							</p>
 						</div>
 					</div>
 
-					<!-- Card 5 (Linha 2, Coluna 2): Tarefas em revisão -->
-					<div class="base-card dashboard-metric-card">
+					<!-- Card 5: Tarefas em Revisão -->
+					<div
+						class="base-card dashboard-metric-card"
+						data-metric-card="EM REVISAO"
+					>
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="loader-circle" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="eye"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">
-									Tarefas em revisão
-								</p>
+								<a
+									href="../demand/demands_list/demands_list.html?status=EM%20REVISAO"
+									class="text-neutral font-inter text-regular text-weight-medium"
+								>
+									Tarefas em Revisão
+								</a>
 							</div>
-							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
-								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-neutral-700)"></i>
+							<a
+								href="../demand/demands_list/demands_list.html?status=EM%20REVISAO"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas em revisão"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
 							</a>
 						</div>
 						<div class="dashboard-metric-body">
-							<h1 class="text-primary">7</h1>
-							<div class="progress-bar progress-bar-compact">
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-filled"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-								<div class="progress-bar-segment progress-bar-empty"></div>
-							</div>
+							<h1 class="text-primary" data-metric-value>0</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
 						</div>
 						<div class="align-center gap-8 text-subtitle">
-							<i data-lucide="plus" class="icon-small" style="color: var(--color-neutral-700)"></i>
-							<p class="font-inter text-small">
-								27 tarefas a mais que o mês passado.
+							<i
+								data-lucide="percent"
+								class="icon-small"
+								style="color: var(--color-neutral-700)"
+							></i>
+							<p class="font-inter text-small" data-metric-subtitle>
+								0% do total de demandas
 							</p>
 						</div>
 					</div>
 
-					<!-- Card 6 (Linha 2, Coluna 3): Concluídas -->
-					<div class="highlight-card dashboard-metric-card">
+					<!-- Card 6: Concluídas -->
+					<div
+						class="highlight-card dashboard-metric-card"
+						data-metric-card="CONCLUIDA"
+					>
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="calendar" class="icon-small" style="color: var(--color-accent-100)"></i>
+									<i
+										data-lucide="circle-check"
+										class="icon-small"
+										style="color: var(--color-accent-100)"
+									></i>
 								</div>
-								<p class="font-inter text-regular text-weight-medium" style="color: var(--color-neutral-100)">
-									Concluídas
-								</p>
+								<a
+									href="../demand/demands_list/demands_list.html?status=CONCLUIDA"
+									class="font-inter text-regular text-weight-medium"
+									style="color: var(--color-neutral-100)"
+								>
+									Tarefas Concluídas
+								</a>
 							</div>
-							<a href="../demand/demand_status/tarefas_abertas.html" class="card-icon" aria-label="Ver lista de demandas">
-								<i data-lucide="arrow-up-right" class="icon-small" style="color: var(--color-accent-100)"></i>
+							<a
+								href="../demand/demands_list/demands_list.html?status=CONCLUIDA"
+								class="card-icon card-icon-clickable"
+								aria-label="Ver tarefas concluídas"
+							>
+								<i
+									data-lucide="arrow-up-right"
+									class="icon-small"
+									style="color: var(--color-accent-100)"
+								></i>
 							</a>
 						</div>
 						<div class="dashboard-metric-body">
-							<h1 style="color: var(--color-neutral-100)">16</h1>
-							<div class="progress-bar progress-bar-compact">
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-filled"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-								<div class="progress-bar-segment progress-bar-accent-empty"></div>
-							</div>
+							<h1 style="color: var(--color-neutral-100)" data-metric-value>
+								0
+							</h1>
+							<div
+								class="progress-bar progress-bar-compact"
+								data-metric-bar
+							></div>
 						</div>
 						<div class="align-center gap-8">
-							<i data-lucide="plus" class="icon-small" style="color: var(--color-accent-400)"></i>
-							<p class="font-inter text-small" style="color: var(--color-accent-400)">
-								27 tarefas a mais que o mês passado.
+							<i
+								data-lucide="check"
+								class="icon-small"
+								style="color: var(--color-accent-400)"
+							></i>
+							<p
+								class="font-inter text-small"
+								style="color: var(--color-accent-400)"
+								data-metric-subtitle
+							>
+								0% do total concluído
 							</p>
 						</div>
 					</div>
 
-					<!-- Card 7 (Linha 3, Colunas 1 a 3): Lista de Tarefas -->
+					<!-- Resumo por Prioridade e Tipo (Seção 2.4 do Documento de Visão) -->
+					<div class="base-card dashboard-insight-card">
+						<div class="align-center gap-8">
+							<div class="card-icon">
+								<i
+									data-lucide="bar-chart-3"
+									class="icon-small"
+									style="color: var(--color-neutral-700)"
+								></i>
+							</div>
+							<p
+								class="text-neutral font-inter text-regular text-weight-medium"
+							>
+								Por Prioridade e Tipo
+							</p>
+						</div>
+						<div class="dashboard-breakdown-grid">
+							<div>
+								<p
+									class="text-subtitle font-inter text-tiny text-weight-semibold"
+								>
+									PRIORIDADE
+								</p>
+								<ul
+									id="dashboard-by-priority"
+									class="dashboard-breakdown-list"
+								></ul>
+							</div>
+							<div>
+								<p
+									class="text-subtitle font-inter text-tiny text-weight-semibold"
+								>
+									TIPO
+								</p>
+								<ul
+									id="dashboard-by-type"
+									class="dashboard-breakdown-list"
+								></ul>
+							</div>
+						</div>
+					</div>
+
+					<!-- Demandas Críticas em Aberto (Seção 2.4) -->
+					<div class="base-card dashboard-insight-card">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i
+										data-lucide="flame"
+										class="icon-small"
+										style="color: #ff2d55"
+									></i>
+								</div>
+								<p
+									class="text-neutral font-inter text-regular text-weight-medium"
+								>
+									Críticas em Aberto
+								</p>
+							</div>
+							<span
+								id="critical-open-badge"
+								class="dashboard-count-pill is-danger"
+								>0</span
+							>
+						</div>
+						<div id="dashboard-critical-list" class="dashboard-mini-list">
+							<p class="text-subtitle font-inter text-small">Carregando...</p>
+						</div>
+					</div>
+
+					<!-- Demandas Próximas do Prazo (Seção 2.4) -->
+					<div class="base-card dashboard-insight-card">
+						<div class="between align-center">
+							<div class="align-center gap-8">
+								<div class="card-icon">
+									<i
+										data-lucide="calendar-clock"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
+								</div>
+								<p
+									class="text-neutral font-inter text-regular text-weight-medium"
+								>
+									Próximas do Prazo
+								</p>
+							</div>
+							<span id="upcoming-deadline-badge" class="dashboard-count-pill"
+								>0</span
+							>
+						</div>
+						<div id="dashboard-upcoming-list" class="dashboard-mini-list">
+							<p class="text-subtitle font-inter text-small">Carregando...</p>
+						</div>
+					</div>
+
+					<!-- Lista de Demandas com Filtros e Ordenação (Seções 2.2.9 e 2.3) -->
 					<div class="base-card dashboard-card-tasks">
 						<div class="between align-center">
 							<div class="align-center gap-8">
 								<div class="card-icon">
-									<i data-lucide="chart-no-axes-combined" class="icon-small" style="color: var(--color-neutral-700)"></i>
+									<i
+										data-lucide="chart-no-axes-combined"
+										class="icon-small"
+										style="color: var(--color-neutral-700)"
+									></i>
 								</div>
-								<p class="text-neutral font-inter text-regular text-weight-medium">
-									Lista de Tarefas
+								<p
+									class="text-neutral font-inter text-regular text-weight-medium"
+								>
+									Lista de Demandas
 								</p>
 							</div>
-							
+							<a
+								href="../demand/demands_list/demands_list.html"
+								class="btn btn-sm secondary-btn"
+							>
+								Ver todas
+								<i data-lucide="arrow-up-right" class="icon-small"></i>
+							</a>
 						</div>
-						
+
 						<div>
-							<ul class="tab-bar dashboard-task-tabs" aria-label="Ordenar tarefas">
-								<li><button type="button" class="tab tab-active" data-sort="default">Ver Todas</button></li>
-								<li><button type="button" class="tab" data-sort="priority">Ordem de Prioridade</button></li>
-								<li><button type="button" class="tab" data-sort="deadline">Prazo mais próximo</button></li>
+							<ul
+								class="tab-bar dashboard-task-tabs"
+								aria-label="Ordenar demandas"
+							>
+								<li>
+									<button
+										type="button"
+										class="tab tab-active"
+										data-sort="creation_date"
+									>
+										Mais recentes
+									</button>
+								</li>
+								<li>
+									<button type="button" class="tab" data-sort="priority">
+										Ordem de Prioridade
+									</button>
+								</li>
+								<li>
+									<button type="button" class="tab" data-sort="due_date">
+										Prazo mais próximo
+									</button>
+								</li>
+								<li>
+									<button type="button" class="tab" data-sort="status">
+										Por Status
+									</button>
+								</li>
 							</ul>
 						</div>
 
 						<div class="dashboard-task-filters">
 							<label class="search-input">
-								<i data-lucide="search" class="icon-medium" style="color: var(--color-neutral-600)"></i>
-								<input id="dashboard-task-search" type="search" placeholder="Buscar por pessoa, tarefa ou projeto" aria-label="Buscar tarefas" />
+								<i
+									data-lucide="search"
+									class="icon-medium"
+									style="color: var(--color-neutral-600)"
+								></i>
+								<input
+									id="dashboard-task-search"
+									type="search"
+									placeholder="Buscar por título, descrição, responsável ou projeto"
+									aria-label="Buscar demandas"
+								/>
 							</label>
+
 							<label class="dashboard-task-status-filter">
 								<span>Status</span>
 								<select id="dashboard-task-status">
-									<option value="">Todos os status</option>
-									<option value="completa">Completa</option>
-									<option value="em revisão">Em revisão</option>
-									<option value="atrasada">Atrasada</option>
+									<option value="">Todos</option>
+									<option value="ABERTA">Aberta</option>
+									<option value="EM ANDAMENTO">Em andamento</option>
+									<option value="EM REVISAO">Em revisão</option>
+									<option value="CONCLUIDA">Concluída</option>
+									<option value="CANCELADA">Cancelada</option>
 								</select>
 							</label>
-							<p id="dashboard-task-count" class="text-subtitle text-small" aria-live="polite"></p>
+
+							<label class="dashboard-task-status-filter">
+								<span>Prioridade</span>
+								<select id="dashboard-task-priority">
+									<option value="">Todas</option>
+									<option value="CRITICA">Crítica</option>
+									<option value="ALTA">Alta</option>
+									<option value="MEDIA">Média</option>
+									<option value="BAIXA">Baixa</option>
+								</select>
+							</label>
+
+							<label class="dashboard-task-status-filter">
+								<span>Tipo</span>
+								<select id="dashboard-task-type">
+									<option value="">Todos</option>
+									<option value="TAREFA">Tarefa</option>
+									<option value="DEFEITO">Defeito</option>
+									<option value="MELHORIA">Melhoria</option>
+									<option value="DOCUMENTACAO">Documentação</option>
+								</select>
+							</label>
+
+							<p
+								id="dashboard-task-count"
+								class="text-subtitle text-small"
+								aria-live="polite"
+							></p>
 						</div>
 
 						<div class="dashboard-tasks-table-wrapper">
 							<table class="dashboard-tasks-table">
 								<thead>
 									<tr>
-										<th>Nome</th>
-										<th>Tarefa</th>
+										<th>Responsável</th>
+										<th>Demanda</th>
+										<th>Tipo</th>
 										<th>Projeto</th>
+										<th>Criação</th>
 										<th>Prazo</th>
 										<th>Prioridade</th>
 										<th>Status</th>
 									</tr>
 								</thead>
-								<tbody>
-									
-								</tbody>
+								<tbody id="dashboard-tasks-tbody"></tbody>
 							</table>
-							<p id="dashboard-task-empty" class="dashboard-task-empty" hidden>Nenhuma tarefa encontrada.</p>
+							<p id="dashboard-task-empty" class="dashboard-task-empty" hidden>
+								Nenhuma demanda encontrada.
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</main>
 
-		<script>
-			lucide.createIcons();
-		</script>
 		<script type="module" src="./dashboard.js"></script>
 	</body>
 </html>

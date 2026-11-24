@@ -1,3 +1,8 @@
+<!--
+    Autor: 
+    register_demand.html -> Tela de cadastro de nova demanda com validação de campos, seleção de projeto/responsável e validação de feriados nacionais no prazo.
+-->
+
 <!doctype html>
 <html lang="pt-BR">
 	<head>
@@ -6,41 +11,20 @@
 		<title>TaskOps - Cadastro de Demanda</title>
 
 		<link rel="stylesheet" href="./register_demand.css" />
-		<!-- Lucide Icons -->
 		<script src="https://unpkg.com/lucide@latest"></script>
 	</head>
 
 	<body>
-		<header class="header">
-			<nav class="nav">
-				<img src="../../../assets/images/logo.png" alt="TaskOps" />
-
-				<ul class="nav-list">
-					<li><a href="../../dashboard/dashboard.html" class="btn btn-lg ghost-btn">Dashboard</a></li>
-					<li><a href="../../project/projects_list/projects_list.html" class="btn btn-lg primary-btn">Projetos</a></li>
-				</ul>
-			</nav>
-
-			<div class="user-profile">
-				<div class="align-center gap-16">
-					<img class="user-profile-avatar" src="../../../assets/images/user.png" alt="Avatar" />
-					<div class="user-profile-info">
-						<p class="user-profile-name text-large">Fulano da S.</p>
-						<p class="user-profile-email font-inter text-tiny text-subtitle">fulano@email.com</p>
-					</div>
-				</div>
-				<i data-lucide="chevron-down" class="icon-medium" style="color: var(--color-primary-500)"></i>
-			</div>
-		</header>
+		<header id="app-header" class="header"></header>
 
 		<main class="page">
 			<section class="form-card">
 				<h1>Cadastro de Demanda</h1>
 
 				<form id="demanda-form" novalidate>
-					<!-- Nome -->
+					<!-- Título -->
 					<div class="form-group name-group">
-						<label for="nome">Nome</label>
+						<label for="nome">Título</label>
 						<input
 							type="text"
 							id="nome"
@@ -48,7 +32,7 @@
 							class="form-control"
 							placeholder="Título da demanda"
 							minlength="3"
-							maxlength="100"
+							maxlength="256"
 							required
 						/>
 						<small class="mensagem-erro" id="erro-nome"></small>
@@ -63,7 +47,7 @@
 							class="form-control"
 							placeholder="Descreva a demanda em detalhes..."
 							minlength="10"
-							maxlength="500"
+							maxlength="2000"
 							required
 						></textarea>
 						<small class="mensagem-erro" id="erro-descricao"></small>
@@ -74,8 +58,15 @@
 						<div class="form-group">
 							<label for="projeto">Projeto</label>
 							<div class="select-wrapper">
-								<select id="projeto" name="projeto" class="form-control" required>
-									<option value="" selected disabled>Carregando projetos...</option>
+								<select
+									id="projeto"
+									name="projeto"
+									class="form-control"
+									required
+								>
+									<option value="" selected disabled>
+										Carregando projetos...
+									</option>
 								</select>
 								<span class="select-arrow">
 									<i data-lucide="chevron-down" class="icon-small"></i>
@@ -106,8 +97,15 @@
 						<div class="form-group">
 							<label for="prioridade">Prioridade</label>
 							<div class="select-wrapper">
-								<select id="prioridade" name="prioridade" class="form-control" required>
-									<option value="" selected disabled>Selecione uma opção...</option>
+								<select
+									id="prioridade"
+									name="prioridade"
+									class="form-control"
+									required
+								>
+									<option value="" selected disabled>
+										Selecione uma opção...
+									</option>
 									<option value="BAIXA">Baixa</option>
 									<option value="MEDIA">Média</option>
 									<option value="ALTA">Alta</option>
@@ -121,13 +119,8 @@
 						</div>
 
 						<div class="form-group">
-							<label for="prazo">Prazo (opcional)</label>
-							<input
-								type="date"
-								id="prazo"
-								name="prazo"
-								class="form-control"
-							/>
+							<label for="prazo">Prazo de finalização (opcional)</label>
+							<input type="date" id="prazo" name="prazo" class="form-control" />
 							<small class="mensagem-erro" id="erro-prazo"></small>
 						</div>
 					</div>
@@ -137,7 +130,11 @@
 						<div class="form-group">
 							<label for="responsavel">Responsável (opcional)</label>
 							<div class="select-wrapper">
-								<select id="responsavel" name="responsavel" class="form-control">
+								<select
+									id="responsavel"
+									name="responsavel"
+									class="form-control"
+								>
 									<option value="">Nenhum (não atribuído)</option>
 								</select>
 								<span class="select-arrow">
@@ -148,18 +145,25 @@
 						</div>
 					</div>
 
-					<p id="mensagem-formulario" class="mensagem-geral" role="status" aria-live="polite"></p>
+					<p
+						id="mensagem-formulario"
+						class="mensagem-geral"
+						role="status"
+						aria-live="polite"
+					></p>
 
 					<!-- Botões -->
 					<div class="actions">
-						<a href="../../dashboard/dashboard.html">
-							<button type="button"   class="btn-cancel" id="botao-cancelar">
+						<a
+							href="../../dashboard/dashboard.html"
+							class="btn-cancel"
+							id="botao-cancelar"
+						>
 							<i data-lucide="x" class="icon-small"></i>
 							<span>Cancelar</span>
-						</button>
 						</a>
 
-						<button type="submit" class="btn-save">
+						<button type="submit" class="btn-save" id="botao-salvar">
 							<i data-lucide="save" class="icon-small"></i>
 							<span>Salvar</span>
 						</button>
@@ -169,8 +173,5 @@
 		</main>
 
 		<script type="module" src="./register_demand.js"></script>
-		<script>
-			lucide.createIcons();
-		</script>
 	</body>
 </html>

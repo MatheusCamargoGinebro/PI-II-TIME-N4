@@ -1,3 +1,18 @@
+/*
+    Estilos padronizados do cabeçalho (header) e perfil do usuário.
+    Autor: 
+*/
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 16px;
+	padding: 16px var(--padding-global);
+	height: fit-content;
+}
+
 .nav {
 	display: flex;
 	justify-content: space-between;
@@ -8,6 +23,17 @@
 	height: fit-content;
 	background-color: var(--color-neutral-100);
 	border-radius: 8px;
+}
+
+.nav-logo-link {
+	display: inline-flex;
+	align-items: center;
+}
+
+.nav img {
+	width: 100px;
+	margin-left: 10px;
+	display: block;
 }
 
 .nav-list {
@@ -23,26 +49,26 @@
 	text-decoration: none;
 }
 
-.nav img {
-	width: 100px;
-	margin-left: 10px;
-}
-
-.header {
+.header-actions {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
-	padding: 16px 48px;
-	height: fit-content;
+	gap: 16px;
+	flex-wrap: wrap;
 }
 
 .user-profile {
 	display: flex;
 	align-items: center;
-	gap: 8px;
-	padding: 8px;
+	gap: 12px;
+	padding: 8px 12px;
 	background-color: var(--color-neutral-100);
 	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.user-profile:hover {
+	background-color: var(--color-neutral-300);
 }
 
 .user-profile-avatar {
@@ -60,8 +86,21 @@
 .user-profile-name {
 	color: var(--color-primary-500);
 	font-weight: 700;
+	line-height: 1.25;
 }
 
 .user-profile-email {
 	color: var(--color-neutral-700);
+	line-height: 1.25;
+}
+
+@media (max-width: 768px) {
+	.header {
+		padding: 12px 20px;
+	}
+
+	.nav {
+		gap: 16px;
+		width: 100%;
+	}
 }
